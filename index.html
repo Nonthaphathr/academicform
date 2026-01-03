@@ -329,6 +329,12 @@
             font-weight: 600;
         }
 
+        .history-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
         .history-list {
             max-height: 500px;
             overflow-y: auto;
@@ -411,7 +417,7 @@
             opacity: 0.5;
         }
 
-        /* Print Preview Modal */
+        /* Modal */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -486,7 +492,36 @@
             justify-content: flex-end;
         }
 
-        /* ========== PRINT DOCUMENT STYLES ========== */
+        /* Settings Modal */
+        .settings-modal .modal-content {
+            max-width: 600px;
+        }
+
+        .settings-modal .modal-body {
+            background: white;
+            padding: 2rem;
+        }
+
+        .settings-group {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .settings-group:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .settings-group h4 {
+            font-family: 'Prompt', sans-serif;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        /* Print Document Styles */
         .print-document {
             background: white;
             width: 210mm;
@@ -550,7 +585,6 @@
             text-indent: 25px;
         }
 
-        /* ========== FIXED CHECKBOX STYLES ========== */
         .print-document .checkbox-line {
             display: flex;
             align-items: flex-start;
@@ -596,19 +630,6 @@
             position: relative;
         }
 
-        .print-document .inline-checkbox .doc-checkbox.checked::after {
-            content: '✓';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 11px;
-            font-weight: bold;
-            color: #333;
-            line-height: 1;
-        }
-
-        /* ========== SIGNATURE SECTION ========== */
         .print-document .signature-section {
             margin-top: 12px;
             text-align: right;
@@ -623,7 +644,6 @@
             margin-top: 20px;
         }
 
-        /* ========== APPROVAL GRID ========== */
         .print-document .approval-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -676,7 +696,63 @@
             min-width: 100px;
         }
 
-        /* ========== PRINT STYLES ========== */
+        /* Loading Spinner */
+        .loading {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid var(--border);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 1rem 1.5rem;
+            background: var(--success);
+            color: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 2000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.error {
+            background: var(--danger);
+        }
+
+        /* Print Styles */
         @media print {
             * {
                 -webkit-print-color-adjust: exact !important;
@@ -764,37 +840,14 @@
         .form-section, .history-panel {
             animation: fadeIn 0.5s ease;
         }
-
-        /* Toast Notification */
-        .toast {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            padding: 1rem 1.5rem;
-            background: var(--success);
-            color: white;
-            border-radius: 8px;
-            box-shadow: var(--shadow-lg);
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: 2000;
-        }
-
-        .toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .toast.error {
-            background: var(--danger);
-        }
     </style>
 </head>
 <body>
+    <!-- Loading Spinner -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+    </div>
+
     <!-- Header -->
     <header class="header">
         <div class="header-content">
@@ -1103,7 +1156,14 @@
         <!-- History Panel -->
         <aside class="history-panel">
             <div class="history-header">
-                <h3>📚 ประวัติการสร้างเอกสาร</h3>
+                <div>
+                    <h3>📚 ประวัติการสร้างเอกสาร</h3>
+                    <div class="history-actions">
+                        <button class="btn btn-sm btn-outline" onclick="openSettings()">
+                            ⚙️ ตั้งค่า
+                        </button>
+                    </div>
+                </div>
                 <span class="history-count" id="historyCount">0</span>
             </div>
             <div class="history-list" id="historyList">
@@ -1122,7 +1182,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3>📄 ตัวอย่างเอกสาร</h3>
-                <button class="modal-close" onclick="closeModal()">&times;</button>
+                <button class="modal-close" onclick="closeModal('previewModal')">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="print-area" id="printArea">
@@ -1130,8 +1190,47 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-outline" onclick="closeModal()">ปิด</button>
+                <button class="btn btn-outline" onclick="closeModal('previewModal')">ปิด</button>
                 <button class="btn btn-success" onclick="printDocument()">🖨️ พิมพ์เอกสาร</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal-overlay settings-modal" id="settingsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>⚙️ ตั้งค่าระบบ</h3>
+                <button class="modal-close" onclick="closeModal('settingsModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-group">
+                    <h4>เจ้าหน้าที่งานทะเบียน</h4>
+                    <div class="form-group">
+                        <label>ชื่อ-นามสกุล</label>
+                        <input type="text" class="form-control" id="registrarName" placeholder="เช่น นายนนทพัทธ์ หิรัญเรือง">
+                    </div>
+                </div>
+                
+                <div class="settings-group">
+                    <h4>หัวหน้าฝ่ายวิชาการ</h4>
+                    <div class="form-group">
+                        <label>ชื่อ-นามสกุล</label>
+                        <input type="text" class="form-control" id="academicHeadName" placeholder="เช่น นางสาวสุพัฒตา ศรีเมือง">
+                    </div>
+                </div>
+                
+                <div class="settings-group">
+                    <h4>ผู้อำนวยการโรงเรียน</h4>
+                    <div class="form-group">
+                        <label>ชื่อ-นามสกุล</label>
+                        <input type="text" class="form-control" id="directorName" placeholder="เช่น นางสุนิสา ใจใหญ่">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('settingsModal')">ยกเลิก</button>
+                <button class="btn btn-success" onclick="saveSettings()">💾 บันทึกการตั้งค่า</button>
             </div>
         </div>
     </div>
@@ -1141,23 +1240,53 @@
         <span id="toastMessage">บันทึกข้อมูลสำเร็จ</span>
     </div>
 
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, addDoc, getDocs, getDoc, doc, updateDoc, deleteDoc, query, orderBy, limit, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyB9n6KwCPeCN4QzQj4tYWo26I6SUgJw3s0",
+            authDomain: "academicform-536d0.firebaseapp.com",
+            projectId: "academicform-536d0",
+            storageBucket: "academicform-536d0.firebasestorage.app",
+            messagingSenderId: "764850134638",
+            appId: "1:764850134638:web:d88a086a8f23a67586907f"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Export to global scope
+        window.db = db;
+        window.firestore = { collection, addDoc, getDocs, getDoc, doc, updateDoc, deleteDoc, query, orderBy, limit, serverTimestamp };
+
+        console.log('Firebase initialized successfully!');
+        
+        // Load initial data
+        window.addEventListener('DOMContentLoaded', () => {
+            loadSettings();
+            loadHistory();
+        });
+    </script>
+
     <script>
+        // Default Settings
+        const DEFAULT_SETTINGS = {
+            registrarName: 'นายนนทพัทธ์ หิรัญเรือง',
+            academicHeadName: 'นางสาวสุพัฒตา ศรีเมือง',
+            directorName: 'นางสุนิสา ใจใหญ่'
+        };
+
+        let currentSettings = { ...DEFAULT_SETTINGS };
+
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            loadHistory();
             setupEventListeners();
             setDefaultDates();
         });
-
-        // Set default dates
-        function setDefaultDates() {
-            const today = new Date().toISOString().split('T')[0];
-            document.querySelectorAll('input[type="date"]').forEach(input => {
-                if (input.name === 'requestDate') {
-                    input.value = today;
-                }
-            });
-        }
 
         // Setup event listeners
         function setupEventListeners() {
@@ -1170,9 +1299,12 @@
             });
 
             // Form 201 - Other attachment toggle
-            document.querySelector('#form201Data input[value="other"]').addEventListener('change', function() {
-                document.getElementById('otherAttachmentGroup201').style.display = this.checked ? 'block' : 'none';
-            });
+            const form201Other = document.querySelector('#form201Data input[value="other"]');
+            if (form201Other) {
+                form201Other.addEventListener('change', function() {
+                    document.getElementById('otherAttachmentGroup201').style.display = this.checked ? 'block' : 'none';
+                });
+            }
 
             // Form 207 - Other purpose toggle
             document.querySelectorAll('#form207Data input[name="purpose"]').forEach(radio => {
@@ -1180,6 +1312,34 @@
                     document.getElementById('otherPurposeGroup207').style.display = 
                         this.value === 'other' ? 'block' : 'none';
                 });
+            });
+
+            // Modal overlay click to close
+            document.querySelectorAll('.modal-overlay').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.classList.remove('active');
+                    }
+                });
+            });
+
+            // Escape key to close modals
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    document.querySelectorAll('.modal-overlay').forEach(modal => {
+                        modal.classList.remove('active');
+                    });
+                }
+            });
+        }
+
+        // Set default dates
+        function setDefaultDates() {
+            const today = new Date().toISOString().split('T')[0];
+            document.querySelectorAll('input[type="date"]').forEach(input => {
+                if (input.name === 'requestDate') {
+                    input.value = today;
+                }
             });
         }
 
@@ -1277,7 +1437,7 @@
                                 <p>${checkbox(false)} ไม่เห็นควรอนุมัติ เนื่องจาก <span class="dotted"></span></p>
                                 <div class="sig-area">
                                     <p>(ลงชื่อ) <span class="dotted"></span></p>
-                                    <p>(นายนนทพัทธ์ หิรัญเรือง)</p>
+                                    <p>(${currentSettings.registrarName})</p>
                                     <p>เจ้าหน้าที่งานทะเบียน</p>
                                 </div>
                             </div>
@@ -1287,7 +1447,7 @@
                                 <p>${checkbox(false)} ไม่เห็นควรอนุมัติ เนื่องจาก <span class="dotted"></span></p>
                                 <div class="sig-area">
                                     <p>(ลงชื่อ) <span class="dotted"></span></p>
-                                    <p>(นางสาวสุพัฒตา ศรีเมือง)</p>
+                                    <p>(${currentSettings.academicHeadName})</p>
                                     <p>หัวหน้าฝ่ายวิชาการ</p>
                                 </div>
                             </div>
@@ -1298,7 +1458,7 @@
                             <p>${checkbox(false)} ไม่อนุมัติ เนื่องจาก <span class="dotted"></span></p>
                             <div class="sig-area">
                                 <p>(ลงชื่อ) <span class="dotted"></span></p>
-                                <p>(นางสุนิสา ใจใหญ่)</p>
+                                <p>(${currentSettings.directorName})</p>
                                 <p>ผู้อำนวยการโรงเรียนกระดุมทองวิทยา</p>
                             </div>
                         </div>
@@ -1343,7 +1503,7 @@
                                 <p>2. นัดให้มารับวันที่ <span class="dotted"></span></p>
                                 <div class="sig-area">
                                     <p>(ลงชื่อ) <span class="dotted"></span> นายทะเบียน</p>
-                                    <p>(นายนนทพัทธ์ หิรัญเรือง)</p>
+                                    <p>(${currentSettings.registrarName})</p>
                                 </div>
                             </div>
                             <div class="approval-box">
@@ -1352,7 +1512,7 @@
                                 <p>2. เพื่อโปรดพิจารณาลงนาม</p>
                                 <div class="sig-area">
                                     <p>(ลงชื่อ) <span class="dotted"></span> หัวหน้าฝ่ายวิชาการ</p>
-                                    <p>(นางสาวสุพัฒตา ศรีเมือง)</p>
+                                    <p>(${currentSettings.academicHeadName})</p>
                                 </div>
                             </div>
                         </div>
@@ -1362,7 +1522,7 @@
                             <p>${checkbox(false)} ลงนามแล้ว</p>
                             <div class="sig-area">
                                 <p>(ลงชื่อ) <span class="dotted"></span> ผู้อำนวยการสถานศึกษา</p>
-                                <p>(นางสุนิสา ใจใหญ่)</p>
+                                <p>(${currentSettings.directorName})</p>
                                 <p>ผู้อำนวยการโรงเรียนกระดุมทองวิทยา</p>
                             </div>
                         </div>
@@ -1400,7 +1560,7 @@
                                 <p>2. นัดให้มารับวันที่ <span class="dotted"></span></p>
                                 <div class="sig-area">
                                     <p>(ลงชื่อ) <span class="dotted"></span> นายทะเบียน</p>
-                                    <p>(นายนนทพัทธ์ หิรัญเรือง)</p>
+                                    <p>(${currentSettings.registrarName})</p>
                                 </div>
                             </div>
                             <div class="approval-box">
@@ -1409,7 +1569,7 @@
                                 <p>2. เพื่อโปรดพิจารณาลงนาม</p>
                                 <div class="sig-area">
                                     <p>(ลงชื่อ) <span class="dotted"></span> หัวหน้าฝ่ายวิชาการ</p>
-                                    <p>(นางสาวสุพัฒตา ศรีเมือง)</p>
+                                    <p>(${currentSettings.academicHeadName})</p>
                                 </div>
                             </div>
                         </div>
@@ -1419,7 +1579,7 @@
                             <p>${checkbox(false)} ลงนามแล้ว</p>
                             <div class="sig-area">
                                 <p>(ลงชื่อ) <span class="dotted"></span> ผู้อำนวยการสถานศึกษา</p>
-                                <p>(นางสุนิสา ใจใหญ่)</p>
+                                <p>(${currentSettings.directorName})</p>
                             </div>
                         </div>
                     </div>
@@ -1443,8 +1603,8 @@
         }
 
         // Close modal
-        function closeModal() {
-            document.getElementById('previewModal').classList.remove('active');
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
         }
 
         // Print document
@@ -1453,7 +1613,7 @@
         }
 
         // Save and print
-        function saveAndPrint(formId) {
+        async function saveAndPrint(formId) {
             if (!validateForm(formId)) {
                 showToast('กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน', 'error');
                 document.getElementById(formId + 'Data').reportValidity();
@@ -1461,144 +1621,287 @@
             }
 
             const data = getFormData(formId);
-            saveToHistory(formId, data);
+            await saveToFirestore(formId, data);
             previewDocument(formId);
         }
 
-        // Save to history (localStorage)
-        function saveToHistory(formId, data) {
-            const history = JSON.parse(localStorage.getItem('formHistory') || '[]');
-            
-            const formTypes = {
-                'form201': 'ใบรับรองการเป็นนักเรียน',
-                'form207': 'ระเบียนผลการเรียน (ปพ.1)',
-                'form209': 'ใบรับรองผลการเรียน'
-            };
+        // Save to Firestore
+        async function saveToFirestore(formId, data) {
+            try {
+                showLoading(true);
 
-            const record = {
-                id: Date.now(),
-                formId: formId,
-                formType: formTypes[formId],
-                formCode: formId === 'form201' ? 'วก.กทว.201' : formId === 'form207' ? 'วก.กทว.207' : 'วก.กทว.209',
-                data: data,
-                createdAt: new Date().toISOString()
-            };
+                const formTypes = {
+                    'form201': 'ใบรับรองการเป็นนักเรียน',
+                    'form207': 'ระเบียนผลการเรียน (ปพ.1)',
+                    'form209': 'ใบรับรองผลการเรียน'
+                };
 
-            history.unshift(record);
-            
-            // Keep only last 100 records
-            if (history.length > 100) {
-                history.pop();
+                const record = {
+                    formId: formId,
+                    formType: formTypes[formId],
+                    formCode: formId === 'form201' ? 'วก.กทว.201' : formId === 'form207' ? 'วก.กทว.207' : 'วก.กทว.209',
+                    studentName: data.fullName || '',
+                    grade: data.grade || '',
+                    studentId: data.studentId || '',
+                    status: 'pending',
+                    data: data,
+                    createdAt: window.firestore.serverTimestamp(),
+                    updatedAt: window.firestore.serverTimestamp()
+                };
+
+                const docRef = await window.firestore.addDoc(
+                    window.firestore.collection(window.db, 'requests'),
+                    record
+                );
+
+                console.log('Document written with ID:', docRef.id);
+                showToast('บันทึกข้อมูลสำเร็จ');
+                await loadHistory();
+
+            } catch (error) {
+                console.error('Error adding document:', error);
+                showToast('เกิดข้อผิดพลาดในการบันทึกข้อมูล: ' + error.message, 'error');
+            } finally {
+                showLoading(false);
             }
-
-            localStorage.setItem('formHistory', JSON.stringify(history));
-            loadHistory();
-            showToast('บันทึกข้อมูลสำเร็จ');
         }
 
-        // Load history from localStorage
-        function loadHistory() {
-            const history = JSON.parse(localStorage.getItem('formHistory') || '[]');
-            const historyList = document.getElementById('historyList');
-            const historyCount = document.getElementById('historyCount');
-            
-            historyCount.textContent = history.length;
+        // Load history from Firestore
+        async function loadHistory() {
+            try {
+                showLoading(true);
 
-            if (history.length === 0) {
-                historyList.innerHTML = `
-                    <div class="empty-history">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                        <p>ยังไม่มีประวัติการสร้างเอกสาร</p>
-                    </div>
-                `;
-                return;
-            }
+                const q = window.firestore.query(
+                    window.firestore.collection(window.db, 'requests'),
+                    window.firestore.orderBy('createdAt', 'desc'),
+                    window.firestore.limit(50)
+                );
 
-            historyList.innerHTML = history.map(record => {
-                const date = new Date(record.createdAt);
-                const dateStr = date.toLocaleDateString('th-TH', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
+                const querySnapshot = await window.firestore.getDocs(q);
+                const history = [];
+
+                querySnapshot.forEach((doc) => {
+                    history.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
                 });
 
-                return `
-                    <div class="history-item">
-                        <div class="history-item-header">
-                            <span class="history-item-type">${record.formCode}</span>
-                            <span class="history-item-date">${dateStr}</span>
+                const historyList = document.getElementById('historyList');
+                const historyCount = document.getElementById('historyCount');
+                
+                historyCount.textContent = history.length;
+
+                if (history.length === 0) {
+                    historyList.innerHTML = `
+                        <div class="empty-history">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            <p>ยังไม่มีประวัติการสร้างเอกสาร</p>
                         </div>
-                        <div class="history-item-name">${record.data.fullName || record.data.prefix + record.data.fullName || '-'}</div>
-                        <div class="history-item-detail">${record.formType}</div>
-                        <div class="history-item-actions">
-                            <button class="btn btn-primary btn-sm" onclick="viewHistoryRecord(${record.id})">
-                                👁️ ดู
-                            </button>
-                            <button class="btn btn-outline btn-sm" onclick="loadHistoryRecord(${record.id})">
-                                📝 แก้ไข
-                            </button>
-                            <button class="btn btn-danger btn-sm" onclick="deleteHistoryRecord(${record.id})">
-                                🗑️ ลบ
-                            </button>
+                    `;
+                    return;
+                }
+
+                historyList.innerHTML = history.map(record => {
+                    let dateStr = '-';
+                    if (record.createdAt) {
+                        const date = record.createdAt.toDate();
+                        dateStr = date.toLocaleDateString('th-TH', {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
+                    }
+
+                    return `
+                        <div class="history-item">
+                            <div class="history-item-header">
+                                <span class="history-item-type">${record.formCode}</span>
+                                <span class="history-item-date">${dateStr}</span>
+                            </div>
+                            <div class="history-item-name">${record.studentName || '-'}</div>
+                            <div class="history-item-detail">${record.formType}</div>
+                            <div class="history-item-actions">
+                                <button class="btn btn-primary btn-sm" onclick="viewHistoryRecord('${record.id}')">
+                                    👁️ ดู
+                                </button>
+                                <button class="btn btn-outline btn-sm" onclick="loadHistoryRecord('${record.id}')">
+                                    📝 แก้ไข
+                                </button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteHistoryRecord('${record.id}')">
+                                    🗑️ ลบ
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                `;
-            }).join('');
+                    `;
+                }).join('');
+
+            } catch (error) {
+                console.error('Error loading history:', error);
+                showToast('เกิดข้อผิดพลาดในการโหลดประวัติ: ' + error.message, 'error');
+            } finally {
+                showLoading(false);
+            }
         }
 
         // View history record
-        function viewHistoryRecord(id) {
-            const history = JSON.parse(localStorage.getItem('formHistory') || '[]');
-            const record = history.find(r => r.id === id);
-            
-            if (record) {
-                const html = generateDocumentHTML(record.formId, record.data);
-                document.getElementById('printArea').innerHTML = html;
-                document.getElementById('previewModal').classList.add('active');
+        async function viewHistoryRecord(id) {
+            try {
+                showLoading(true);
+                const docRef = window.firestore.doc(window.db, 'requests', id);
+                const docSnap = await window.firestore.getDoc(docRef);
+                
+                if (docSnap.exists()) {
+                    const record = docSnap.data();
+                    const html = generateDocumentHTML(record.formId, record.data);
+                    document.getElementById('printArea').innerHTML = html;
+                    document.getElementById('previewModal').classList.add('active');
+                } else {
+                    showToast('ไม่พบข้อมูล', 'error');
+                }
+            } catch (error) {
+                console.error('Error viewing record:', error);
+                showToast('เกิดข้อผิดพลาด: ' + error.message, 'error');
+            } finally {
+                showLoading(false);
             }
         }
 
         // Load history record to form
-        function loadHistoryRecord(id) {
-            const history = JSON.parse(localStorage.getItem('formHistory') || '[]');
-            const record = history.find(r => r.id === id);
-            
-            if (record) {
-                switchForm(record.formId);
-                const form = document.getElementById(record.formId + 'Data');
+        async function loadHistoryRecord(id) {
+            try {
+                showLoading(true);
+                const docRef = window.firestore.doc(window.db, 'requests', id);
+                const docSnap = await window.firestore.getDoc(docRef);
                 
-                Object.keys(record.data).forEach(key => {
-                    const field = form.querySelector(`[name="${key}"]`);
-                    if (field) {
-                        if (field.type === 'checkbox') {
-                            field.checked = record.data[key].includes(field.value);
-                        } else if (field.type === 'radio') {
-                            const radios = form.querySelectorAll(`[name="${key}"]`);
-                            radios.forEach(radio => {
-                                radio.checked = radio.value === record.data[key];
-                            });
-                        } else {
-                            field.value = record.data[key];
+                if (docSnap.exists()) {
+                    const record = docSnap.data();
+                    switchForm(record.formId);
+                    
+                    const form = document.getElementById(record.formId + 'Data');
+                    
+                    Object.keys(record.data).forEach(key => {
+                        const field = form.querySelector(`[name="${key}"]`);
+                        if (field) {
+                            if (field.type === 'checkbox') {
+                                const checkboxes = form.querySelectorAll(`[name="${key}"]`);
+                                checkboxes.forEach(checkbox => {
+                                    checkbox.checked = record.data[key] && record.data[key].includes(checkbox.value);
+                                });
+                            } else if (field.type === 'radio') {
+                                const radios = form.querySelectorAll(`[name="${key}"]`);
+                                radios.forEach(radio => {
+                                    radio.checked = radio.value === record.data[key];
+                                });
+                            } else {
+                                field.value = record.data[key];
+                            }
                         }
-                    }
-                });
+                    });
 
-                showToast('โหลดข้อมูลสำเร็จ');
+                    showToast('โหลดข้อมูลสำเร็จ');
+                } else {
+                    showToast('ไม่พบข้อมูล', 'error');
+                }
+            } catch (error) {
+                console.error('Error loading record:', error);
+                showToast('เกิดข้อผิดพลาด: ' + error.message, 'error');
+            } finally {
+                showLoading(false);
             }
         }
 
         // Delete history record
-        function deleteHistoryRecord(id) {
-            if (confirm('คุณต้องการลบรายการนี้หรือไม่?')) {
-                let history = JSON.parse(localStorage.getItem('formHistory') || '[]');
-                history = history.filter(r => r.id !== id);
-                localStorage.setItem('formHistory', JSON.stringify(history));
-                loadHistory();
+        async function deleteHistoryRecord(id) {
+            if (!confirm('คุณต้องการลบรายการนี้หรือไม่?')) {
+                return;
+            }
+
+            try {
+                showLoading(true);
+                await window.firestore.deleteDoc(window.firestore.doc(window.db, 'requests', id));
                 showToast('ลบรายการสำเร็จ');
+                await loadHistory();
+            } catch (error) {
+                console.error('Error deleting record:', error);
+                showToast('เกิดข้อผิดพลาดในการลบ: ' + error.message, 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Settings Functions
+        function openSettings() {
+            document.getElementById('registrarName').value = currentSettings.registrarName;
+            document.getElementById('academicHeadName').value = currentSettings.academicHeadName;
+            document.getElementById('directorName').value = currentSettings.directorName;
+            document.getElementById('settingsModal').classList.add('active');
+        }
+
+        async function saveSettings() {
+            const newSettings = {
+                registrarName: document.getElementById('registrarName').value || DEFAULT_SETTINGS.registrarName,
+                academicHeadName: document.getElementById('academicHeadName').value || DEFAULT_SETTINGS.academicHeadName,
+                directorName: document.getElementById('directorName').value || DEFAULT_SETTINGS.directorName
+            };
+
+            try {
+                showLoading(true);
+                
+                // Save to Firestore
+                const settingsRef = window.firestore.doc(window.db, 'settings', 'officials');
+                await window.firestore.updateDoc(settingsRef, newSettings).catch(async () => {
+                    // If document doesn't exist, create it
+                    await window.firestore.addDoc(
+                        window.firestore.collection(window.db, 'settings'),
+                        { id: 'officials', ...newSettings }
+                    );
+                });
+
+                currentSettings = newSettings;
+                closeModal('settingsModal');
+                showToast('บันทึกการตั้งค่าสำเร็จ');
+            } catch (error) {
+                console.error('Error saving settings:', error);
+                showToast('เกิดข้อผิดพลาดในการบันทึกการตั้งค่า: ' + error.message, 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        async function loadSettings() {
+            try {
+                const settingsRef = window.firestore.doc(window.db, 'settings', 'officials');
+                const docSnap = await window.firestore.getDoc(settingsRef);
+                
+                if (docSnap.exists()) {
+                    currentSettings = { ...DEFAULT_SETTINGS, ...docSnap.data() };
+                } else {
+                    // Initialize with default settings
+                    currentSettings = { ...DEFAULT_SETTINGS };
+                    // Save default settings to Firestore
+                    await window.firestore.addDoc(
+                        window.firestore.collection(window.db, 'settings'),
+                        { id: 'officials', ...currentSettings }
+                    );
+                }
+            } catch (error) {
+                console.error('Error loading settings:', error);
+                currentSettings = { ...DEFAULT_SETTINGS };
+            }
+        }
+
+        // Show/Hide loading
+        function showLoading(show) {
+            const loading = document.getElementById('loading');
+            if (show) {
+                loading.classList.add('active');
+            } else {
+                loading.classList.remove('active');
             }
         }
 
@@ -1614,20 +1917,6 @@
                 toast.classList.remove('show');
             }, 3000);
         }
-
-        // Close modal on outside click
-        document.getElementById('previewModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
-        });
-
-        // Close modal on Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeModal();
-            }
-        });
     </script>
 </body>
 </html>
