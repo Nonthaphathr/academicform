@@ -474,7 +474,8 @@
         .modal-body {
             flex: 1;
             overflow-y: auto;
-            padding: 1.5rem;
+            padding: 1rem;
+            background: #e2e8f0;
         }
 
         .modal-footer {
@@ -485,130 +486,215 @@
             justify-content: flex-end;
         }
 
-        /* Print Document Styles */
+        /* ========== PRINT DOCUMENT STYLES ========== */
         .print-document {
             background: white;
-            padding: 20mm;
+            width: 210mm;
+            height: 297mm;
+            padding: 10mm 15mm 10mm 15mm;
             font-family: 'Sarabun', sans-serif;
-            font-size: 16px;
-            line-height: 1.8;
+            font-size: 15px;
+            line-height: 1.5;
             color: black;
-        }
-
-        .print-document .doc-header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .print-document .doc-logo {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 10px;
-        }
-
-        .print-document .doc-school-info {
-            text-align: right;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-
-        .print-document .doc-title {
-            text-align: center;
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 20px;
+            margin: 0 auto;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
         }
 
         .print-document .doc-code {
             position: absolute;
-            top: 20mm;
-            right: 20mm;
-            font-size: 12px;
+            top: 10mm;
+            right: 15mm;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .print-document .doc-header {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            margin-bottom: 5px;
+            position: relative;
+        }
+
+        .print-document .doc-logo {
+            width: 55px;
+            height: 55px;
+        }
+
+        .print-document .doc-school-info {
+            position: absolute;
+            right: 0;
+            top: 0;
+            text-align: right;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .print-document .doc-title {
+            text-align: center;
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 10px;
         }
 
         .print-document .doc-content {
-            margin-bottom: 30px;
+            margin-bottom: 5px;
         }
 
         .print-document .doc-content p {
-            margin-bottom: 10px;
-            text-indent: 40px;
+            margin-bottom: 3px;
+        }
+
+        .print-document .indent {
+            text-indent: 25px;
+        }
+
+        /* ========== FIXED CHECKBOX STYLES ========== */
+        .print-document .checkbox-line {
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            margin: 2px 0 2px 25px;
+            line-height: 1.4;
         }
 
         .print-document .doc-checkbox {
             display: inline-block;
-            width: 14px;
-            height: 14px;
-            border: 1px solid black;
-            margin-right: 5px;
-            vertical-align: middle;
+            width: 13px;
+            height: 13px;
+            min-width: 13px;
+            min-height: 13px;
+            border: 1.5px solid #333;
+            background: white;
+            position: relative;
+            flex-shrink: 0;
+            margin-top: 3px;
         }
 
         .print-document .doc-checkbox.checked::after {
             content: '✓';
-            display: block;
-            text-align: center;
-            line-height: 12px;
-            font-size: 12px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 11px;
+            font-weight: bold;
+            color: #333;
+            line-height: 1;
         }
 
-        .print-document .doc-signature-section {
-            margin-top: 40px;
+        .print-document .inline-checkbox {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
 
-        .print-document .signature-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 60px;
+        .print-document .inline-checkbox .doc-checkbox {
+            margin-top: 0;
+            vertical-align: middle;
         }
 
-        .print-document .signature-box {
-            text-align: center;
-            min-width: 200px;
+        /* ========== SIGNATURE SECTION ========== */
+        .print-document .signature-section {
+            margin-top: 12px;
+            text-align: right;
+            padding-right: 20px;
+        }
+
+        .print-document .signature-section p {
+            margin: 2px 0;
         }
 
         .print-document .signature-line {
-            border-top: 1px dotted black;
-            padding-top: 5px;
-            margin-top: 40px;
+            margin-top: 20px;
         }
 
-        .print-document .approval-section {
-            margin-top: 30px;
-            padding: 15px;
-            border: 1px solid #ddd;
+        /* ========== APPROVAL GRID ========== */
+        .print-document .approval-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 12px;
         }
 
-        .print-document .approval-title {
+        .print-document .approval-box {
+            border: 1px solid #666;
+            padding: 8px 10px;
+            font-size: 13px;
+        }
+
+        .print-document .approval-box-title {
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 4px;
+            font-size: 13px;
         }
 
-        .print-document .underline {
-            border-bottom: 1px dotted black;
+        .print-document .approval-box p {
+            margin: 2px 0;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .print-document .approval-box .sig-area {
+            margin-top: 12px;
+            text-align: center;
+        }
+
+        .print-document .approval-box .sig-area p {
+            justify-content: center;
+        }
+
+        .print-document .approval-center {
+            max-width: 260px;
+            margin: 8px auto 0;
+        }
+
+        .print-document .dotted {
+            border-bottom: 1px dotted #333;
             display: inline-block;
-            min-width: 150px;
+            min-width: 60px;
         }
 
-        /* Print Styles */
+        .print-document .dotted-long {
+            border-bottom: 1px dotted #333;
+            display: inline-block;
+            min-width: 100px;
+        }
+
+        /* ========== PRINT STYLES ========== */
         @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            
             body * {
                 visibility: hidden;
             }
+            
             .print-area, .print-area * {
                 visibility: visible;
             }
+            
             .print-area {
                 position: absolute;
                 left: 0;
                 top: 0;
-                width: 210mm;
-                min-height: 297mm;
+                width: 100%;
             }
+            
             .print-document {
-                padding: 15mm;
+                width: 100%;
+                height: auto;
+                padding: 8mm 12mm;
                 box-shadow: none;
+                margin: 0;
+                font-size: 14px;
             }
+            
             @page {
                 size: A4;
                 margin: 0;
@@ -635,6 +721,15 @@
             }
             .btn {
                 justify-content: center;
+            }
+            .modal-body {
+                padding: 0.5rem;
+            }
+            .print-document {
+                width: 100%;
+                height: auto;
+                padding: 5mm;
+                font-size: 11px;
             }
         }
 
@@ -1117,6 +1212,11 @@
             return `${day} ${month} ${year}`;
         }
 
+        // Create checkbox HTML
+        function checkbox(isChecked) {
+            return `<span class="doc-checkbox${isChecked ? ' checked' : ''}"></span>`;
+        }
+
         // Generate document HTML
         function generateDocumentHTML(formId, data) {
             const logoUrl = 'https://nonthaphathr.github.io/uploadimg/logoschool.png';
@@ -1124,11 +1224,11 @@
             if (formId === 'form201') {
                 const attachments = data.attachment || [];
                 return `
-                    <div class="print-document" style="position: relative;">
+                    <div class="print-document">
                         <div class="doc-code">วก.กทว.201</div>
                         <div class="doc-header">
                             <img src="${logoUrl}" class="doc-logo" alt="โลโก้โรงเรียน">
-                            <div class="doc-school-info" style="text-align: right;">
+                            <div class="doc-school-info">
                                 โรงเรียนกระดุมทองวิทยา<br>
                                 ต.หนองหัวช้าง อ.กันทรารมย์<br>
                                 จ.ศรีสะเกษ 33130
@@ -1136,193 +1236,168 @@
                         </div>
                         <div class="doc-title">แบบคำร้องขอใบรับรองการเป็นนักเรียน</div>
                         <div class="doc-content">
-                            <p style="text-indent: 0;"><strong>เรื่อง</strong> ขอใบรับรองการเป็นนักเรียน</p>
-                            <p style="text-indent: 0;"><strong>เรียน</strong> ผู้อำนวยการโรงเรียนกระดุมทองวิทยา</p>
-                            <p>ข้าพเจ้า ${data.prefix || ''}${data.fullName || '.....................'} นักเรียนชั้นมัธยมศึกษาปีที่ ${data.grade || '......'}
-                            เลขประจำตัวนักเรียน ${data.studentId || '.....................'} หมายเลขโทรศัพท์ ${data.phone || '.....................'}
-                            มีความประสงค์จะขอใบรับรองการเป็นนักเรียนเพื่อ ${data.purpose || '.....................'}
-                            และจะมารับในวันที่ ${formatThaiDate(data.pickupDate)} ทั้งนี้ได้แนบเอกสาร</p>
-                            <p style="text-indent: 40px;">
-                                <span class="doc-checkbox ${attachments.includes('photo') ? 'checked' : ''}"></span> รูปถ่าย 1.5 นิ้ว 1 รูป
-                            </p>
-                            <p style="text-indent: 40px;">
-                                <span class="doc-checkbox ${attachments.includes('other') ? 'checked' : ''}"></span> อื่นๆ ${data.otherAttachment || '.....................'}
-                            </p>
-                            <p style="text-indent: 0; margin-top: 20px;">จึงเรียนมาเพื่อโปรดทราบ และพิจารณาดำเนินการต่อไป</p>
+                            <p><strong>เรื่อง</strong> ขอใบรับรองการเป็นนักเรียน</p>
+                            <p><strong>เรียน</strong> ผู้อำนวยการโรงเรียนกระดุมทองวิทยา</p>
+                            <p class="indent">ข้าพเจ้า ${data.prefix || ''}${data.fullName || '<span class="dotted-long"></span>'} นักเรียนชั้นมัธยมศึกษาปีที่ ${data.grade || '<span class="dotted"></span>'} เลขประจำตัวนักเรียน ${data.studentId || '<span class="dotted"></span>'} หมายเลขโทรศัพท์ ${data.phone || '<span class="dotted"></span>'} มีความประสงค์จะขอใบรับรองการเป็นนักเรียนเพื่อ ${data.purpose || '<span class="dotted-long"></span>'} และจะมารับในวันที่ ${formatThaiDate(data.pickupDate)} ทั้งนี้ได้แนบเอกสาร</p>
+                            <div class="checkbox-line">${checkbox(attachments.includes('photo'))} รูปถ่าย 1.5 นิ้ว 1 รูป</div>
+                            <div class="checkbox-line">${checkbox(attachments.includes('other'))} อื่นๆ ${data.otherAttachment || '<span class="dotted-long"></span>'}</div>
+                            <p style="margin-top: 6px;">จึงเรียนมาเพื่อโปรดทราบ และพิจารณาดำเนินการต่อไป</p>
                         </div>
-                        <div style="text-align: right; margin-top: 30px; margin-right: 50px;">
-                            <p>(ลงชื่อ).............................................</p>
-                            <p>(${data.prefix || ''}${data.fullName || '.....................'})</p>
+                        <div class="signature-section">
+                            <p class="signature-line">(ลงชื่อ) <span class="dotted-long"></span></p>
+                            <p>( ${data.prefix || ''}${data.fullName || '<span class="dotted"></span>'} )</p>
                             <p>ผู้ยื่นคำขอ</p>
                         </div>
-                        <div class="doc-signature-section">
-                            <div class="signature-row">
-                                <div class="approval-section" style="flex: 1; margin-right: 10px;">
-                                    <div class="approval-title">ความเห็นเจ้าหน้าที่ทะเบียน</div>
-                                    <p><span class="doc-checkbox"></span> เห็นควรอนุมัติ</p>
-                                    <p><span class="doc-checkbox"></span> ไม่เห็นควรอนุมัติ เนื่องจาก..................</p>
-                                    <p style="margin-top: 20px;">(ลงชื่อ).............................................</p>
-                                    <p style="text-align: center;">(นายนนทพัทธ์ หิรัญเรือง)</p>
-                                    <p style="text-align: center;">เจ้าหน้าที่งานทะเบียน</p>
-                                </div>
-                                <div class="approval-section" style="flex: 1;">
-                                    <div class="approval-title">ความเห็นหัวหน้าฝ่ายวิชาการ</div>
-                                    <p><span class="doc-checkbox"></span> เห็นควรอนุมัติ</p>
-                                    <p><span class="doc-checkbox"></span> ไม่เห็นควรอนุมัติ เนื่องจาก..................</p>
-                                    <p style="margin-top: 20px;">(ลงชื่อ).............................................</p>
-                                    <p style="text-align: center;">(นางสาวสุพัฒตา ศรีเมือง)</p>
-                                    <p style="text-align: center;">หัวหน้าฝ่ายวิชาการ</p>
+                        <div class="approval-grid">
+                            <div class="approval-box">
+                                <div class="approval-box-title">ความเห็นเจ้าหน้าที่ทะเบียน</div>
+                                <p>${checkbox(false)} เห็นควรอนุมัติ</p>
+                                <p>${checkbox(false)} ไม่เห็นควรอนุมัติ เนื่องจาก <span class="dotted"></span></p>
+                                <div class="sig-area">
+                                    <p>(ลงชื่อ) <span class="dotted"></span></p>
+                                    <p>(นายนนทพัทธ์ หิรัญเรือง)</p>
+                                    <p>เจ้าหน้าที่งานทะเบียน</p>
                                 </div>
                             </div>
-                            <div class="approval-section" style="max-width: 400px; margin: 0 auto;">
-                                <div class="approval-title">ความเห็นของผู้อำนวยการโรงเรียน</div>
-                                <p><span class="doc-checkbox"></span> อนุมัติ</p>
-                                <p><span class="doc-checkbox"></span> ไม่อนุมัติ เนื่องจาก..................</p>
-                                <p style="margin-top: 20px; text-align: center;">(ลงชื่อ).............................................</p>
-                                <p style="text-align: center;">(นางสุนิสา ใจใหญ่)</p>
-                                <p style="text-align: center;">ผู้อำนวยการโรงเรียนกระดุมทองวิทยา</p>
+                            <div class="approval-box">
+                                <div class="approval-box-title">ความเห็นหัวหน้าฝ่ายวิชาการ</div>
+                                <p>${checkbox(false)} เห็นควรอนุมัติ</p>
+                                <p>${checkbox(false)} ไม่เห็นควรอนุมัติ เนื่องจาก <span class="dotted"></span></p>
+                                <div class="sig-area">
+                                    <p>(ลงชื่อ) <span class="dotted"></span></p>
+                                    <p>(นางสาวสุพัฒตา ศรีเมือง)</p>
+                                    <p>หัวหน้าฝ่ายวิชาการ</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="approval-box approval-center">
+                            <div class="approval-box-title">ความเห็นของผู้อำนวยการโรงเรียน</div>
+                            <p>${checkbox(false)} อนุมัติ</p>
+                            <p>${checkbox(false)} ไม่อนุมัติ เนื่องจาก <span class="dotted"></span></p>
+                            <div class="sig-area">
+                                <p>(ลงชื่อ) <span class="dotted"></span></p>
+                                <p>(นางสุนิสา ใจใหญ่)</p>
+                                <p>ผู้อำนวยการโรงเรียนกระดุมทองวิทยา</p>
                             </div>
                         </div>
                     </div>
                 `;
             } else if (formId === 'form207') {
                 const attachments = data.attachment || [];
-                let purposeText = data.purpose;
-                if (data.purpose === 'other') {
-                    purposeText = data.otherPurpose || '.....................';
-                }
                 return `
-                    <div class="print-document" style="position: relative;">
+                    <div class="print-document">
                         <div class="doc-code">วก.กทว.207</div>
                         <div class="doc-header">
                             <img src="${logoUrl}" class="doc-logo" alt="โลโก้โรงเรียน">
-                            <div class="doc-school-info" style="text-align: right;">
+                            <div class="doc-school-info">
                                 เขียนที่โรงเรียนกระดุมทองวิทยา<br>
                                 วันที่ ${formatThaiDate(data.requestDate)}
                             </div>
                         </div>
-                        <div class="doc-content" style="margin-top: 20px;">
-                            <p style="text-indent: 0;"><strong>เรื่อง</strong> ขอระเบียนแสดงผลการเรียน ปพ.1:บ / ปพ.1:พ (สำหรับนักเรียนปัจจุบัน)</p>
-                            <p style="text-indent: 0;"><strong>เรียน</strong> ผู้อำนวยการโรงเรียนกระดุมทองวิทยา</p>
-                            <p style="text-indent: 0;"><strong>สิ่งที่ส่งมาด้วย</strong></p>
-                            <p style="text-indent: 40px;">
-                                <span class="doc-checkbox ${attachments.includes('photo') ? 'checked' : ''}"></span> รูปถ่าย ขนาด 1.5 นิ้ว จำนวน 1 แผ่น
-                            </p>
-                            <p style="text-indent: 40px;">
-                                <span class="doc-checkbox ${attachments.includes('lostReport') ? 'checked' : ''}"></span> รายงานประจำวันรับแจ้งเอกสารหาย จำนวน 1 แผ่น
-                            </p>
-                            <p>ด้วยข้าพเจ้า ${data.fullName || '.....................'} นักเรียนชั้น ${data.grade || '......'} 
-                            เลขประจำตัว ${data.studentId || '.....................'} มีความประสงค์ขอระเบียนแสดงผลการเรียน 
-                            <span class="doc-checkbox ${data.docType === 'ปพ.1:บ' ? 'checked' : ''}"></span>ปพ.1:บ 
-                            <span class="doc-checkbox ${data.docType === 'ปพ.1:พ' ? 'checked' : ''}"></span>ปพ.1:พ</p>
+                        <div class="doc-content" style="margin-top: 10px;">
+                            <p><strong>เรื่อง</strong> ขอระเบียนแสดงผลการเรียน ปพ.1:บ / ปพ.1:พ (สำหรับนักเรียนปัจจุบัน)</p>
+                            <p><strong>เรียน</strong> ผู้อำนวยการโรงเรียนกระดุมทองวิทยา</p>
+                            <p><strong>สิ่งที่ส่งมาด้วย</strong></p>
+                            <div class="checkbox-line">${checkbox(attachments.includes('photo'))} รูปถ่าย ขนาด 1.5 นิ้ว จำนวน 1 แผ่น</div>
+                            <div class="checkbox-line">${checkbox(attachments.includes('lostReport'))} รายงานประจำวันรับแจ้งเอกสารหาย จำนวน 1 แผ่น</div>
+                            <p class="indent" style="margin-top: 6px;">ด้วยข้าพเจ้า ${data.fullName || '<span class="dotted-long"></span>'} นักเรียนชั้น ${data.grade || '<span class="dotted"></span>'} เลขประจำตัว ${data.studentId || '<span class="dotted"></span>'} มีความประสงค์ขอระเบียนแสดงผลการเรียน <span class="inline-checkbox">${checkbox(data.docType === 'ปพ.1:บ')} ปพ.1:บ</span> <span class="inline-checkbox">${checkbox(data.docType === 'ปพ.1:พ')} ปพ.1:พ</span></p>
                             <p><strong>เพื่อ</strong></p>
-                            <p style="text-indent: 40px;">
-                                <span class="doc-checkbox ${data.purpose === 'ศึกษาต่อสถานศึกษาอื่น' ? 'checked' : ''}"></span> ศึกษาต่อสถานศึกษาอื่น
-                            </p>
-                            <p style="text-indent: 40px;">
-                                <span class="doc-checkbox ${data.purpose === 'ทดแทนใบเดิมที่สูญหาย' ? 'checked' : ''}"></span> ทดแทนใบเดิมที่สูญหาย
-                            </p>
-                            <p style="text-indent: 40px;">
-                                <span class="doc-checkbox ${data.purpose === 'ใช้เป็นหลักฐานการขอรับทุนการศึกษา' ? 'checked' : ''}"></span> ใช้เป็นหลักฐานการขอรับทุนการศึกษา
-                            </p>
-                            <p style="text-indent: 40px;">
-                                <span class="doc-checkbox ${data.purpose === 'other' ? 'checked' : ''}"></span> อื่นๆ (ระบุ) ${data.purpose === 'other' ? data.otherPurpose || '.....................' : '.....................'}
-                            </p>
-                            <p>โดยจะมารับในวันที่ ${formatThaiDate(data.pickupDate)}</p>
-                            <p style="text-indent: 0; margin-top: 10px;">จึงเรียนมาเพื่อโปรดพิจารณา</p>
+                            <div class="checkbox-line">${checkbox(data.purpose === 'ศึกษาต่อสถานศึกษาอื่น')} ศึกษาต่อสถานศึกษาอื่น</div>
+                            <div class="checkbox-line">${checkbox(data.purpose === 'ทดแทนใบเดิมที่สูญหาย')} ทดแทนใบเดิมที่สูญหาย</div>
+                            <div class="checkbox-line">${checkbox(data.purpose === 'ใช้เป็นหลักฐานการขอรับทุนการศึกษา')} ใช้เป็นหลักฐานการขอรับทุนการศึกษา</div>
+                            <div class="checkbox-line">${checkbox(data.purpose === 'other')} อื่นๆ (ระบุ) ${data.purpose === 'other' ? data.otherPurpose || '' : '<span class="dotted-long"></span>'}</div>
+                            <p style="margin-top: 6px;">โดยจะมารับในวันที่ ${formatThaiDate(data.pickupDate)}</p>
+                            <p>จึงเรียนมาเพื่อโปรดพิจารณา</p>
                         </div>
-                        <div style="text-align: right; margin-top: 20px; margin-right: 50px;">
+                        <div class="signature-section">
                             <p>ขอแสดงความนับถือ</p>
-                            <p style="margin-top: 30px;">(ลงชื่อ)............................................ผู้ขอ</p>
-                            <p>(${data.fullName || '.....................'})</p>
+                            <p class="signature-line">(ลงชื่อ) <span class="dotted-long"></span> ผู้ขอ</p>
+                            <p>( ${data.fullName || '<span class="dotted"></span>'} )</p>
                         </div>
-                        <div class="doc-signature-section">
-                            <div class="signature-row">
-                                <div class="approval-section" style="flex: 1; margin-right: 10px;">
-                                    <div class="approval-title">บันทึกของนายทะเบียน</div>
-                                    <p>1. รับทราบคำร้อง</p>
-                                    <p>2. นัดให้มารับวันที่ ......../......../........</p>
-                                    <p style="margin-top: 20px;">(ลงชื่อ)....................................นายทะเบียน</p>
-                                    <p style="text-align: center;">(นายนนทพัทธ์ หิรัญเรือง)</p>
-                                </div>
-                                <div class="approval-section" style="flex: 1;">
-                                    <div class="approval-title">ความเห็นของหัวหน้าฝ่ายบริหารงานวิชาการ</div>
-                                    <p>1. เพื่อโปรดทราบ</p>
-                                    <p>2. เพื่อโปรดพิจารณาลงนาม</p>
-                                    <p style="margin-top: 20px;">(ลงชื่อ)............................หัวหน้าฝ่ายวิชาการ</p>
-                                    <p style="text-align: center;">(นางสาวสุพัฒตา ศรีเมือง)</p>
+                        <div class="approval-grid">
+                            <div class="approval-box">
+                                <div class="approval-box-title">บันทึกของนายทะเบียน</div>
+                                <p>1. รับทราบคำร้อง</p>
+                                <p>2. นัดให้มารับวันที่ <span class="dotted"></span></p>
+                                <div class="sig-area">
+                                    <p>(ลงชื่อ) <span class="dotted"></span> นายทะเบียน</p>
+                                    <p>(นายนนทพัทธ์ หิรัญเรือง)</p>
                                 </div>
                             </div>
-                            <div class="approval-section" style="max-width: 500px; margin: 0 auto;">
-                                <div class="approval-title">การพิจารณาของผู้อำนวยการสถานศึกษา</div>
-                                <p>
-                                    <span class="doc-checkbox"></span> อนุมัติ 
-                                    <span class="doc-checkbox"></span> ไม่อนุมัติ เพราะ.........................................
-                                </p>
-                                <p><span class="doc-checkbox"></span> ลงนามแล้ว</p>
-                                <p style="margin-top: 20px; text-align: right;">(ลงชื่อ)..............................ผู้อำนวยการสถานศึกษา</p>
-                                <p style="text-align: center;">(นางสุนิสา ใจใหญ่)</p>
-                                <p style="text-align: center;">ผู้อำนวยการโรงเรียนกระดุมทองวิทยา</p>
+                            <div class="approval-box">
+                                <div class="approval-box-title">ความเห็นของหัวหน้าฝ่ายบริหารงานวิชาการ</div>
+                                <p>1. เพื่อโปรดทราบ</p>
+                                <p>2. เพื่อโปรดพิจารณาลงนาม</p>
+                                <div class="sig-area">
+                                    <p>(ลงชื่อ) <span class="dotted"></span> หัวหน้าฝ่ายวิชาการ</p>
+                                    <p>(นางสาวสุพัฒตา ศรีเมือง)</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="approval-box approval-center" style="max-width: 300px;">
+                            <div class="approval-box-title">การพิจารณาของผู้อำนวยการสถานศึกษา</div>
+                            <p><span class="inline-checkbox">${checkbox(false)} อนุมัติ</span> &nbsp; <span class="inline-checkbox">${checkbox(false)} ไม่อนุมัติ เพราะ <span class="dotted"></span></span></p>
+                            <p>${checkbox(false)} ลงนามแล้ว</p>
+                            <div class="sig-area">
+                                <p>(ลงชื่อ) <span class="dotted"></span> ผู้อำนวยการสถานศึกษา</p>
+                                <p>(นางสุนิสา ใจใหญ่)</p>
+                                <p>ผู้อำนวยการโรงเรียนกระดุมทองวิทยา</p>
                             </div>
                         </div>
                     </div>
                 `;
             } else if (formId === 'form209') {
                 return `
-                    <div class="print-document" style="position: relative;">
+                    <div class="print-document">
                         <div class="doc-code">วก.กทว.209</div>
                         <div class="doc-header">
                             <img src="${logoUrl}" class="doc-logo" alt="โลโก้โรงเรียน">
-                            <div class="doc-school-info" style="text-align: right;">
+                            <div class="doc-school-info">
                                 โรงเรียนกระดุมทองวิทยา<br>
                                 ต.หนองหัวช้าง อ.กันทรารมย์<br>
                                 จ.ศรีสะเกษ 33130
                             </div>
                         </div>
                         <div class="doc-title">แบบคำร้องขอใบรับรองผลการเรียน</div>
-                        <p style="text-align: right; margin-bottom: 20px;">วันที่ ${formatThaiDate(data.requestDate)}</p>
+                        <p style="text-align: right; margin-bottom: 8px; font-size: 14px;">วันที่ ${formatThaiDate(data.requestDate)}</p>
                         <div class="doc-content">
-                            <p style="text-indent: 0;"><strong>เรื่อง</strong> ขอใบรับรองผลการเรียน</p>
-                            <p style="text-indent: 0;"><strong>เรียน</strong> ผู้อำนวยการโรงเรียนกระดุมทองวิทยา</p>
-                            <p>ด้วยข้าพเจ้า ${data.fullName || '.....................'} นักเรียนชั้น ${data.grade || '......'} 
-                            เลขประจำตัวนักเรียน ${data.studentId || '.....................'} 
-                            เกิดวันที่ ${formatThaiDate(data.birthDate)}
-                            บิดาชื่อ ${data.fatherName || '.....................'} มารดาชื่อ ${data.motherName || '.....................'}
-                            มีความประสงค์จะขอใบรับรองผลการเรียนเพื่อ ${data.purpose || '.....................'}
-                            โดยจะมารับในวันที่ ${formatThaiDate(data.pickupDate)}</p>
-                            <p style="text-indent: 0; margin-top: 10px;">จึงเรียนมาเพื่อโปรดพิจารณา</p>
+                            <p><strong>เรื่อง</strong> ขอใบรับรองผลการเรียน</p>
+                            <p><strong>เรียน</strong> ผู้อำนวยการโรงเรียนกระดุมทองวิทยา</p>
+                            <p class="indent">ด้วยข้าพเจ้า ${data.fullName || '<span class="dotted-long"></span>'} นักเรียนชั้น ${data.grade || '<span class="dotted"></span>'} เลขประจำตัวนักเรียน ${data.studentId || '<span class="dotted"></span>'} เกิดวันที่ ${formatThaiDate(data.birthDate)} บิดาชื่อ ${data.fatherName || '<span class="dotted"></span>'} มารดาชื่อ ${data.motherName || '<span class="dotted"></span>'} มีความประสงค์จะขอใบรับรองผลการเรียนเพื่อ ${data.purpose || '<span class="dotted-long"></span>'} โดยจะมารับในวันที่ ${formatThaiDate(data.pickupDate)}</p>
+                            <p style="margin-top: 6px;">จึงเรียนมาเพื่อโปรดพิจารณา</p>
                         </div>
-                        <div style="text-align: right; margin-top: 20px; margin-right: 50px;">
+                        <div class="signature-section">
                             <p>ขอแสดงความนับถือ</p>
-                            <p style="margin-top: 30px;">(ลงชื่อ)............................................ผู้ยื่นขอ</p>
-                            <p>(${data.fullName || '.....................'})</p>
+                            <p class="signature-line">(ลงชื่อ) <span class="dotted-long"></span> ผู้ยื่นขอ</p>
+                            <p>( ${data.fullName || '<span class="dotted"></span>'} )</p>
                         </div>
-                        <div class="doc-signature-section">
-                            <div class="signature-row">
-                                <div class="approval-section" style="flex: 1; margin-right: 10px;">
-                                    <div class="approval-title">บันทึกของนายทะเบียน</div>
-                                    <p>1. รับทราบคำร้อง</p>
-                                    <p>2. นัดให้มารับวันที่ ......../......../........</p>
-                                    <p style="margin-top: 20px;">(ลงชื่อ).........................................นายทะเบียน</p>
-                                    <p style="text-align: center;">(นายนนทพัทธ์ หิรัญเรือง)</p>
-                                </div>
-                                <div class="approval-section" style="flex: 1;">
-                                    <div class="approval-title">ความเห็นของหัวหน้าฝ่ายบริหารงานวิชาการ</div>
-                                    <p>1. เพื่อโปรดทราบ</p>
-                                    <p>2. เพื่อโปรดพิจารณาลงนาม</p>
-                                    <p style="margin-top: 20px;">(ลงชื่อ)......................................หัวหน้าฝ่ายวิชาการ</p>
-                                    <p style="text-align: center;">(นางสาวสุพัฒตา ศรีเมือง)</p>
+                        <div class="approval-grid">
+                            <div class="approval-box">
+                                <div class="approval-box-title">บันทึกของนายทะเบียน</div>
+                                <p>1. รับทราบคำร้อง</p>
+                                <p>2. นัดให้มารับวันที่ <span class="dotted"></span></p>
+                                <div class="sig-area">
+                                    <p>(ลงชื่อ) <span class="dotted"></span> นายทะเบียน</p>
+                                    <p>(นายนนทพัทธ์ หิรัญเรือง)</p>
                                 </div>
                             </div>
-                            <div class="approval-section" style="max-width: 500px; margin: 0 auto;">
-                                <div class="approval-title">การพิจารณาของผู้อำนวยการสถานศึกษา</div>
-                                <p>
-                                    <span class="doc-checkbox"></span> อนุมัติ 
-                                    <span class="doc-checkbox"></span> ไม่อนุมัติ เพราะ.........................................
-                                </p>
-                                <p><span class="doc-checkbox"></span> ลงนามแล้ว</p>
-                                <p style="margin-top: 20px; text-align: right;">(ลงชื่อ).........................................ผู้อำนวยการสถานศึกษา</p>
-                                <p style="text-align: center;">(นางสุนิสา ใจใหญ่)</p>
+                            <div class="approval-box">
+                                <div class="approval-box-title">ความเห็นของหัวหน้าฝ่ายบริหารงานวิชาการ</div>
+                                <p>1. เพื่อโปรดทราบ</p>
+                                <p>2. เพื่อโปรดพิจารณาลงนาม</p>
+                                <div class="sig-area">
+                                    <p>(ลงชื่อ) <span class="dotted"></span> หัวหน้าฝ่ายวิชาการ</p>
+                                    <p>(นางสาวสุพัฒตา ศรีเมือง)</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="approval-box approval-center" style="max-width: 300px;">
+                            <div class="approval-box-title">การพิจารณาของผู้อำนวยการสถานศึกษา</div>
+                            <p><span class="inline-checkbox">${checkbox(false)} อนุมัติ</span> &nbsp; <span class="inline-checkbox">${checkbox(false)} ไม่อนุมัติ เพราะ <span class="dotted"></span></span></p>
+                            <p>${checkbox(false)} ลงนามแล้ว</p>
+                            <div class="sig-area">
+                                <p>(ลงชื่อ) <span class="dotted"></span> ผู้อำนวยการสถานศึกษา</p>
+                                <p>(นางสุนิสา ใจใหญ่)</p>
                             </div>
                         </div>
                     </div>
