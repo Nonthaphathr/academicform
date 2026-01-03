@@ -491,7 +491,7 @@
             background: white;
             width: 210mm;
             min-height: 297mm;
-            padding: 10mm 15mm 10mm 15mm;
+            padding: 8mm 10mm 8mm 10mm;
             font-family: 'Sarabun', sans-serif;
             font-size: 15px;
             line-height: 1.5;
@@ -503,11 +503,10 @@
         }
 
         .print-document .doc-code {
-            position: absolute;
-            top: 10mm;
-            right: 15mm;
+            text-align: right;
             font-size: 13px;
             font-weight: 500;
+            margin-bottom: 5px;
         }
 
         .print-document .doc-header {
@@ -526,9 +525,9 @@
         .print-document .doc-school-info {
             position: absolute;
             right: 0;
-            top: 18px;
+            top: 0;
             text-align: right;
-            font-size: 14px;
+            font-size: 13px;
             line-height: 1.4;
         }
 
@@ -707,10 +706,10 @@
             }
             
             .print-document {
-                width: 210mm;
+                width: 100%;
                 min-height: auto;
                 height: auto;
-                padding: 8mm 12mm;
+                padding: 2mm 5mm;
                 box-shadow: none;
                 margin: 0;
                 font-size: 14px;
@@ -720,7 +719,7 @@
             
             @page {
                 size: A4;
-                margin: 0;
+                margin: 10mm;
             }
         }
 
