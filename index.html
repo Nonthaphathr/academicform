@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบเอกสารคำร้อง - ฝ่ายบริหารงานวิชาการ</title>
+    <link rel="icon" type="image/png" href="https://nonthaphathr.github.io/uploadimg/logoschool.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a365d;
+            --primary-light: #2c5282;
+            --accent: #d69e2e;
+            --accent-light: #ecc94b;
+            --bg: #f7fafc;
+            --card-bg: #ffffff;
+            --text: #2d3748;
+            --text-light: #718096;
+            --border: #e2e8f0;
+            --success: #38a169;
+            --danger: #e53e3e;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background: linear-gradient(135deg, var(--bg) 0%, #edf2f7 100%);
+            min-height: 100vh;
+            color: var(--text);
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: var(--shadow-lg);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-section img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid var(--accent);
+            background: white;
+            padding: 2px;
+        }
+
+        .logo-text h1 {
+            font-family: 'Prompt', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .logo-text p {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-tab {
+            padding: 0.625rem 1.25rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Sarabun', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .nav-tab:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .nav-tab.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+            .history-panel {
+                order: 2;
+            }
+        }
+
+        /* Form Section */
+        .form-section {
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .form-header-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--accent);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .form-header h2 {
+            font-family: 'Prompt', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .form-header p {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        .form-body {
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .form-group label .required {
+            color: var(--danger);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-family: 'Sarabun', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .checkbox-item input[type="checkbox"],
+        .checkbox-item input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--border);
+        }
+
+        .btn {
+            padding: 0.875rem 1.5rem;
+            border-radius: 8px;
+            font-family: 'Sarabun', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success) 0%, #48bb78 100%);
+            color: white;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-outline {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* History Panel */
+        .history-panel {
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .history-header {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            color: var(--primary);
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .history-header h3 {
+            font-family: 'Prompt', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .history-count {
+            background: var(--primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .history-list {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .history-item:hover {
+            background: var(--bg);
+        }
+
+        .history-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+        }
+
+        .history-item-type {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .history-item-date {
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        .history-item-name {
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.25rem;
+        }
+
+        .history-item-detail {
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        .history-item-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .btn-sm {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.8rem;
+            border-radius: 6px;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c53030;
+        }
+
+        .empty-history {
+            padding: 3rem 1.5rem;
+            text-align: center;
+            color: var(--text-light);
+        }
+
+        .empty-history svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* Print Preview Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            font-family: 'Prompt', sans-serif;
+            font-size: 1.25rem;
+        }
+
+        .modal-close {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: var(--bg);
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        .modal-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        /* Print Document Styles */
+        .print-document {
+            background: white;
+            padding: 20mm;
+            font-family: 'Sarabun', sans-serif;
+            font-size: 16px;
+            line-height: 1.8;
+            color: black;
+        }
+
+        .print-document .doc-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .print-document .doc-logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 10px;
+        }
+
+        .print-document .doc-school-info {
+            text-align: right;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .print-document .doc-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .print-document .doc-code {
+            position: absolute;
+            top: 20mm;
+            right: 20mm;
+            font-size: 12px;
+        }
+
+        .print-document .doc-content {
+            margin-bottom: 30px;
+        }
+
+        .print-document .doc-content p {
+            margin-bottom: 10px;
+            text-indent: 40px;
+        }
+
+        .print-document .doc-checkbox {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 1px solid black;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+
+        .print-document .doc-checkbox.checked::after {
+            content: '✓';
+            display: block;
+            text-align: center;
+            line-height: 12px;
+            font-size: 12px;
+        }
+
+        .print-document .doc-signature-section {
+            margin-top: 40px;
+        }
+
+        .print-document .signature-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 60px;
+        }
+
+        .print-document .signature-box {
+            text-align: center;
+            min-width: 200px;
+        }
+
+        .print-document .signature-line {
+            border-top: 1px dotted black;
+            padding-top: 5px;
+            margin-top: 40px;
+        }
+
+        .print-document .approval-section {
+            margin-top: 30px;
+            padding: 15px;
+            border: 1px solid #ddd;
+        }
+
+        .print-document .approval-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .print-document .underline {
+            border-bottom: 1px dotted black;
+            display: inline-block;
+            min-width: 150px;
+        }
+
+        /* Print Styles */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .print-area, .print-area * {
+                visibility: visible;
+            }
+            .print-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 210mm;
+                min-height: 297mm;
+            }
+            .print-document {
+                padding: 15mm;
+                box-shadow: none;
+            }
+            @page {
+                size: A4;
+                margin: 0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .nav-tabs {
+                justify-content: center;
+            }
+            .main-container {
+                padding: 1rem;
+            }
+            .form-body {
+                padding: 1.5rem;
+            }
+            .form-actions {
+                flex-direction: column;
+            }
+            .btn {
+                justify-content: center;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-section, .history-panel {
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 1rem 1.5rem;
+            background: var(--success);
+            color: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 2000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.error {
+            background: var(--danger);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="https://nonthaphathr.github.io/uploadimg/logoschool.png" alt="โลโก้โรงเรียน">
+                <div class="logo-text">
+                    <h1>ระบบเอกสารคำร้อง</h1>
+                    <p>ฝ่ายบริหารงานวิชาการ โรงเรียนกระดุมทองวิทยา</p>
+                </div>
+            </div>
+            <nav class="nav-tabs">
+                <button class="nav-tab active" data-form="form201">
+                    📄 ใบรับรองการเป็นนักเรียน
+                </button>
+                <button class="nav-tab" data-form="form207">
+                    📋 ระเบียนผลการเรียน (ปพ.1)
+                </button>
+                <button class="nav-tab" data-form="form209">
+                    📝 ใบรับรองผลการเรียน
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Form Section -->
+        <div class="form-section">
+            <!-- Form 201 -->
+            <div id="form201" class="form-container">
+                <div class="form-header">
+                    <div class="form-header-icon">📄</div>
+                    <div>
+                        <h2>แบบคำร้องขอใบรับรองการเป็นนักเรียน</h2>
+                        <p>วก.กทว.201</p>
+                    </div>
+                </div>
+                <div class="form-body">
+                    <form id="form201Data">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>คำนำหน้า <span class="required">*</span></label>
+                                <select class="form-control" name="prefix" required>
+                                    <option value="">-- เลือก --</option>
+                                    <option value="ด.ช.">ด.ช.</option>
+                                    <option value="ด.ญ.">ด.ญ.</option>
+                                    <option value="นาย">นาย</option>
+                                    <option value="นางสาว">นางสาว</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>ชื่อ-นามสกุล <span class="required">*</span></label>
+                                <input type="text" class="form-control" name="fullName" required placeholder="กรอกชื่อ-นามสกุล">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>ชั้นมัธยมศึกษาปีที่ <span class="required">*</span></label>
+                                <select class="form-control" name="grade" required>
+                                    <option value="">-- เลือก --</option>
+                                    <option value="1">ม.1</option>
+                                    <option value="2">ม.2</option>
+                                    <option value="3">ม.3</option>
+                                    <option value="4">ม.4</option>
+                                    <option value="5">ม.5</option>
+                                    <option value="6">ม.6</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>เลขประจำตัวนักเรียน <span class="required">*</span></label>
+                                <input type="text" class="form-control" name="studentId" required placeholder="เลขประจำตัว">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>หมายเลขโทรศัพท์</label>
+                            <input type="tel" class="form-control" name="phone" placeholder="0xx-xxx-xxxx">
+                        </div>
+                        <div class="form-group">
+                            <label>วัตถุประสงค์การขอใบรับรอง <span class="required">*</span></label>
+                            <input type="text" class="form-control" name="purpose" required placeholder="ระบุวัตถุประสงค์">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>วันที่จะมารับเอกสาร <span class="required">*</span></label>
+                                <input type="date" class="form-control" name="pickupDate" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>เอกสารแนบ</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="attachment" value="photo">
+                                    รูปถ่าย 1.5 นิ้ว 1 รูป
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="attachment" value="other">
+                                    อื่นๆ
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group" id="otherAttachmentGroup201" style="display: none;">
+                            <label>ระบุเอกสารอื่นๆ</label>
+                            <input type="text" class="form-control" name="otherAttachment" placeholder="ระบุเอกสารอื่นๆ">
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-primary" onclick="previewDocument('form201')">
+                                👁️ ดูตัวอย่างเอกสาร
+                            </button>
+                            <button type="button" class="btn btn-success" onclick="saveAndPrint('form201')">
+                                🖨️ บันทึกและพิมพ์
+                            </button>
+                            <button type="reset" class="btn btn-outline">
+                                🔄 ล้างข้อมูล
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Form 207 -->
+            <div id="form207" class="form-container" style="display: none;">
+                <div class="form-header">
+                    <div class="form-header-icon">📋</div>
+                    <div>
+                        <h2>แบบคำร้องขอระเบียนแสดงผลการเรียน</h2>
+                        <p>วก.กทว.207 (ปพ.1:บ / ปพ.1:พ)</p>
+                    </div>
+                </div>
+                <div class="form-body">
+                    <form id="form207Data">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>วันที่ยื่นคำร้อง <span class="required">*</span></label>
+                                <input type="date" class="form-control" name="requestDate" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>ชื่อ-นามสกุล <span class="required">*</span></label>
+                            <input type="text" class="form-control" name="fullName" required placeholder="กรอกชื่อ-นามสกุล">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>ชั้นเรียน <span class="required">*</span></label>
+                                <select class="form-control" name="grade" required>
+                                    <option value="">-- เลือก --</option>
+                                    <option value="ม.1">ม.1</option>
+                                    <option value="ม.2">ม.2</option>
+                                    <option value="ม.3">ม.3</option>
+                                    <option value="ม.4">ม.4</option>
+                                    <option value="ม.5">ม.5</option>
+                                    <option value="ม.6">ม.6</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>เลขประจำตัว <span class="required">*</span></label>
+                                <input type="text" class="form-control" name="studentId" required placeholder="เลขประจำตัว">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>ประเภทเอกสารที่ต้องการ <span class="required">*</span></label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-item">
+                                    <input type="radio" name="docType" value="ปพ.1:บ" required>
+                                    ปพ.1:บ
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="radio" name="docType" value="ปพ.1:พ">
+                                    ปพ.1:พ
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>วัตถุประสงค์ <span class="required">*</span></label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-item">
+                                    <input type="radio" name="purpose" value="ศึกษาต่อสถานศึกษาอื่น" required>
+                                    ศึกษาต่อสถานศึกษาอื่น
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="radio" name="purpose" value="ทดแทนใบเดิมที่สูญหาย">
+                                    ทดแทนใบเดิมที่สูญหาย
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="radio" name="purpose" value="ใช้เป็นหลักฐานการขอรับทุนการศึกษา">
+                                    ใช้เป็นหลักฐานการขอรับทุนการศึกษา
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="radio" name="purpose" value="other">
+                                    อื่นๆ
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group" id="otherPurposeGroup207" style="display: none;">
+                            <label>ระบุวัตถุประสงค์อื่นๆ</label>
+                            <input type="text" class="form-control" name="otherPurpose" placeholder="ระบุวัตถุประสงค์">
+                        </div>
+                        <div class="form-group">
+                            <label>วันที่จะมารับเอกสาร <span class="required">*</span></label>
+                            <input type="date" class="form-control" name="pickupDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label>สิ่งที่ส่งมาด้วย</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="attachment" value="photo">
+                                    รูปถ่าย ขนาด 1.5 นิ้ว จำนวน 1 แผ่น
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="attachment" value="lostReport">
+                                    รายงานประจำวันรับแจ้งเอกสารหาย จำนวน 1 แผ่น
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-primary" onclick="previewDocument('form207')">
+                                👁️ ดูตัวอย่างเอกสาร
+                            </button>
+                            <button type="button" class="btn btn-success" onclick="saveAndPrint('form207')">
+                                🖨️ บันทึกและพิมพ์
+                            </button>
+                            <button type="reset" class="btn btn-outline">
+                                🔄 ล้างข้อมูล
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Form 209 -->
+            <div id="form209" class="form-container" style="display: none;">
+                <div class="form-header">
+                    <div class="form-header-icon">📝</div>
+                    <div>
+                        <h2>แบบคำร้องขอใบรับรองผลการเรียน</h2>
+                        <p>วก.กทว.209</p>
+                    </div>
+                </div>
+                <div class="form-body">
+                    <form id="form209Data">
+                        <div class="form-group">
+                            <label>วันที่ยื่นคำร้อง <span class="required">*</span></label>
+                            <input type="date" class="form-control" name="requestDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label>ชื่อ-นามสกุล <span class="required">*</span></label>
+                            <input type="text" class="form-control" name="fullName" required placeholder="กรอกชื่อ-นามสกุล">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>ชั้นเรียน <span class="required">*</span></label>
+                                <select class="form-control" name="grade" required>
+                                    <option value="">-- เลือก --</option>
+                                    <option value="ม.1">ม.1</option>
+                                    <option value="ม.2">ม.2</option>
+                                    <option value="ม.3">ม.3</option>
+                                    <option value="ม.4">ม.4</option>
+                                    <option value="ม.5">ม.5</option>
+                                    <option value="ม.6">ม.6</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>เลขประจำตัวนักเรียน <span class="required">*</span></label>
+                                <input type="text" class="form-control" name="studentId" required placeholder="เลขประจำตัว">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>วันเกิด</label>
+                                <input type="date" class="form-control" name="birthDate">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>ชื่อบิดา</label>
+                                <input type="text" class="form-control" name="fatherName" placeholder="ชื่อบิดา">
+                            </div>
+                            <div class="form-group">
+                                <label>ชื่อมารดา</label>
+                                <input type="text" class="form-control" name="motherName" placeholder="ชื่อมารดา">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>วัตถุประสงค์การขอใบรับรอง <span class="required">*</span></label>
+                            <input type="text" class="form-control" name="purpose" required placeholder="ระบุวัตถุประสงค์">
+                        </div>
+                        <div class="form-group">
+                            <label>วันที่จะมารับเอกสาร <span class="required">*</span></label>
+                            <input type="date" class="form-control" name="pickupDate" required>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-primary" onclick="previewDocument('form209')">
+                                👁️ ดูตัวอย่างเอกสาร
+                            </button>
+                            <button type="button" class="btn btn-success" onclick="saveAndPrint('form209')">
+                                🖨️ บันทึกและพิมพ์
+                            </button>
+                            <button type="reset" class="btn btn-outline">
+                                🔄 ล้างข้อมูล
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- History Panel -->
+        <aside class="history-panel">
+            <div class="history-header">
+                <h3>📚 ประวัติการสร้างเอกสาร</h3>
+                <span class="history-count" id="historyCount">0</span>
+            </div>
+            <div class="history-list" id="historyList">
+                <div class="empty-history">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <p>ยังไม่มีประวัติการสร้างเอกสาร</p>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Preview Modal -->
+    <div class="modal-overlay" id="previewModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>📄 ตัวอย่างเอกสาร</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="print-area" id="printArea">
+                    <!-- Document content will be rendered here -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal()">ปิด</button>
+                <button class="btn btn-success" onclick="printDocument()">🖨️ พิมพ์เอกสาร</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <span id="toastMessage">บันทึกข้อมูลสำเร็จ</span>
+    </div>
+
+    <script>
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadHistory();
+            setupEventListeners();
+            setDefaultDates();
+        });
+
+        // Set default dates
+        function setDefaultDates() {
+            const today = new Date().toISOString().split('T')[0];
+            document.querySelectorAll('input[type="date"]').forEach(input => {
+                if (input.name === 'requestDate') {
+                    input.value = today;
+                }
+            });
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Tab navigation
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const formId = this.dataset.form;
+                    switchForm(formId);
+                });
+            });
+
+            // Form 201 - Other attachment toggle
+            document.querySelector('#form201Data input[value="other"]').addEventListener('change', function() {
+                document.getElementById('otherAttachmentGroup201').style.display = this.checked ? 'block' : 'none';
+            });
+
+            // Form 207 - Other purpose toggle
+            document.querySelectorAll('#form207Data input[name="purpose"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    document.getElementById('otherPurposeGroup207').style.display = 
+                        this.value === 'other' ? 'block' : 'none';
+                });
+            });
+        }
+
+        // Switch between forms
+        function switchForm(formId) {
+            document.querySelectorAll('.form-container').forEach(form => {
+                form.style.display = 'none';
+            });
+            document.getElementById(formId).style.display = 'block';
+
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.dataset.form === formId) {
+                    tab.classList.add('active');
+                }
+            });
+        }
+
+        // Get form data
+        function getFormData(formId) {
+            const form = document.getElementById(formId + 'Data');
+            const formData = new FormData(form);
+            const data = {};
+            
+            for (let [key, value] of formData.entries()) {
+                if (key === 'attachment') {
+                    if (!data[key]) data[key] = [];
+                    data[key].push(value);
+                } else {
+                    data[key] = value;
+                }
+            }
+            
+            return data;
+        }
+
+        // Validate form
+        function validateForm(formId) {
+            const form = document.getElementById(formId + 'Data');
+            return form.checkValidity();
+        }
+
+        // Format Thai date
+        function formatThaiDate(dateString) {
+            if (!dateString) return '....................';
+            const date = new Date(dateString);
+            const thaiMonths = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 
+                               'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'];
+            const day = date.getDate();
+            const month = thaiMonths[date.getMonth()];
+            const year = date.getFullYear() + 543;
+            return `${day} ${month} ${year}`;
+        }
+
+        // Generate document HTML
+        function generateDocumentHTML(formId, data) {
+            const logoUrl = 'https://nonthaphathr.github.io/uploadimg/logoschool.png';
+            
+            if (formId === 'form201') {
+                const attachments = data.attachment || [];
+                return `
+                    <div class="print-document" style="position: relative;">
+                        <div class="doc-code">วก.กทว.201</div>
+                        <div class="doc-header">
+                            <img src="${logoUrl}" class="doc-logo" alt="โลโก้โรงเรียน">
+                            <div class="doc-school-info" style="text-align: right;">
+                                โรงเรียนกระดุมทองวิทยา<br>
+                                ต.หนองหัวช้าง อ.กันทรารมย์<br>
+                                จ.ศรีสะเกษ 33130
+                            </div>
+                        </div>
+                        <div class="doc-title">แบบคำร้องขอใบรับรองการเป็นนักเรียน</div>
+                        <div class="doc-content">
+                            <p style="text-indent: 0;"><strong>เรื่อง</strong> ขอใบรับรองการเป็นนักเรียน</p>
+                            <p style="text-indent: 0;"><strong>เรียน</strong> ผู้อำนวยการโรงเรียนกระดุมทองวิทยา</p>
+                            <p>ข้าพเจ้า ${data.prefix || ''}${data.fullName || '.....................'} นักเรียนชั้นมัธยมศึกษาปีที่ ${data.grade || '......'}
+                            เลขประจำตัวนักเรียน ${data.studentId || '.....................'} หมายเลขโทรศัพท์ ${data.phone || '.....................'}
+                            มีความประสงค์จะขอใบรับรองการเป็นนักเรียนเพื่อ ${data.purpose || '.....................'}
+                            และจะมารับในวันที่ ${formatThaiDate(data.pickupDate)} ทั้งนี้ได้แนบเอกสาร</p>
+                            <p style="text-indent: 40px;">
+                                <span class="doc-checkbox ${attachments.includes('photo') ? 'checked' : ''}"></span> รูปถ่าย 1.5 นิ้ว 1 รูป
+                            </p>
+                            <p style="text-indent: 40px;">
+                                <span class="doc-checkbox ${attachments.includes('other') ? 'checked' : ''}"></span> อื่นๆ ${data.otherAttachment || '.....................'}
+                            </p>
+                            <p style="text-indent: 0; margin-top: 20px;">จึงเรียนมาเพื่อโปรดทราบ และพิจารณาดำเนินการต่อไป</p>
+                        </div>
+                        <div style="text-align: right; margin-top: 30px; margin-right: 50px;">
+                            <p>(ลงชื่อ).............................................</p>
+                            <p>(${data.prefix || ''}${data.fullName || '.....................'})</p>
+                            <p>ผู้ยื่นคำขอ</p>
+                        </div>
+                        <div class="doc-signature-section">
+                            <div class="signature-row">
+                                <div class="approval-section" style="flex: 1; margin-right: 10px;">
+                                    <div class="approval-title">ความเห็นเจ้าหน้าที่ทะเบียน</div>
+                                    <p><span class="doc-checkbox"></span> เห็นควรอนุมัติ</p>
+                                    <p><span class="doc-checkbox"></span> ไม่เห็นควรอนุมัติ เนื่องจาก..................</p>
+                                    <p style="margin-top: 20px;">(ลงชื่อ).............................................</p>
+                                    <p style="text-align: center;">(นายนนทพัทธ์ หิรัญเรือง)</p>
+                                    <p style="text-align: center;">เจ้าหน้าที่งานทะเบียน</p>
+                                </div>
+                                <div class="approval-section" style="flex: 1;">
+                                    <div class="approval-title">ความเห็นหัวหน้าฝ่ายวิชาการ</div>
+                                    <p><span class="doc-checkbox"></span> เห็นควรอนุมัติ</p>
+                                    <p><span class="doc-checkbox"></span> ไม่เห็นควรอนุมัติ เนื่องจาก..................</p>
+                                    <p style="margin-top: 20px;">(ลงชื่อ).............................................</p>
+                                    <p style="text-align: center;">(นางสาวสุพัฒตา ศรีเมือง)</p>
+                                    <p style="text-align: center;">หัวหน้าฝ่ายวิชาการ</p>
+                                </div>
+                            </div>
+                            <div class="approval-section" style="max-width: 400px; margin: 0 auto;">
+                                <div class="approval-title">ความเห็นของผู้อำนวยการโรงเรียน</div>
+                                <p><span class="doc-checkbox"></span> อนุมัติ</p>
+                                <p><span class="doc-checkbox"></span> ไม่อนุมัติ เนื่องจาก..................</p>
+                                <p style="margin-top: 20px; text-align: center;">(ลงชื่อ).............................................</p>
+                                <p style="text-align: center;">(นางสุนิสา ใจใหญ่)</p>
+                                <p style="text-align: center;">ผู้อำนวยการโรงเรียนกระดุมทองวิทยา</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (formId === 'form207') {
+                const attachments = data.attachment || [];
+                let purposeText = data.purpose;
+                if (data.purpose === 'other') {
+                    purposeText = data.otherPurpose || '.....................';
+                }
+                return `
+                    <div class="print-document" style="position: relative;">
+                        <div class="doc-code">วก.กทว.207</div>
+                        <div class="doc-header">
+                            <img src="${logoUrl}" class="doc-logo" alt="โลโก้โรงเรียน">
+                            <div class="doc-school-info" style="text-align: right;">
+                                เขียนที่โรงเรียนกระดุมทองวิทยา<br>
+                                วันที่ ${formatThaiDate(data.requestDate)}
+                            </div>
+                        </div>
+                        <div class="doc-content" style="margin-top: 20px;">
+                            <p style="text-indent: 0;"><strong>เรื่อง</strong> ขอระเบียนแสดงผลการเรียน ปพ.1:บ / ปพ.1:พ (สำหรับนักเรียนปัจจุบัน)</p>
+                            <p style="text-indent: 0;"><strong>เรียน</strong> ผู้อำนวยการโรงเรียนกระดุมทองวิทยา</p>
+                            <p style="text-indent: 0;"><strong>สิ่งที่ส่งมาด้วย</strong></p>
+                            <p style="text-indent: 40px;">
+                                <span class="doc-checkbox ${attachments.includes('photo') ? 'checked' : ''}"></span> รูปถ่าย ขนาด 1.5 นิ้ว จำนวน 1 แผ่น
+                            </p>
+                            <p style="text-indent: 40px;">
+                                <span class="doc-checkbox ${attachments.includes('lostReport') ? 'checked' : ''}"></span> รายงานประจำวันรับแจ้งเอกสารหาย จำนวน 1 แผ่น
+                            </p>
+                            <p>ด้วยข้าพเจ้า ${data.fullName || '.....................'} นักเรียนชั้น ${data.grade || '......'} 
+                            เลขประจำตัว ${data.studentId || '.....................'} มีความประสงค์ขอระเบียนแสดงผลการเรียน 
+                            <span class="doc-checkbox ${data.docType === 'ปพ.1:บ' ? 'checked' : ''}"></span>ปพ.1:บ 
+                            <span class="doc-checkbox ${data.docType === 'ปพ.1:พ' ? 'checked' : ''}"></span>ปพ.1:พ</p>
+                            <p><strong>เพื่อ</strong></p>
+                            <p style="text-indent: 40px;">
+                                <span class="doc-checkbox ${data.purpose === 'ศึกษาต่อสถานศึกษาอื่น' ? 'checked' : ''}"></span> ศึกษาต่อสถานศึกษาอื่น
+                            </p>
+                            <p style="text-indent: 40px;">
+                                <span class="doc-checkbox ${data.purpose === 'ทดแทนใบเดิมที่สูญหาย' ? 'checked' : ''}"></span> ทดแทนใบเดิมที่สูญหาย
+                            </p>
+                            <p style="text-indent: 40px;">
+                                <span class="doc-checkbox ${data.purpose === 'ใช้เป็นหลักฐานการขอรับทุนการศึกษา' ? 'checked' : ''}"></span> ใช้เป็นหลักฐานการขอรับทุนการศึกษา
+                            </p>
+                            <p style="text-indent: 40px;">
+                                <span class="doc-checkbox ${data.purpose === 'other' ? 'checked' : ''}"></span> อื่นๆ (ระบุ) ${data.purpose === 'other' ? data.otherPurpose || '.....................' : '.....................'}
+                            </p>
+                            <p>โดยจะมารับในวันที่ ${formatThaiDate(data.pickupDate)}</p>
+                            <p style="text-indent: 0; margin-top: 10px;">จึงเรียนมาเพื่อโปรดพิจารณา</p>
+                        </div>
+                        <div style="text-align: right; margin-top: 20px; margin-right: 50px;">
+                            <p>ขอแสดงความนับถือ</p>
+                            <p style="margin-top: 30px;">(ลงชื่อ)............................................ผู้ขอ</p>
+                            <p>(${data.fullName || '.....................'})</p>
+                        </div>
+                        <div class="doc-signature-section">
+                            <div class="signature-row">
+                                <div class="approval-section" style="flex: 1; margin-right: 10px;">
+                                    <div class="approval-title">บันทึกของนายทะเบียน</div>
+                                    <p>1. รับทราบคำร้อง</p>
+                                    <p>2. นัดให้มารับวันที่ ......../......../........</p>
+                                    <p style="margin-top: 20px;">(ลงชื่อ)....................................นายทะเบียน</p>
+                                    <p style="text-align: center;">(นายนนทพัทธ์ หิรัญเรือง)</p>
+                                </div>
+                                <div class="approval-section" style="flex: 1;">
+                                    <div class="approval-title">ความเห็นของหัวหน้าฝ่ายบริหารงานวิชาการ</div>
+                                    <p>1. เพื่อโปรดทราบ</p>
+                                    <p>2. เพื่อโปรดพิจารณาลงนาม</p>
+                                    <p style="margin-top: 20px;">(ลงชื่อ)............................หัวหน้าฝ่ายวิชาการ</p>
+                                    <p style="text-align: center;">(นางสาวสุพัฒตา ศรีเมือง)</p>
+                                </div>
+                            </div>
+                            <div class="approval-section" style="max-width: 500px; margin: 0 auto;">
+                                <div class="approval-title">การพิจารณาของผู้อำนวยการสถานศึกษา</div>
+                                <p>
+                                    <span class="doc-checkbox"></span> อนุมัติ 
+                                    <span class="doc-checkbox"></span> ไม่อนุมัติ เพราะ.........................................
+                                </p>
+                                <p><span class="doc-checkbox"></span> ลงนามแล้ว</p>
+                                <p style="margin-top: 20px; text-align: right;">(ลงชื่อ)..............................ผู้อำนวยการสถานศึกษา</p>
+                                <p style="text-align: center;">(นางสุนิสา ใจใหญ่)</p>
+                                <p style="text-align: center;">ผู้อำนวยการโรงเรียนกระดุมทองวิทยา</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (formId === 'form209') {
+                return `
+                    <div class="print-document" style="position: relative;">
+                        <div class="doc-code">วก.กทว.209</div>
+                        <div class="doc-header">
+                            <img src="${logoUrl}" class="doc-logo" alt="โลโก้โรงเรียน">
+                            <div class="doc-school-info" style="text-align: right;">
+                                โรงเรียนกระดุมทองวิทยา<br>
+                                ต.หนองหัวช้าง อ.กันทรารมย์<br>
+                                จ.ศรีสะเกษ 33130
+                            </div>
+                        </div>
+                        <div class="doc-title">แบบคำร้องขอใบรับรองผลการเรียน</div>
+                        <p style="text-align: right; margin-bottom: 20px;">วันที่ ${formatThaiDate(data.requestDate)}</p>
+                        <div class="doc-content">
+                            <p style="text-indent: 0;"><strong>เรื่อง</strong> ขอใบรับรองผลการเรียน</p>
+                            <p style="text-indent: 0;"><strong>เรียน</strong> ผู้อำนวยการโรงเรียนกระดุมทองวิทยา</p>
+                            <p>ด้วยข้าพเจ้า ${data.fullName || '.....................'} นักเรียนชั้น ${data.grade || '......'} 
+                            เลขประจำตัวนักเรียน ${data.studentId || '.....................'} 
+                            เกิดวันที่ ${formatThaiDate(data.birthDate)}
+                            บิดาชื่อ ${data.fatherName || '.....................'} มารดาชื่อ ${data.motherName || '.....................'}
+                            มีความประสงค์จะขอใบรับรองผลการเรียนเพื่อ ${data.purpose || '.....................'}
+                            โดยจะมารับในวันที่ ${formatThaiDate(data.pickupDate)}</p>
+                            <p style="text-indent: 0; margin-top: 10px;">จึงเรียนมาเพื่อโปรดพิจารณา</p>
+                        </div>
+                        <div style="text-align: right; margin-top: 20px; margin-right: 50px;">
+                            <p>ขอแสดงความนับถือ</p>
+                            <p style="margin-top: 30px;">(ลงชื่อ)............................................ผู้ยื่นขอ</p>
+                            <p>(${data.fullName || '.....................'})</p>
+                        </div>
+                        <div class="doc-signature-section">
+                            <div class="signature-row">
+                                <div class="approval-section" style="flex: 1; margin-right: 10px;">
+                                    <div class="approval-title">บันทึกของนายทะเบียน</div>
+                                    <p>1. รับทราบคำร้อง</p>
+                                    <p>2. นัดให้มารับวันที่ ......../......../........</p>
+                                    <p style="margin-top: 20px;">(ลงชื่อ).........................................นายทะเบียน</p>
+                                    <p style="text-align: center;">(นายนนทพัทธ์ หิรัญเรือง)</p>
+                                </div>
+                                <div class="approval-section" style="flex: 1;">
+                                    <div class="approval-title">ความเห็นของหัวหน้าฝ่ายบริหารงานวิชาการ</div>
+                                    <p>1. เพื่อโปรดทราบ</p>
+                                    <p>2. เพื่อโปรดพิจารณาลงนาม</p>
+                                    <p style="margin-top: 20px;">(ลงชื่อ)......................................หัวหน้าฝ่ายวิชาการ</p>
+                                    <p style="text-align: center;">(นางสาวสุพัฒตา ศรีเมือง)</p>
+                                </div>
+                            </div>
+                            <div class="approval-section" style="max-width: 500px; margin: 0 auto;">
+                                <div class="approval-title">การพิจารณาของผู้อำนวยการสถานศึกษา</div>
+                                <p>
+                                    <span class="doc-checkbox"></span> อนุมัติ 
+                                    <span class="doc-checkbox"></span> ไม่อนุมัติ เพราะ.........................................
+                                </p>
+                                <p><span class="doc-checkbox"></span> ลงนามแล้ว</p>
+                                <p style="margin-top: 20px; text-align: right;">(ลงชื่อ).........................................ผู้อำนวยการสถานศึกษา</p>
+                                <p style="text-align: center;">(นางสุนิสา ใจใหญ่)</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            return '';
+        }
+
+        // Preview document
+        function previewDocument(formId) {
+            if (!validateForm(formId)) {
+                showToast('กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน', 'error');
+                document.getElementById(formId + 'Data').reportValidity();
+                return;
+            }
+
+            const data = getFormData(formId);
+            const html = generateDocumentHTML(formId, data);
+            document.getElementById('printArea').innerHTML = html;
+            document.getElementById('previewModal').classList.add('active');
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('previewModal').classList.remove('active');
+        }
+
+        // Print document
+        function printDocument() {
+            window.print();
+        }
+
+        // Save and print
+        function saveAndPrint(formId) {
+            if (!validateForm(formId)) {
+                showToast('กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน', 'error');
+                document.getElementById(formId + 'Data').reportValidity();
+                return;
+            }
+
+            const data = getFormData(formId);
+            saveToHistory(formId, data);
+            previewDocument(formId);
+        }
+
+        // Save to history (localStorage)
+        function saveToHistory(formId, data) {
+            const history = JSON.parse(localStorage.getItem('formHistory') || '[]');
+            
+            const formTypes = {
+                'form201': 'ใบรับรองการเป็นนักเรียน',
+                'form207': 'ระเบียนผลการเรียน (ปพ.1)',
+                'form209': 'ใบรับรองผลการเรียน'
+            };
+
+            const record = {
+                id: Date.now(),
+                formId: formId,
+                formType: formTypes[formId],
+                formCode: formId === 'form201' ? 'วก.กทว.201' : formId === 'form207' ? 'วก.กทว.207' : 'วก.กทว.209',
+                data: data,
+                createdAt: new Date().toISOString()
+            };
+
+            history.unshift(record);
+            
+            // Keep only last 100 records
+            if (history.length > 100) {
+                history.pop();
+            }
+
+            localStorage.setItem('formHistory', JSON.stringify(history));
+            loadHistory();
+            showToast('บันทึกข้อมูลสำเร็จ');
+        }
+
+        // Load history from localStorage
+        function loadHistory() {
+            const history = JSON.parse(localStorage.getItem('formHistory') || '[]');
+            const historyList = document.getElementById('historyList');
+            const historyCount = document.getElementById('historyCount');
+            
+            historyCount.textContent = history.length;
+
+            if (history.length === 0) {
+                historyList.innerHTML = `
+                    <div class="empty-history">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        <p>ยังไม่มีประวัติการสร้างเอกสาร</p>
+                    </div>
+                `;
+                return;
+            }
+
+            historyList.innerHTML = history.map(record => {
+                const date = new Date(record.createdAt);
+                const dateStr = date.toLocaleDateString('th-TH', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                return `
+                    <div class="history-item">
+                        <div class="history-item-header">
+                            <span class="history-item-type">${record.formCode}</span>
+                            <span class="history-item-date">${dateStr}</span>
+                        </div>
+                        <div class="history-item-name">${record.data.fullName || record.data.prefix + record.data.fullName || '-'}</div>
+                        <div class="history-item-detail">${record.formType}</div>
+                        <div class="history-item-actions">
+                            <button class="btn btn-primary btn-sm" onclick="viewHistoryRecord(${record.id})">
+                                👁️ ดู
+                            </button>
+                            <button class="btn btn-outline btn-sm" onclick="loadHistoryRecord(${record.id})">
+                                📝 แก้ไข
+                            </button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteHistoryRecord(${record.id})">
+                                🗑️ ลบ
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // View history record
+        function viewHistoryRecord(id) {
+            const history = JSON.parse(localStorage.getItem('formHistory') || '[]');
+            const record = history.find(r => r.id === id);
+            
+            if (record) {
+                const html = generateDocumentHTML(record.formId, record.data);
+                document.getElementById('printArea').innerHTML = html;
+                document.getElementById('previewModal').classList.add('active');
+            }
+        }
+
+        // Load history record to form
+        function loadHistoryRecord(id) {
+            const history = JSON.parse(localStorage.getItem('formHistory') || '[]');
+            const record = history.find(r => r.id === id);
+            
+            if (record) {
+                switchForm(record.formId);
+                const form = document.getElementById(record.formId + 'Data');
+                
+                Object.keys(record.data).forEach(key => {
+                    const field = form.querySelector(`[name="${key}"]`);
+                    if (field) {
+                        if (field.type === 'checkbox') {
+                            field.checked = record.data[key].includes(field.value);
+                        } else if (field.type === 'radio') {
+                            const radios = form.querySelectorAll(`[name="${key}"]`);
+                            radios.forEach(radio => {
+                                radio.checked = radio.value === record.data[key];
+                            });
+                        } else {
+                            field.value = record.data[key];
+                        }
+                    }
+                });
+
+                showToast('โหลดข้อมูลสำเร็จ');
+            }
+        }
+
+        // Delete history record
+        function deleteHistoryRecord(id) {
+            if (confirm('คุณต้องการลบรายการนี้หรือไม่?')) {
+                let history = JSON.parse(localStorage.getItem('formHistory') || '[]');
+                history = history.filter(r => r.id !== id);
+                localStorage.setItem('formHistory', JSON.stringify(history));
+                loadHistory();
+                showToast('ลบรายการสำเร็จ');
+            }
+        }
+
+        // Show toast notification
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toastMessage.textContent = message;
+            toast.className = 'toast show' + (type === 'error' ? ' error' : '');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Close modal on outside click
+        document.getElementById('previewModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
