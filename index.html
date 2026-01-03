@@ -620,13 +620,14 @@
 
         .print-document .inline-checkbox {
             display: inline-flex;
-            align-items: baseline;
+            align-items: center;
             gap: 4px;
-            vertical-align: baseline;
+            vertical-align: middle;
         }
 
         .print-document .inline-checkbox .doc-checkbox {
-            margin-top: 2px;
+            margin-top: 0;
+            margin-bottom: 2px;
             position: relative;
             flex-shrink: 0;
         }
@@ -772,34 +773,38 @@
                 print-color-adjust: exact !important;
             }
             
-            html, body {
-                width: 210mm;
-                height: 297mm;
+            body {
                 margin: 0;
                 padding: 0;
-                background: white;
+                background: white !important;
             }
             
-            body * {
-                visibility: hidden;
-            }
-            
-            .print-area, .print-area * {
-                visibility: visible;
-            }
-            
-            .print-area {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 210mm;
-                background: white;
-            }
-            
-            .modal-overlay,
+            /* Hide everything except print content */
+            .header,
+            .main-container,
             .modal-header,
-            .modal-footer {
+            .modal-footer,
+            .modal-close,
+            .nav-tabs,
+            .history-panel,
+            .form-section {
                 display: none !important;
+            }
+            
+            /* Show only modal body and print area */
+            .modal-overlay {
+                position: static !important;
+                background: white !important;
+                display: block !important;
+            }
+            
+            .modal-content {
+                max-width: none !important;
+                width: 100% !important;
+                max-height: none !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                background: white !important;
             }
             
             .modal-body {
@@ -808,13 +813,18 @@
                 overflow: visible !important;
             }
             
+            .print-area {
+                width: 100% !important;
+                background: white !important;
+            }
+            
             .print-document {
-                width: 100%;
+                width: 210mm;
                 min-height: auto;
                 height: auto;
-                padding: 2mm 5mm;
+                padding: 0;
                 box-shadow: none;
-                margin: 0;
+                margin: 0 auto;
                 font-size: 14px;
                 page-break-after: avoid;
                 page-break-inside: avoid;
