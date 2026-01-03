@@ -620,14 +620,27 @@
 
         .print-document .inline-checkbox {
             display: inline-flex;
-            align-items: center;
+            align-items: baseline;
             gap: 4px;
+            vertical-align: baseline;
         }
 
         .print-document .inline-checkbox .doc-checkbox {
-            margin-top: 0;
-            vertical-align: middle;
+            margin-top: 2px;
             position: relative;
+            flex-shrink: 0;
+        }
+
+        .print-document .inline-checkbox .doc-checkbox.checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 11px;
+            font-weight: bold;
+            color: #333;
+            line-height: 1;
         }
 
         .print-document .signature-section {
@@ -666,7 +679,7 @@
         .print-document .approval-box p {
             margin: 2px 0;
             display: flex;
-            align-items: center;
+            align-items: baseline;
             gap: 4px;
         }
 
@@ -764,6 +777,7 @@
                 height: 297mm;
                 margin: 0;
                 padding: 0;
+                background: white;
             }
             
             body * {
@@ -779,6 +793,19 @@
                 left: 0;
                 top: 0;
                 width: 210mm;
+                background: white;
+            }
+            
+            .modal-overlay,
+            .modal-header,
+            .modal-footer {
+                display: none !important;
+            }
+            
+            .modal-body {
+                background: white !important;
+                padding: 0 !important;
+                overflow: visible !important;
             }
             
             .print-document {
@@ -791,6 +818,7 @@
                 font-size: 14px;
                 page-break-after: avoid;
                 page-break-inside: avoid;
+                background: white;
             }
             
             @page {
