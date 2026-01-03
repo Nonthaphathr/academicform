@@ -702,14 +702,23 @@
             border-bottom: 1px dotted #333;
             display: inline-block;
             min-width: 60px;
-            vertical-align: baseline;
+            vertical-align: text-bottom;
+            margin-bottom: 2px;
         }
 
         .print-document .dotted-long {
             border-bottom: 1px dotted #333;
             display: inline-block;
             min-width: 100px;
-            vertical-align: baseline;
+            vertical-align: text-bottom;
+            margin-bottom: 2px;
+        }
+        
+        .print-document .sig-name {
+            display: block;
+            text-align: center;
+            margin-top: -2px;
+        }
         }
 
         /* Loading Spinner */
@@ -1473,46 +1482,46 @@
                         <div class="doc-content">
                             <p><strong>เรื่อง</strong> ขอใบรับรองการเป็นนักเรียน</p>
                             <p><strong>เรียน</strong> ผู้อำนวยการโรงเรียนกระดุมทองวิทยา</p>
-                            <p class="indent">ข้าพเจ้า ${data.prefix || ''}${data.fullName || '<span class="dotted-long"></span>'} นักเรียนชั้นมัธยมศึกษาปีที่ ${data.grade || '<span class="dotted"></span>'} เลขประจำตัวนักเรียน ${data.studentId || '<span class="dotted"></span>'} หมายเลขโทรศัพท์ ${data.phone || '<span class="dotted"></span>'} มีความประสงค์จะขอใบรับรองการเป็นนักเรียนเพื่อ ${data.purpose || '<span class="dotted-long"></span>'} และจะมารับในวันที่ ${formatThaiDate(data.pickupDate)} ทั้งนี้ได้แนบเอกสาร</p>
+                            <p class="indent">ข้าพเจ้า ${data.prefix || ''}${data.fullName || '.............................'} นักเรียนชั้นมัธยมศึกษาปีที่ ${data.grade || '............'} เลขประจำตัวนักเรียน ${data.studentId || '............'} หมายเลขโทรศัพท์ ${data.phone || '............'} มีความประสงค์จะขอใบรับรองการเป็นนักเรียนเพื่อ ${data.purpose || '.............................'} และจะมารับในวันที่ ${formatThaiDate(data.pickupDate)} ทั้งนี้ได้แนบเอกสาร</p>
                             <div class="checkbox-line">${checkbox(attachments.includes('photo'))} รูปถ่าย 1.5 นิ้ว 1 รูป</div>
-                            <div class="checkbox-line">${checkbox(attachments.includes('other'))} อื่นๆ ${data.otherAttachment || '<span class="dotted-long"></span>'}</div>
+                            <div class="checkbox-line">${checkbox(attachments.includes('other'))} อื่นๆ ${data.otherAttachment || '.............................'}</div>
                             <p style="margin-top: 6px;">จึงเรียนมาเพื่อโปรดทราบ และพิจารณาดำเนินการต่อไป</p>
                         </div>
                         <div class="signature-section">
-                            <p class="signature-line">(ลงชื่อ) <span class="dotted-long"></span></p>
-                            <p>( ${data.prefix || ''}${data.fullName || '<span class="dotted"></span>'} )</p>
-                            <p>ผู้ยื่นคำขอ</p>
+                            <p style="text-align: center; margin: 20px 0 2px 0;">(ลงชื่อ) .............................</p>
+                            <p style="text-align: center; margin: 0;">( ${data.prefix || ''}${data.fullName || '.............................'} )</p>
+                            <p style="text-align: center; margin: 0;">ผู้ยื่นคำขอ</p>
                         </div>
                         <div class="approval-grid">
                             <div class="approval-box">
                                 <div class="approval-box-title">ความเห็นเจ้าหน้าที่ทะเบียน</div>
-                                <p>${checkbox(false)} เห็นควรอนุมัติ</p>
-                                <p>${checkbox(false)} ไม่เห็นควรอนุมัติ เนื่องจาก <span class="dotted"></span></p>
-                                <div class="sig-area">
-                                    <p>(ลงชื่อ) <span class="dotted"></span></p>
-                                    <p>(${currentSettings.registrarName})</p>
-                                    <p>เจ้าหน้าที่งานทะเบียน</p>
+                                <p style="margin: 3px 0;">${checkbox(false)} เห็นควรอนุมัติ</p>
+                                <p style="margin: 3px 0;">${checkbox(false)} ไม่เห็นควรอนุมัติ เนื่องจาก ....................</p>
+                                <div style="margin-top: 15px; text-align: center;">
+                                    <p style="margin: 2px 0;">(ลงชื่อ) .............................</p>
+                                    <p style="margin: 2px 0;">(${currentSettings.registrarName})</p>
+                                    <p style="margin: 2px 0;">เจ้าหน้าที่งานทะเบียน</p>
                                 </div>
                             </div>
                             <div class="approval-box">
                                 <div class="approval-box-title">ความเห็นหัวหน้าฝ่ายวิชาการ</div>
-                                <p>${checkbox(false)} เห็นควรอนุมัติ</p>
-                                <p>${checkbox(false)} ไม่เห็นควรอนุมัติ เนื่องจาก <span class="dotted"></span></p>
-                                <div class="sig-area">
-                                    <p>(ลงชื่อ) <span class="dotted"></span></p>
-                                    <p>(${currentSettings.academicHeadName})</p>
-                                    <p>หัวหน้าฝ่ายวิชาการ</p>
+                                <p style="margin: 3px 0;">${checkbox(false)} เห็นควรอนุมัติ</p>
+                                <p style="margin: 3px 0;">${checkbox(false)} ไม่เห็นควรอนุมัติ เนื่องจาก ....................</p>
+                                <div style="margin-top: 15px; text-align: center;">
+                                    <p style="margin: 2px 0;">(ลงชื่อ) .............................</p>
+                                    <p style="margin: 2px 0;">(${currentSettings.academicHeadName})</p>
+                                    <p style="margin: 2px 0;">หัวหน้าฝ่ายวิชาการ</p>
                                 </div>
                             </div>
                         </div>
                         <div class="approval-box approval-center">
                             <div class="approval-box-title">ความเห็นของผู้อำนวยการโรงเรียน</div>
-                            <p>${checkbox(false)} อนุมัติ</p>
-                            <p>${checkbox(false)} ไม่อนุมัติ เนื่องจาก <span class="dotted"></span></p>
-                            <div class="sig-area">
-                                <p>(ลงชื่อ) <span class="dotted"></span></p>
-                                <p>(${currentSettings.directorName})</p>
-                                <p>ผู้อำนวยการโรงเรียนกระดุมทองวิทยา</p>
+                            <p style="margin: 3px 0;">${checkbox(false)} อนุมัติ</p>
+                            <p style="margin: 3px 0;">${checkbox(false)} ไม่อนุมัติ เนื่องจาก ....................</p>
+                            <div style="margin-top: 15px; text-align: center;">
+                                <p style="margin: 2px 0;">(ลงชื่อ) .............................</p>
+                                <p style="margin: 2px 0;">(${currentSettings.directorName})</p>
+                                <p style="margin: 2px 0;">ผู้อำนวยการโรงเรียนกระดุมทองวิทยา</p>
                             </div>
                         </div>
                     </div>
@@ -1535,48 +1544,50 @@
                             <p><strong>สิ่งที่ส่งมาด้วย</strong></p>
                             <div class="checkbox-line">${checkbox(attachments.includes('photo'))} รูปถ่าย ขนาด 1.5 นิ้ว จำนวน 1 แผ่น</div>
                             <div class="checkbox-line">${checkbox(attachments.includes('lostReport'))} รายงานประจำวันรับแจ้งเอกสารหาย จำนวน 1 แผ่น</div>
-                            <p class="indent" style="margin-top: 6px;">ด้วยข้าพเจ้า ${data.fullName || '<span class="dotted-long"></span>'} นักเรียนชั้น ${data.grade || '<span class="dotted"></span>'} เลขประจำตัว ${data.studentId || '<span class="dotted"></span>'} มีความประสงค์ขอระเบียนแสดงผลการเรียน <span class="inline-checkbox">${checkbox(data.docType === 'ปพ.1:บ')} ปพ.1:บ</span> <span class="inline-checkbox">${checkbox(data.docType === 'ปพ.1:พ')} ปพ.1:พ</span></p>
+                            <p class="indent" style="margin-top: 6px;">ด้วยข้าพเจ้า ${data.fullName || '.............................'} นักเรียนชั้น ${data.grade || '............'} เลขประจำตัว ${data.studentId || '............'} มีความประสงค์ขอระเบียนแสดงผลการเรียน</p>
+                            <div class="checkbox-line" style="margin-left: 25px;">${checkbox(data.docType === 'ปพ.1:บ')} ปพ.1:บ</div>
+                            <div class="checkbox-line" style="margin-left: 25px;">${checkbox(data.docType === 'ปพ.1:พ')} ปพ.1:พ</div>
                             <p><strong>เพื่อ</strong></p>
                             <div class="checkbox-line">${checkbox(data.purpose === 'ศึกษาต่อสถานศึกษาอื่น')} ศึกษาต่อสถานศึกษาอื่น</div>
                             <div class="checkbox-line">${checkbox(data.purpose === 'ทดแทนใบเดิมที่สูญหาย')} ทดแทนใบเดิมที่สูญหาย</div>
                             <div class="checkbox-line">${checkbox(data.purpose === 'ใช้เป็นหลักฐานการขอรับทุนการศึกษา')} ใช้เป็นหลักฐานการขอรับทุนการศึกษา</div>
-                            <div class="checkbox-line">${checkbox(data.purpose === 'other')} อื่นๆ (ระบุ) ${data.purpose === 'other' ? data.otherPurpose || '' : '<span class="dotted-long"></span>'}</div>
-                            <p style="margin-top: 6px;">โดยจะมารับในวันที่ ${formatThaiDate(data.pickupDate)}</p>
-                            <p>จึงเรียนมาเพื่อโปรดพิจารณา</p>
+                            <div class="checkbox-line">${checkbox(data.purpose === 'other')} อื่นๆ (ระบุ) ............................${data.purpose === 'other' ? (data.otherPurpose || '') : ''}</div>
+                            <p style="margin-top: 6px;">โดยจะมารับในวันที่ <strong>${formatThaiDate(data.pickupDate)}</strong></p>
+                            <p style="text-indent: 150px; margin-top: 4px;">จึงเรียนมาเพื่อโปรดพิจารณา</p>
                         </div>
                         <div class="signature-section">
-                            <p>ขอแสดงความนับถือ</p>
-                            <p class="signature-line">(ลงชื่อ) <span class="dotted-long"></span> ผู้ขอ</p>
-                            <p>( ${data.fullName || '<span class="dotted"></span>'} )</p>
+                            <p style="text-align: center; margin: 20px 0 2px 0;">(ลงชื่อ) ............................. ผู้ขอ</p>
+                            <p style="text-align: center; margin: 0;">( ${data.fullName || '.............................'} )</p>
                         </div>
                         <div class="approval-grid">
                             <div class="approval-box">
                                 <div class="approval-box-title">บันทึกของนายทะเบียน</div>
-                                <p>1. รับทราบคำร้อง</p>
-                                <p>2. นัดให้มารับวันที่ <span class="dotted"></span></p>
-                                <div class="sig-area">
-                                    <p>(ลงชื่อ) <span class="dotted"></span> นายทะเบียน</p>
-                                    <p>(${currentSettings.registrarName})</p>
+                                <p style="margin: 3px 0;">1. รับทราบคำร้อง</p>
+                                <p style="margin: 3px 0;">2. นัดให้มารับวันที่ ....................</p>
+                                <div style="margin-top: 15px; text-align: center;">
+                                    <p style="margin: 2px 0;">(ลงชื่อ) ............................. นายทะเบียน</p>
+                                    <p style="margin: 2px 0;">(${currentSettings.registrarName})</p>
                                 </div>
                             </div>
                             <div class="approval-box">
                                 <div class="approval-box-title">ความเห็นของหัวหน้าฝ่ายบริหารงานวิชาการ</div>
-                                <p>1. เพื่อโปรดทราบ</p>
-                                <p>2. เพื่อโปรดพิจารณาลงนาม</p>
-                                <div class="sig-area">
-                                    <p>(ลงชื่อ) <span class="dotted"></span> หัวหน้าฝ่ายวิชาการ</p>
-                                    <p>(${currentSettings.academicHeadName})</p>
+                                <p style="margin: 3px 0;">1. เพื่อโปรดทราบ</p>
+                                <p style="margin: 3px 0;">2. เพื่อโปรดพิจารณาลงนาม</p>
+                                <div style="margin-top: 15px; text-align: center;">
+                                    <p style="margin: 2px 0;">(ลงชื่อ) ............................. หัวหน้าฝ่ายวิชาการ</p>
+                                    <p style="margin: 2px 0;">(${currentSettings.academicHeadName})</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="approval-box approval-center" style="max-width: 300px;">
+                        <div class="approval-box approval-center" style="max-width: 400px; margin-top: 8px;">
                             <div class="approval-box-title">การพิจารณาของผู้อำนวยการสถานศึกษา</div>
-                            <p><span class="inline-checkbox">${checkbox(false)} อนุมัติ</span> &nbsp; <span class="inline-checkbox">${checkbox(false)} ไม่อนุมัติ เพราะ <span class="dotted"></span></span></p>
-                            <p>${checkbox(false)} ลงนามแล้ว</p>
-                            <div class="sig-area">
-                                <p>(ลงชื่อ) <span class="dotted"></span> ผู้อำนวยการสถานศึกษา</p>
-                                <p>(${currentSettings.directorName})</p>
-                                <p>ผู้อำนวยการโรงเรียนกระดุมทองวิทยา</p>
+                            <div class="checkbox-line" style="margin: 3px 0 3px 0;">${checkbox(false)} อนุมัติ</div>
+                            <div class="checkbox-line" style="margin: 3px 0 3px 0;">${checkbox(false)} ไม่อนุมัติ เพราะ ....................</div>
+                            <div class="checkbox-line" style="margin: 3px 0 3px 0;">${checkbox(false)} ลงนามแล้ว</div>
+                            <div style="margin-top: 15px; text-align: center;">
+                                <p style="margin: 2px 0;">(ลงชื่อ) ............................. ผู้อำนวยการสถานศึกษา</p>
+                                <p style="margin: 2px 0; padding-left: 56px;">(${currentSettings.directorName})</p>
+                                <p style="margin: 2px 0; padding-left: 32px;">ผู้อำนวยการโรงเรียนกระดุมทองวิทยา</p>
                             </div>
                         </div>
                     </div>
@@ -1598,41 +1609,42 @@
                         <div class="doc-content">
                             <p><strong>เรื่อง</strong> ขอใบรับรองผลการเรียน</p>
                             <p><strong>เรียน</strong> ผู้อำนวยการโรงเรียนกระดุมทองวิทยา</p>
-                            <p class="indent">ด้วยข้าพเจ้า ${data.fullName || '<span class="dotted-long"></span>'} นักเรียนชั้น ${data.grade || '<span class="dotted"></span>'} เลขประจำตัวนักเรียน ${data.studentId || '<span class="dotted"></span>'} เกิดวันที่ ${formatThaiDate(data.birthDate)} บิดาชื่อ ${data.fatherName || '<span class="dotted"></span>'} มารดาชื่อ ${data.motherName || '<span class="dotted"></span>'} มีความประสงค์จะขอใบรับรองผลการเรียนเพื่อ ${data.purpose || '<span class="dotted-long"></span>'} โดยจะมารับในวันที่ ${formatThaiDate(data.pickupDate)}</p>
+                            <p class="indent">ด้วยข้าพเจ้า ${data.fullName || '.............................'} นักเรียนชั้น ${data.grade || '............'} เลขประจำตัวนักเรียน ${data.studentId || '............'} เกิดวันที่ ${formatThaiDate(data.birthDate)} บิดาชื่อ ${data.fatherName || '............'} มารดาชื่อ ${data.motherName || '............'} มีความประสงค์จะขอใบรับรองผลการเรียนเพื่อ ${data.purpose || '.............................'} โดยจะมารับในวันที่ ${formatThaiDate(data.pickupDate)}</p>
                             <p style="margin-top: 6px;">จึงเรียนมาเพื่อโปรดพิจารณา</p>
                         </div>
                         <div class="signature-section">
-                            <p>ขอแสดงความนับถือ</p>
-                            <p class="signature-line">(ลงชื่อ) <span class="dotted-long"></span> ผู้ยื่นขอ</p>
-                            <p>( ${data.fullName || '<span class="dotted"></span>'} )</p>
+                            <p style="margin-bottom: 4px;">ขอแสดงความนับถือ</p>
+                            <p style="text-align: center; margin: 20px 0 2px 0;">(ลงชื่อ) ............................. ผู้ยื่นขอ</p>
+                            <p style="text-align: center; margin: 0;">( ${data.fullName || '.............................'} )</p>
                         </div>
                         <div class="approval-grid">
                             <div class="approval-box">
                                 <div class="approval-box-title">บันทึกของนายทะเบียน</div>
-                                <p>1. รับทราบคำร้อง</p>
-                                <p>2. นัดให้มารับวันที่ <span class="dotted"></span></p>
-                                <div class="sig-area">
-                                    <p>(ลงชื่อ) <span class="dotted"></span> นายทะเบียน</p>
-                                    <p>(${currentSettings.registrarName})</p>
+                                <p style="margin: 3px 0;">1. รับทราบคำร้อง</p>
+                                <p style="margin: 3px 0;">2. นัดให้มารับวันที่ ....................</p>
+                                <div style="margin-top: 15px; text-align: center;">
+                                    <p style="margin: 2px 0;">(ลงชื่อ) ............................. นายทะเบียน</p>
+                                    <p style="margin: 2px 0;">(${currentSettings.registrarName})</p>
                                 </div>
                             </div>
                             <div class="approval-box">
                                 <div class="approval-box-title">ความเห็นของหัวหน้าฝ่ายบริหารงานวิชาการ</div>
-                                <p>1. เพื่อโปรดทราบ</p>
-                                <p>2. เพื่อโปรดพิจารณาลงนาม</p>
-                                <div class="sig-area">
-                                    <p>(ลงชื่อ) <span class="dotted"></span> หัวหน้าฝ่ายวิชาการ</p>
-                                    <p>(${currentSettings.academicHeadName})</p>
+                                <p style="margin: 3px 0;">1. เพื่อโปรดทราบ</p>
+                                <p style="margin: 3px 0;">2. เพื่อโปรดพิจารณาลงนาม</p>
+                                <div style="margin-top: 15px; text-align: center;">
+                                    <p style="margin: 2px 0;">(ลงชื่อ) ............................. หัวหน้าฝ่ายวิชาการ</p>
+                                    <p style="margin: 2px 0;">(${currentSettings.academicHeadName})</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="approval-box approval-center" style="max-width: 300px;">
+                        <div class="approval-box approval-center" style="max-width: 400px;">
                             <div class="approval-box-title">การพิจารณาของผู้อำนวยการสถานศึกษา</div>
-                            <p><span class="inline-checkbox">${checkbox(false)} อนุมัติ</span> &nbsp; <span class="inline-checkbox">${checkbox(false)} ไม่อนุมัติ เพราะ <span class="dotted"></span></span></p>
-                            <p>${checkbox(false)} ลงนามแล้ว</p>
-                            <div class="sig-area">
-                                <p>(ลงชื่อ) <span class="dotted"></span> ผู้อำนวยการสถานศึกษา</p>
-                                <p>(${currentSettings.directorName})</p>
+                            <div class="checkbox-line" style="margin: 3px 0 3px 0;">${checkbox(false)} อนุมัติ</div>
+                            <div class="checkbox-line" style="margin: 3px 0 3px 0;">${checkbox(false)} ไม่อนุมัติ เพราะ ....................</div>
+                            <div class="checkbox-line" style="margin: 3px 0 3px 0;">${checkbox(false)} ลงนามแล้ว</div>
+                            <div style="margin-top: 15px; text-align: center;">
+                                <p style="margin: 2px 0;">(ลงชื่อ) ............................. ผู้อำนวยการสถานศึกษา</p>
+                                <p style="margin: 2px 0;">(${currentSettings.directorName})</p>
                             </div>
                         </div>
                     </div>
