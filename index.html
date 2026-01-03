@@ -620,14 +620,14 @@
 
         .print-document .inline-checkbox {
             display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            vertical-align: middle;
+            align-items: flex-start;
+            gap: 6px;
+            line-height: 1.4;
+            vertical-align: top;
         }
 
         .print-document .inline-checkbox .doc-checkbox {
-            margin-top: 0;
-            margin-bottom: 2px;
+            margin-top: 3px;
             position: relative;
             flex-shrink: 0;
         }
@@ -702,12 +702,14 @@
             border-bottom: 1px dotted #333;
             display: inline-block;
             min-width: 60px;
+            vertical-align: baseline;
         }
 
         .print-document .dotted-long {
             border-bottom: 1px dotted #333;
             display: inline-block;
             min-width: 100px;
+            vertical-align: baseline;
         }
 
         /* Loading Spinner */
@@ -787,15 +789,28 @@
             .modal-close,
             .nav-tabs,
             .history-panel,
-            .form-section {
+            .form-section,
+            .settings-modal,
+            #settingsModal {
                 display: none !important;
             }
             
-            /* Show only modal body and print area */
+            /* Show only preview modal body and print area */
             .modal-overlay {
                 position: static !important;
                 background: white !important;
                 display: block !important;
+            }
+            
+            /* Hide all modals first */
+            .modal-overlay.settings-modal {
+                display: none !important;
+            }
+            
+            /* Show only preview modal */
+            #previewModal {
+                display: block !important;
+                position: static !important;
             }
             
             .modal-content {
