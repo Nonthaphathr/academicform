@@ -2,27 +2,65 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบยื่นเอกสารคำร้องออนไลน์ - กลุ่มงานบริหารวิชาการ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>ระบบยื่นเอกสารคำร้องออนไลน์ - โรงเรียนกระดุมทองวิทยา</title>
     <link rel="icon" type="image/png" href="https://nonthaphathr.github.io/uploadimg/logoschool.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&family=Prompt:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #1a365d;
             --primary-light: #2c5282;
+            --primary-dark: #0f2942;
             --accent: #d69e2e;
             --accent-light: #ecc94b;
+            --accent-dark: #b7791f;
             --bg: #f7fafc;
+            --bg-secondary: #edf2f7;
             --card-bg: #ffffff;
+            --overlay-bg: rgba(0, 0, 0, 0.6);
             --text: #2d3748;
             --text-light: #718096;
+            --text-lighter: #a0aec0;
             --border: #e2e8f0;
+            --border-light: #edf2f7;
             --success: #38a169;
+            --success-light: #48bb78;
             --danger: #e53e3e;
+            --danger-light: #fc8181;
+            --warning: #ed8936;
+            --info: #3182ce;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
             --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --space-xs: 0.25rem;
+            --space-sm: 0.5rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --space-2xl: 3rem;
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-2xl: 1.5rem;
+            --radius-full: 9999px;
+            --font-body: 'Sarabun', sans-serif;
+            --font-heading: 'Prompt', sans-serif;
+            --text-xs: 0.75rem;
+            --text-sm: 0.875rem;
+            --text-base: 1rem;
+            --text-lg: 1.125rem;
+            --text-xl: 1.25rem;
+            --text-2xl: 1.5rem;
+            --text-3xl: 1.875rem;
+            --text-4xl: 2.25rem;
+            --touch-target: 44px;
+            --button-height: 48px;
+            --input-height: 48px;
         }
 
         * {
@@ -31,18 +69,69 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Sarabun', sans-serif;
-            background: linear-gradient(135deg, var(--bg) 0%, #edf2f7 100%);
-            min-height: 100vh;
-            color: var(--text);
+        html {
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Header */
+        body {
+            font-family: var(--font-body);
+            background: linear-gradient(135deg, var(--bg) 0%, var(--bg-secondary) 100%);
+            min-height: 100vh;
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: var(--radius-full);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-light);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: var(--primary-light);
+        }
+
+        *:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        ::selection {
+            background: var(--accent);
+            color: var(--primary);
+        }
+
         .header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
             color: white;
-            padding: 1rem 2rem;
+            padding: var(--space-md) var(--space-lg);
             box-shadow: var(--shadow-lg);
             position: sticky;
             top: 0;
@@ -55,53 +144,68 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 1rem;
+            gap: var(--space-md);
+            flex-wrap: wrap;
         }
 
         .logo-section {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: var(--space-md);
         }
 
         .logo-section img {
             width: 60px;
             height: 60px;
-            border-radius: 50%;
+            border-radius: var(--radius-full);
             border: 3px solid var(--accent);
             background: white;
             padding: 2px;
+            flex-shrink: 0;
         }
 
         .logo-text h1 {
-            font-family: 'Prompt', sans-serif;
-            font-size: 1.25rem;
+            font-size: clamp(1rem, 4vw, 1.25rem);
             font-weight: 600;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
+            line-height: 1.3;
         }
 
         .logo-text p {
-            font-size: 0.875rem;
-            opacity: 0.9;
+            font-size: clamp(0.75rem, 3vw, 0.875rem);
+            opacity: 0.95;
+            margin-top: 2px;
+        }
+
+        .logo-text .developer {
+            font-size: clamp(0.7rem, 2.5vw, 0.75rem);
+            opacity: 0.8;
+            margin-top: 2px;
         }
 
         .nav-tabs {
             display: flex;
-            gap: 0.5rem;
+            gap: var(--space-sm);
             flex-wrap: wrap;
+            justify-content: center;
         }
 
         .nav-tab {
-            padding: 0.625rem 1.25rem;
+            padding: 0.75rem 1rem;
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
+            border-radius: var(--radius-lg);
             color: white;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-family: 'Sarabun', sans-serif;
-            font-size: 0.9rem;
+            font-family: var(--font-body);
+            font-size: clamp(0.8rem, 3vw, 0.9rem);
             font-weight: 500;
+            white-space: nowrap;
+            min-height: var(--touch-target);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .nav-tab:hover {
@@ -109,108 +213,265 @@
             transform: translateY(-2px);
         }
 
+        .nav-tab:active {
+            transform: translateY(0);
+        }
+
         .nav-tab.active {
             background: var(--accent);
             border-color: var(--accent);
             color: var(--primary);
             font-weight: 600;
+            box-shadow: var(--shadow-md);
         }
 
-        /* Main Container */
+        .landing-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            height: 100dvh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            padding: var(--space-xl) var(--space-md);
+        }
+
+        .landing-page.hidden {
+            display: none;
+        }
+
+        .landing-container {
+            max-width: 1200px;
+            width: 100%;
+            animation: fadeInUp 0.8s ease;
+            margin: auto;
+        }
+
+        .landing-header {
+            text-align: center;
+            margin-bottom: var(--space-2xl);
+            color: white;
+        }
+
+        .landing-logo {
+            width: clamp(80px, 20vw, 120px);
+            height: clamp(80px, 20vw, 120px);
+            margin: 0 auto var(--space-lg);
+            background: white;
+            border-radius: var(--radius-full);
+            padding: 10px;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .landing-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .landing-header h1 {
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: var(--space-sm);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            line-height: 1.2;
+        }
+
+        .landing-header p {
+            font-size: clamp(1rem, 3vw, 1.25rem);
+            opacity: 0.95;
+            margin-bottom: var(--space-xs);
+        }
+
+        .landing-header .developer {
+            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+            opacity: 0.8;
+            margin-top: var(--space-sm);
+        }
+
+        .form-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: clamp(1rem, 3vw, 2rem);
+            margin-top: var(--space-xl);
+        }
+
+        .form-card {
+            background: white;
+            border-radius: var(--radius-2xl);
+            padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1rem, 3vw, 2rem);
+            box-shadow: var(--shadow-xl);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+        }
+
+        .form-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-card:active {
+            transform: translateY(-5px) scale(1.01);
+        }
+
+        .form-card-icon {
+            width: clamp(60px, 15vw, 80px);
+            height: clamp(60px, 15vw, 80px);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: var(--radius-xl);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(2rem, 6vw, 2.5rem);
+            margin: 0 auto var(--space-lg);
+            box-shadow: var(--shadow-md);
+        }
+
+        .form-card h3 {
+            font-size: clamp(1.1rem, 4vw, 1.4rem);
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: var(--space-sm);
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        .form-card-code {
+            text-align: center;
+            font-size: clamp(0.8rem, 3vw, 0.9rem);
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: var(--space-md);
+        }
+
+        .form-card-desc {
+            text-align: center;
+            color: var(--text-light);
+            font-size: clamp(0.85rem, 3vw, 0.95rem);
+            line-height: 1.6;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         .main-container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: clamp(1rem, 3vw, 2rem);
             display: grid;
             grid-template-columns: 1fr 350px;
-            gap: 2rem;
+            gap: clamp(1rem, 3vw, 2rem);
+            align-items: start;
         }
 
-        @media (max-width: 1024px) {
-            .main-container {
-                grid-template-columns: 1fr;
-                display: flex;
-                flex-direction: column;
-            }
-            .form-section {
-                order: 1;
-                width: 100%;
-            }
-            .history-panel {
-                order: 2;
-                width: 100%;
-                position: relative !important;
-                top: 0 !important;
-            }
-        }
-
-        /* Form Section */
         .form-section {
             background: var(--card-bg);
-            border-radius: 16px;
+            border-radius: var(--radius-2xl);
             box-shadow: var(--shadow-lg);
             overflow: hidden;
+            animation: fadeIn 0.5s ease;
         }
 
         .form-header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
             color: white;
-            padding: 1.5rem 2rem;
+            padding: clamp(1rem, 3vw, 1.5rem) clamp(1rem, 4vw, 2rem);
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: var(--space-md);
         }
 
         .form-header-icon {
-            width: 48px;
-            height: 48px;
+            width: clamp(40px, 10vw, 48px);
+            height: clamp(40px, 10vw, 48px);
             background: var(--accent);
-            border-radius: 12px;
+            border-radius: var(--radius-lg);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: clamp(1.25rem, 5vw, 1.5rem);
+            flex-shrink: 0;
         }
 
         .form-header h2 {
-            font-family: 'Prompt', sans-serif;
-            font-size: 1.25rem;
+            font-size: clamp(1rem, 4vw, 1.25rem);
             font-weight: 600;
+            line-height: 1.3;
         }
 
         .form-header p {
-            font-size: 0.875rem;
-            opacity: 0.9;
+            font-size: clamp(0.8rem, 3vw, 0.875rem);
+            opacity: 0.95;
+            margin-top: 2px;
         }
 
         .form-body {
-            padding: 2rem;
+            padding: clamp(1rem, 4vw, 2rem);
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: var(--space-lg);
         }
 
         .form-group label {
             display: block;
             font-weight: 500;
-            margin-bottom: 0.5rem;
+            margin-bottom: var(--space-sm);
             color: var(--text);
+            font-size: var(--text-base);
         }
 
         .form-group label .required {
             color: var(--danger);
+            margin-left: 2px;
+        }
+
+        .form-group label span {
+            font-size: var(--text-sm);
+            color: var(--text-light);
+            font-weight: 400;
         }
 
         .form-control {
             width: 100%;
-            padding: 0.75rem 1rem;
+            padding: clamp(0.75rem, 3vw, 1rem);
+            min-height: var(--input-height);
             border: 2px solid var(--border);
-            border-radius: 8px;
-            font-family: 'Sarabun', sans-serif;
-            font-size: 1rem;
+            border-radius: var(--radius-lg);
+            font-family: var(--font-body);
+            font-size: var(--text-base);
             transition: all 0.3s ease;
             background: white;
+            color: var(--text);
+            -webkit-appearance: none;
+            appearance: none;
         }
 
         .form-control:focus {
@@ -219,59 +480,101 @@
             box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.1);
         }
 
+        .form-control::placeholder {
+            color: var(--text-lighter);
+        }
+
+        select.form-control {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23718096' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 12px;
+            padding-right: 2.5rem;
+        }
+
         .form-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-md);
         }
 
         .checkbox-group {
             display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-top: 0.5rem;
+            flex-direction: column;
+            gap: var(--space-md);
+            margin-top: var(--space-sm);
         }
 
         .checkbox-item {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: var(--space-md);
             cursor: pointer;
+            padding: var(--space-sm);
+            border-radius: var(--radius-md);
+            transition: background 0.2s ease;
+            min-height: var(--touch-target);
+        }
+
+        .checkbox-item:hover {
+            background: var(--bg);
         }
 
         .checkbox-item input[type="checkbox"],
         .checkbox-item input[type="radio"] {
-            width: 18px;
-            height: 18px;
+            width: 22px;
+            height: 22px;
+            min-width: 22px;
+            min-height: 22px;
             accent-color: var(--primary);
             cursor: pointer;
+            margin: 0;
+        }
+
+        .checkbox-item label {
+            margin: 0;
+            cursor: pointer;
+            font-size: var(--text-base);
+            line-height: 1.5;
         }
 
         .form-actions {
             display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-            padding-top: 1.5rem;
+            flex-direction: column;
+            gap: var(--space-md);
+            margin-top: var(--space-xl);
+            padding-top: var(--space-lg);
             border-top: 2px solid var(--border);
         }
 
         .btn {
-            padding: 0.875rem 1.5rem;
-            border-radius: 8px;
-            font-family: 'Sarabun', sans-serif;
-            font-size: 1rem;
+            padding: clamp(0.875rem, 3vw, 1rem) clamp(1rem, 4vw, 1.5rem);
+            min-height: var(--button-height);
+            border-radius: var(--radius-lg);
+            font-family: var(--font-body);
+            font-size: var(--text-base);
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            justify-content: center;
+            gap: var(--space-sm);
             border: none;
+            white-space: nowrap;
+            text-align: center;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
         }
 
         .btn-primary {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
             color: white;
+            box-shadow: var(--shadow);
         }
 
         .btn-primary:hover {
@@ -280,8 +583,9 @@
         }
 
         .btn-success {
-            background: linear-gradient(135deg, var(--success) 0%, #48bb78 100%);
+            background: linear-gradient(135deg, var(--success) 0%, var(--success-light) 100%);
             color: white;
+            box-shadow: var(--shadow);
         }
 
         .btn-success:hover {
@@ -300,114 +604,11 @@
             color: white;
         }
 
-        /* History Panel */
-        .history-panel {
-            background: var(--card-bg);
-            border-radius: 16px;
-            box-shadow: var(--shadow-lg);
-            overflow: hidden;
-            height: fit-content;
-        }
-        
-        /* Sticky เฉพาะบนหน้าจอใหญ่ */
-        @media (min-width: 1025px) {
-            .history-panel {
-                position: sticky;
-                top: 100px;
-            }
-        }
-
-        .history-header {
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
-            color: var(--primary);
-            padding: 1.25rem 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .history-header h3 {
-            font-family: 'Prompt', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .history-count {
-            background: var(--primary);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.875rem;
-            font-weight: 600;
-        }
-
-        .history-actions {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-        }
-
-        .history-list {
-            max-height: 500px;
-            overflow-y: auto;
-        }
-
-        .history-item {
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid var(--border);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .history-item:hover {
-            background: var(--bg);
-        }
-
-        .history-item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 0.5rem;
-        }
-
-        .history-item-type {
-            font-size: 0.75rem;
-            padding: 0.25rem 0.5rem;
-            background: var(--primary);
-            color: white;
-            border-radius: 4px;
-            font-weight: 500;
-        }
-
-        .history-item-date {
-            font-size: 0.75rem;
-            color: var(--text-light);
-        }
-
-        .history-item-name {
-            font-weight: 600;
-            color: var(--text);
-            margin-bottom: 0.25rem;
-        }
-
-        .history-item-detail {
-            font-size: 0.875rem;
-            color: var(--text-light);
-        }
-
-        .history-item-actions {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 0.75rem;
-        }
-
         .btn-sm {
-            padding: 0.375rem 0.75rem;
-            font-size: 0.8rem;
-            border-radius: 6px;
+            padding: 0.5rem 1rem;
+            font-size: var(--text-sm);
+            border-radius: var(--radius-md);
+            min-height: 36px;
         }
 
         .btn-danger {
@@ -416,11 +617,113 @@
         }
 
         .btn-danger:hover {
-            background: #c53030;
+            background: var(--danger-light);
+        }
+        .history-panel {
+            background: var(--card-bg);
+            border-radius: var(--radius-2xl);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            height: fit-content;
+            animation: fadeIn 0.5s ease 0.1s both;
+        }
+
+        .history-header {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            color: var(--primary);
+            padding: clamp(1rem, 3vw, 1.25rem) clamp(1rem, 3vw, 1.5rem);
+        }
+
+        .history-header h3 {
+            font-size: clamp(1rem, 3.5vw, 1.1rem);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-sm);
+        }
+
+        .history-count {
+            background: var(--primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--radius-full);
+            font-size: var(--text-sm);
+            font-weight: 600;
+        }
+
+        .history-actions {
+            display: flex;
+            gap: var(--space-sm);
+            margin-top: var(--space-sm);
+        }
+
+        .history-list {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            padding: var(--space-md) clamp(1rem, 3vw, 1.5rem);
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .history-item:hover {
+            background: var(--bg);
+        }
+
+        .history-item:active {
+            background: var(--bg-secondary);
+        }
+
+        .history-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--space-sm);
+            gap: var(--space-sm);
+        }
+
+        .history-item-type {
+            font-size: var(--text-xs);
+            padding: 0.25rem 0.5rem;
+            background: var(--primary);
+            color: white;
+            border-radius: var(--radius-sm);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .history-item-date {
+            font-size: var(--text-xs);
+            color: var(--text-light);
+            text-align: right;
+        }
+
+        .history-item-name {
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: var(--space-xs);
+            font-size: var(--text-base);
+        }
+
+        .history-item-detail {
+            font-size: var(--text-sm);
+            color: var(--text-light);
+        }
+
+        .history-item-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-sm);
+            margin-top: var(--space-md);
         }
 
         .empty-history {
-            padding: 3rem 1.5rem;
+            padding: var(--space-2xl) var(--space-lg);
             text-align: center;
             color: var(--text-light);
         }
@@ -428,23 +731,24 @@
         .empty-history svg {
             width: 64px;
             height: 64px;
-            margin-bottom: 1rem;
+            margin-bottom: var(--space-md);
             opacity: 0.5;
         }
 
-        /* Modal */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
+            background: var(--overlay-bg);
+            backdrop-filter: blur(4px);
             display: none;
             align-items: center;
             justify-content: center;
             z-index: 1000;
-            padding: 1rem;
+            padding: var(--space-md);
+            overflow-y: auto;
         }
 
         .modal-overlay.active {
@@ -453,38 +757,58 @@
 
         .modal-content {
             background: white;
-            border-radius: 16px;
+            border-radius: var(--radius-2xl);
             max-width: 900px;
             width: 100%;
             max-height: 90vh;
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            box-shadow: var(--shadow-xl);
+            animation: modalSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
         .modal-header {
-            padding: 1.5rem;
+            padding: clamp(1rem, 3vw, 1.5rem);
             border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: var(--space-md);
         }
 
         .modal-header h3 {
-            font-family: 'Prompt', sans-serif;
-            font-size: 1.25rem;
+            font-size: clamp(1.1rem, 4vw, 1.25rem);
+            flex: 1;
         }
 
         .modal-close {
-            width: 40px;
-            height: 40px;
+            width: clamp(36px, 10vw, 40px);
+            height: clamp(36px, 10vw, 40px);
+            min-width: var(--touch-target);
+            min-height: var(--touch-target);
             border: none;
             background: var(--bg);
-            border-radius: 50%;
+            border-radius: var(--radius-full);
             cursor: pointer;
-            font-size: 1.5rem;
+            font-size: clamp(1.25rem, 4vw, 1.5rem);
             color: var(--text-light);
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
         }
 
         .modal-close:hover {
@@ -495,42 +819,30 @@
         .modal-body {
             flex: 1;
             overflow-y: auto;
-            padding: 1rem;
-            background: #e2e8f0;
+            padding: clamp(0.5rem, 2vw, 1rem);
+            background: var(--bg-secondary);
         }
 
         .modal-footer {
-            padding: 1.5rem;
+            padding: clamp(1rem, 3vw, 1.5rem);
             border-top: 1px solid var(--border);
             display: flex;
-            gap: 1rem;
-            justify-content: flex-end;
+            flex-direction: column;
+            gap: var(--space-md);
         }
 
-        /* Preview Area */
-        #previewArea {
-            background: white;
-            min-height: 200px;
-        }
-
-        #previewArea .print-document {
-            margin: 0 auto;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-        }
-
-        /* Settings Modal */
         .settings-modal .modal-content {
             max-width: 600px;
         }
 
         .settings-modal .modal-body {
             background: white;
-            padding: 2rem;
+            padding: clamp(1rem, 4vw, 2rem);
         }
 
         .settings-group {
-            margin-bottom: 1.5rem;
-            padding-bottom: 1.5rem;
+            margin-bottom: var(--space-lg);
+            padding-bottom: var(--space-lg);
             border-bottom: 1px solid var(--border);
         }
 
@@ -541,19 +853,82 @@
         }
 
         .settings-group h4 {
-            font-family: 'Prompt', sans-serif;
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
+            font-size: clamp(1rem, 3.5vw, 1.1rem);
+            margin-bottom: var(--space-md);
             color: var(--primary);
         }
 
-        /* Print Document Styles */
+        #previewArea {
+            background: white;
+            min-height: 200px;
+        }
+
+        #previewArea .print-document {
+            margin: 0 auto;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .loading {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid var(--border);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 1rem 1.5rem;
+            background: var(--success);
+            color: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 2000;
+            font-size: var(--text-base);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.error {
+            background: var(--danger);
+        }
+
         .print-document {
             background: white;
             width: 210mm;
             min-height: 297mm;
-            padding: 8mm 10mm 8mm 10mm;
-            font-family: 'Sarabun', sans-serif;
+            padding: 8mm 10mm;
+            font-family: var(--font-body);
             font-size: 15px;
             line-height: 1.5;
             color: black;
@@ -644,32 +1019,6 @@
             line-height: 1;
         }
 
-        .print-document .inline-checkbox {
-            display: inline-flex;
-            align-items: flex-start;
-            gap: 6px;
-            line-height: 1.4;
-            vertical-align: top;
-        }
-
-        .print-document .inline-checkbox .doc-checkbox {
-            margin-top: 3px;
-            position: relative;
-            flex-shrink: 0;
-        }
-
-        .print-document .inline-checkbox .doc-checkbox.checked::after {
-            content: '✓';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 11px;
-            font-weight: bold;
-            color: #333;
-            line-height: 1;
-        }
-
         .print-document .signature-section {
             margin-top: 12px;
             text-align: right;
@@ -678,10 +1027,6 @@
 
         .print-document .signature-section p {
             margin: 2px 0;
-        }
-
-        .print-document .signature-line {
-            margin-top: 20px;
         }
 
         .print-document .approval-grid {
@@ -705,18 +1050,6 @@
 
         .print-document .approval-box p {
             margin: 2px 0;
-            display: flex;
-            align-items: baseline;
-            gap: 4px;
-        }
-
-        .print-document .approval-box .sig-area {
-            margin-top: 12px;
-            text-align: center;
-        }
-
-        .print-document .approval-box .sig-area p {
-            justify-content: center;
         }
 
         .print-document .approval-center {
@@ -724,255 +1057,17 @@
             margin: 8px auto 0;
         }
 
-        .print-document .dotted {
-            border-bottom: 1px dotted #333;
-            display: inline-block;
-            min-width: 60px;
-            vertical-align: text-bottom;
-            margin-bottom: 2px;
-        }
-
-        .print-document .dotted-long {
-            border-bottom: 1px dotted #333;
-            display: inline-block;
-            min-width: 100px;
-            vertical-align: text-bottom;
-            margin-bottom: 2px;
-        }
-        
-        .print-document .sig-name {
-            display: block;
-            text-align: center;
-            margin-top: -2px;
-        }
-
-        /* Loading Spinner */
-        .loading {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 9999;
-        }
-
-        .loading.active {
-            display: block;
-        }
-
-        .spinner {
-            border: 4px solid var(--border);
-            border-top: 4px solid var(--primary);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Toast */
-        .toast {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            padding: 1rem 1.5rem;
-            background: var(--success);
-            color: white;
-            border-radius: 8px;
-            box-shadow: var(--shadow-lg);
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: 2000;
-        }
-
-        .toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .toast.error {
-            background: var(--danger);
-        }
-
-        /* Landing Page */
-        .landing-page {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            height: 100dvh; /* Dynamic viewport height สำหรับมือถือ */
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            overflow-y: auto; /* เปลี่ยนจาก hidden เป็น auto */
-            overflow-x: hidden;
-            -webkit-overflow-scrolling: touch; /* Smooth scroll บน iOS */
-            padding: 20px 0;
-        }
-
-        .landing-page.hidden {
-            display: none;
-        }
-
-        .landing-container {
-            max-width: 1200px;
-            width: 90%;
-            animation: fadeInUp 0.8s ease;
-            margin: auto; /* จัดกลาง */
-            padding: 20px 0;
-        }
-
-        .landing-header {
-            text-align: center;
-            margin-bottom: 3rem;
-            color: white;
-        }
-
-        .landing-logo {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 1.5rem;
-            background: white;
-            border-radius: 50%;
-            padding: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .landing-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .landing-header h1 {
-            font-family: 'Prompt', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .landing-header p {
-            font-size: 1.25rem;
-            opacity: 0.95;
-            margin-bottom: 0.25rem;
-        }
-
-        .landing-header .developer {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-top: 0.5rem;
-        }
-
-        .form-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .form-card {
-            background: white;
-            border-radius: 20px;
-            padding: 2.5rem 2rem;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .form-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 6px;
-            background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
-        }
-
-        .form-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
-        }
-
-        .form-card-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            margin: 0 auto 1.5rem;
-            box-shadow: 0 10px 20px rgba(26, 54, 93, 0.2);
-        }
-
-        .form-card h3 {
-            font-family: 'Prompt', sans-serif;
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-            text-align: center;
-        }
-
-        .form-card-code {
-            text-align: center;
-            font-size: 0.9rem;
-            color: var(--accent);
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .form-card-desc {
-            text-align: center;
-            color: var(--text-light);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Hidden Print Area - สำหรับพิมพ์เอกสาร */
         #printArea {
             display: none;
         }
 
-        /* ========================================
-           PRINT STYLES - แก้ไขแล้ว
-           ======================================== */
         @media print {
-            /* Reset ทุกอย่างก่อน */
             *, *::before, *::after {
                 background: transparent !important;
                 background-color: transparent !important;
                 box-shadow: none !important;
             }
             
-            /* ตั้งค่า html และ body */
             html, body {
                 width: 210mm !important;
                 height: auto !important;
@@ -982,13 +1077,11 @@
                 background-color: white !important;
             }
             
-            /* ซ่อนทุกอย่างใน body ก่อน */
             body > * {
                 display: none !important;
                 visibility: hidden !important;
             }
             
-            /* แสดงเฉพาะ printArea */
             #printArea {
                 display: block !important;
                 visibility: visible !important;
@@ -1002,12 +1095,10 @@
                 background-color: white !important;
             }
             
-            /* แสดงเนื้อหาภายใน printArea */
             #printArea * {
                 visibility: visible !important;
             }
             
-            /* ตั้งค่าเอกสาร */
             .print-document {
                 display: block !important;
                 visibility: visible !important;
@@ -1022,20 +1113,17 @@
                 background-color: white !important;
             }
             
-            /* ให้กรอบ approval-box มี background ขาว */
             .print-document .approval-box,
             .print-document .approval-grid {
                 background: white !important;
                 background-color: white !important;
             }
             
-            /* ตั้งค่าหน้ากระดาษ */
             @page {
                 size: A4 portrait;
                 margin: 10mm;
             }
             
-            /* ให้สีพิมพ์ออกมาถูกต้อง */
             .print-document,
             .print-document * {
                 -webkit-print-color-adjust: exact !important;
@@ -1043,7 +1131,6 @@
                 color-adjust: exact !important;
             }
             
-            /* ให้ border ยังคงแสดง */
             .print-document .approval-box {
                 border: 1px solid #666 !important;
             }
@@ -1053,103 +1140,80 @@
                 background: white !important;
             }
             
-            /* ป้องกันการตัดหน้า */
             .approval-grid,
             .approval-box {
                 page-break-inside: avoid !important;
             }
         }
 
-        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                display: flex;
+                flex-direction: column;
+            }
+            .form-section {
+                order: 1;
+                width: 100%;
+            }
+            .history-panel {
+                order: 2;
+                width: 100%;
+                position: relative !important;
+                top: 0 !important;
+            }
+        }
+
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
                 text-align: center;
             }
             .nav-tabs {
-                justify-content: center;
-            }
-            .main-container {
-                padding: 1rem;
-                display: flex;
-                flex-direction: column;
-            }
-            /* ให้ form section อยู่ก่อน history panel บนมือถือ */
-            .form-section {
-                order: 1;
                 width: 100%;
             }
-            .history-panel {
-                order: 2;
-                width: 100%;
-                position: relative;
-                top: 0;
-                margin-top: 1rem;
+            .nav-tab {
+                flex: 1;
+                min-width: 0;
             }
-            .form-body {
-                padding: 1.5rem;
+            .form-row {
+                grid-template-columns: 1fr;
             }
-            .form-actions {
+            .modal-footer {
                 flex-direction: column;
             }
-            .btn {
-                justify-content: center;
-            }
-            .modal-body {
-                padding: 0.5rem;
+            .modal-footer .btn {
+                width: 100%;
             }
             .print-document {
                 width: 100%;
-                height: auto;
                 padding: 5mm;
                 font-size: 11px;
             }
-            .landing-header h1 {
-                font-size: 1.75rem;
-            }
-            
-            .landing-header p {
-                font-size: 1rem;
-            }
-
-            .form-cards {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .form-card {
-                padding: 2rem 1.5rem;
-            }
-            
-            .landing-logo {
-                width: 100px;
-                height: 100px;
+            .toast {
+                bottom: 1rem;
+                right: 1rem;
+                left: 1rem;
             }
         }
-        
-        /* สำหรับหน้าจอ tablet */
-        @media (max-width: 1024px) and (min-width: 769px) {
-            .main-container {
-                grid-template-columns: 1fr;
-            }
-            .form-section {
-                order: 1;
-            }
+
+        @media (min-width: 1025px) {
             .history-panel {
-                order: 2;
-                position: relative;
-                top: 0;
+                position: sticky;
+                top: 100px;
+            }
+            .form-actions {
+                flex-direction: row;
+            }
+            .modal-footer {
+                flex-direction: row;
+                justify-content: flex-end;
             }
         }
 
-        /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-
-        .form-section, .history-panel {
-            animation: fadeIn 0.5s ease;
         }
     </style>
 </head>
@@ -1207,18 +1271,18 @@
                 <div class="logo-text">
                     <h1>ระบบยื่นเอกสารคำร้องออนไลน์</h1>
                     <p>กลุ่มงานบริหารวิชาการ โรงเรียนกระดุมทองวิทยา</p>
-                    <p style="font-size: 0.75rem; opacity: 0.8; margin-top: 2px;">พัฒนาโดย ครูนนทพัทธ์ หิรัญเรือง</p>
+                    <p class="developer">พัฒนาโดย ครูนนทพัทธ์ หิรัญเรือง</p>
                 </div>
             </div>
             <nav class="nav-tabs">
                 <button class="nav-tab active" data-form="form201">
-                    📄 ใบรับรองการเป็นนักเรียน
+                    📄 ใบรับรองฯ
                 </button>
                 <button class="nav-tab" data-form="form207">
-                    📋 ระเบียนผลการเรียน (ปพ.1)
+                    📋 ปพ.1
                 </button>
                 <button class="nav-tab" data-form="form209">
-                    📝 ใบรับรองผลการเรียน
+                    📝 ใบรับรองผล
                 </button>
             </nav>
         </div>
@@ -1228,7 +1292,7 @@
     <main class="main-container">
         <!-- Form Section -->
         <div class="form-section">
-            <!-- Form 201 -->
+            <!-- Form 201: ใบรับรองการเป็นนักเรียน -->
             <div id="form201" class="form-container">
                 <div class="form-header">
                     <div class="form-header-icon">📄</div>
@@ -1292,11 +1356,11 @@
                             <div class="checkbox-group">
                                 <label class="checkbox-item">
                                     <input type="checkbox" name="attachment" value="photo">
-                                    รูปถ่าย 1.5 นิ้ว 1 รูป
+                                    <span>รูปถ่าย 1.5 นิ้ว 1 รูป</span>
                                 </label>
                                 <label class="checkbox-item">
                                     <input type="checkbox" name="attachment" value="other">
-                                    อื่นๆ
+                                    <span>อื่นๆ</span>
                                 </label>
                             </div>
                         </div>
@@ -1308,8 +1372,8 @@
                             <button type="button" class="btn btn-primary" onclick="previewDocument('form201')">
                                 👁️ ดูตัวอย่างเอกสาร
                             </button>
-                            <button type="button" class="btn btn-success" onclick="saveAndPrint('form201')">
-                                🖨️ บันทึกและพิมพ์
+                            <button type="button" class="btn btn-success" onclick="saveDocument('form201')">
+                                💾 บันทึกเอกสาร
                             </button>
                             <button type="reset" class="btn btn-outline">
                                 🔄 ล้างข้อมูล
@@ -1319,7 +1383,7 @@
                 </div>
             </div>
 
-            <!-- Form 207 -->
+            <!-- Form 207: ระเบียนผลการเรียน -->
             <div id="form207" class="form-container" style="display: none;">
                 <div class="form-header">
                     <div class="form-header-icon">📋</div>
@@ -1375,11 +1439,11 @@
                             <div class="checkbox-group">
                                 <label class="checkbox-item">
                                     <input type="radio" name="docType" value="ปพ.1:บ" required>
-                                    ปพ.1:บ
+                                    <span>ปพ.1:บ</span>
                                 </label>
                                 <label class="checkbox-item">
                                     <input type="radio" name="docType" value="ปพ.1:พ">
-                                    ปพ.1:พ
+                                    <span>ปพ.1:พ</span>
                                 </label>
                             </div>
                         </div>
@@ -1388,19 +1452,19 @@
                             <div class="checkbox-group">
                                 <label class="checkbox-item">
                                     <input type="radio" name="purpose" value="ศึกษาต่อสถานศึกษาอื่น" required>
-                                    ศึกษาต่อสถานศึกษาอื่น
+                                    <span>ศึกษาต่อสถานศึกษาอื่น</span>
                                 </label>
                                 <label class="checkbox-item">
                                     <input type="radio" name="purpose" value="ทดแทนใบเดิมที่สูญหาย">
-                                    ทดแทนใบเดิมที่สูญหาย
+                                    <span>ทดแทนใบเดิมที่สูญหาย</span>
                                 </label>
                                 <label class="checkbox-item">
                                     <input type="radio" name="purpose" value="ใช้เป็นหลักฐานการขอรับทุนการศึกษา">
-                                    ใช้เป็นหลักฐานการขอรับทุนการศึกษา
+                                    <span>ใช้เป็นหลักฐานการขอรับทุนการศึกษา</span>
                                 </label>
                                 <label class="checkbox-item">
                                     <input type="radio" name="purpose" value="other">
-                                    อื่นๆ
+                                    <span>อื่นๆ</span>
                                 </label>
                             </div>
                         </div>
@@ -1417,11 +1481,11 @@
                             <div class="checkbox-group">
                                 <label class="checkbox-item">
                                     <input type="checkbox" name="attachment" value="photo">
-                                    รูปถ่าย ขนาด 1.5 นิ้ว จำนวน 1 แผ่น
+                                    <span>รูปถ่าย ขนาด 1.5 นิ้ว จำนวน 1 แผ่น</span>
                                 </label>
                                 <label class="checkbox-item">
                                     <input type="checkbox" name="attachment" value="lostReport">
-                                    รายงานประจำวันรับแจ้งเอกสารหาย จำนวน 1 แผ่น
+                                    <span>รายงานประจำวันรับแจ้งเอกสารหาย จำนวน 1 แผ่น</span>
                                 </label>
                             </div>
                         </div>
@@ -1429,8 +1493,8 @@
                             <button type="button" class="btn btn-primary" onclick="previewDocument('form207')">
                                 👁️ ดูตัวอย่างเอกสาร
                             </button>
-                            <button type="button" class="btn btn-success" onclick="saveAndPrint('form207')">
-                                🖨️ บันทึกและพิมพ์
+                            <button type="button" class="btn btn-success" onclick="saveDocument('form207')">
+                                💾 บันทึกเอกสาร
                             </button>
                             <button type="reset" class="btn btn-outline">
                                 🔄 ล้างข้อมูล
@@ -1440,7 +1504,7 @@
                 </div>
             </div>
 
-            <!-- Form 209 -->
+            <!-- Form 209: ใบรับรองผลการเรียน -->
             <div id="form209" class="form-container" style="display: none;">
                 <div class="form-header">
                     <div class="form-header-icon">📝</div>
@@ -1517,8 +1581,8 @@
                             <button type="button" class="btn btn-primary" onclick="previewDocument('form209')">
                                 👁️ ดูตัวอย่างเอกสาร
                             </button>
-                            <button type="button" class="btn btn-success" onclick="saveAndPrint('form209')">
-                                🖨️ บันทึกและพิมพ์
+                            <button type="button" class="btn btn-success" onclick="saveDocument('form209')">
+                                💾 บันทึกเอกสาร
                             </button>
                             <button type="reset" class="btn btn-outline">
                                 🔄 ล้างข้อมูล
@@ -1532,15 +1596,15 @@
         <!-- History Panel -->
         <aside class="history-panel">
             <div class="history-header">
-                <div>
-                    <h3>📚 ประวัติการสร้างเอกสาร</h3>
-                    <div class="history-actions">
-                        <button class="btn btn-sm btn-outline" onclick="openSettings()">
-                            ⚙️ ตั้งค่า
-                        </button>
-                    </div>
+                <h3>
+                    📚 ประวัติการสร้างเอกสาร
+                    <span class="history-count" id="historyCount">0</span>
+                </h3>
+                <div class="history-actions">
+                    <button class="btn btn-sm btn-outline" onclick="openSettings()">
+                        ⚙️ ตั้งค่า
+                    </button>
                 </div>
-                <span class="history-count" id="historyCount">0</span>
             </div>
             <div class="history-list" id="historyList">
                 <div class="empty-history">
@@ -1552,7 +1616,6 @@
             </div>
         </aside>
     </main>
-
     <!-- Preview Modal -->
     <div class="modal-overlay" id="previewModal">
         <div class="modal-content">
@@ -1572,7 +1635,7 @@
         </div>
     </div>
 
-    <!-- Hidden Print Area - สำหรับพิมพ์เอกสารโดยเฉพาะ -->
+    <!-- Hidden Print Area -->
     <div id="printArea">
         <!-- Document for printing will be rendered here -->
     </div>
@@ -1626,7 +1689,6 @@
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
         import { getFirestore, collection, addDoc, getDocs, getDoc, doc, updateDoc, deleteDoc, query, orderBy, limit, serverTimestamp, setDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
-        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyB9n6KwCPeCN4QzQj4tYWo26I6SUgJw3s0",
             authDomain: "academicform-536d0.firebaseapp.com",
@@ -1636,17 +1698,14 @@
             appId: "1:764850134638:web:d88a086a8f23a67586907f"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Export to global scope
         window.db = db;
         window.firestore = { collection, addDoc, getDocs, getDoc, doc, updateDoc, deleteDoc, query, orderBy, limit, serverTimestamp, setDoc };
 
         console.log('Firebase initialized successfully!');
         
-        // Load initial data
         window.addEventListener('DOMContentLoaded', () => {
             loadSettings();
             loadHistory();
@@ -1654,7 +1713,6 @@
     </script>
 
     <script>
-        // Default Settings
         const DEFAULT_SETTINGS = {
             registrarName: 'นายนนทพัทธ์ หิรัญเรือง',
             academicHeadName: 'นางสาวสุพัฒตา ศรีเมือง',
@@ -1662,33 +1720,25 @@
         };
 
         let currentSettings = { ...DEFAULT_SETTINGS };
+        const ADMIN_PASSWORD = '0000';
 
-        // Select form from landing page
         function selectForm(formId) {
-            // Hide landing page
             document.getElementById('landingPage').classList.add('hidden');
-            
-            // Show the selected form
             switchForm(formId);
         }
 
-        // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             setupEventListeners();
             setDefaultDates();
         });
 
-        // Setup event listeners
         function setupEventListeners() {
-            // Tab navigation
             document.querySelectorAll('.nav-tab').forEach(tab => {
                 tab.addEventListener('click', function() {
-                    const formId = this.dataset.form;
-                    switchForm(formId);
+                    switchForm(this.dataset.form);
                 });
             });
 
-            // Form 201 - Other attachment toggle
             const form201Other = document.querySelector('#form201Data input[value="other"]');
             if (form201Other) {
                 form201Other.addEventListener('change', function() {
@@ -1696,7 +1746,6 @@
                 });
             }
 
-            // Form 207 - Other purpose toggle
             document.querySelectorAll('#form207Data input[name="purpose"]').forEach(radio => {
                 radio.addEventListener('change', function() {
                     document.getElementById('otherPurposeGroup207').style.display = 
@@ -1704,7 +1753,6 @@
                 });
             });
 
-            // Modal overlay click to close
             document.querySelectorAll('.modal-overlay').forEach(modal => {
                 modal.addEventListener('click', function(e) {
                     if (e.target === this) {
@@ -1713,7 +1761,6 @@
                 });
             });
 
-            // Escape key to close modals
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape') {
                     document.querySelectorAll('.modal-overlay').forEach(modal => {
@@ -1723,7 +1770,6 @@
             });
         }
 
-        // Set default dates
         function setDefaultDates() {
             const today = new Date().toISOString().split('T')[0];
             document.querySelectorAll('input[type="date"]').forEach(input => {
@@ -1733,7 +1779,6 @@
             });
         }
 
-        // Switch between forms
         function switchForm(formId) {
             document.querySelectorAll('.form-container').forEach(form => {
                 form.style.display = 'none';
@@ -1748,7 +1793,6 @@
             });
         }
 
-        // Get form data
         function getFormData(formId) {
             const form = document.getElementById(formId + 'Data');
             const formData = new FormData(form);
@@ -1766,13 +1810,11 @@
             return data;
         }
 
-        // Validate form
         function validateForm(formId) {
             const form = document.getElementById(formId + 'Data');
             return form.checkValidity();
         }
 
-        // Format Thai date
         function formatThaiDate(dateString) {
             if (!dateString) return '....................';
             const date = new Date(dateString);
@@ -1784,12 +1826,10 @@
             return `${day} ${month} ${year}`;
         }
 
-        // Create checkbox HTML
         function checkbox(isChecked) {
             return `<span class="doc-checkbox${isChecked ? ' checked' : ''}"></span>`;
         }
 
-        // Generate document HTML
         function generateDocumentHTML(formId, data) {
             const logoUrl = 'https://nonthaphathr.github.io/uploadimg/logoschool.png';
             
@@ -1979,8 +2019,6 @@
             }
             return '';
         }
-
-        // Preview document
         function previewDocument(formId) {
             if (!validateForm(formId)) {
                 showToast('กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน', 'error');
@@ -1991,33 +2029,23 @@
             const data = getFormData(formId);
             const html = generateDocumentHTML(formId, data);
             
-            // Show in preview area (inside modal)
             document.getElementById('previewArea').innerHTML = html;
-            
-            // Also prepare print area (hidden, for printing)
             document.getElementById('printArea').innerHTML = html;
-            
             document.getElementById('previewModal').classList.add('active');
         }
 
-        // Close modal
         function closeModal(modalId) {
             document.getElementById(modalId).classList.remove('active');
         }
 
-        // Print document - แก้ไขฟังก์ชันนี้
         function printDocument() {
-            // ปิด modal ก่อนพิมพ์เพื่อไม่ให้ติด modal overlay
             closeModal('previewModal');
-            
-            // รอให้ modal ปิดสนิทก่อนพิมพ์
             setTimeout(() => {
                 window.print();
             }, 100);
         }
 
-        // Save and print
-        async function saveAndPrint(formId) {
+        async function saveDocument(formId) {
             if (!validateForm(formId)) {
                 showToast('กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน', 'error');
                 document.getElementById(formId + 'Data').reportValidity();
@@ -2026,10 +2054,13 @@
 
             const data = getFormData(formId);
             await saveToFirestore(formId, data);
-            previewDocument(formId);
+            
+            const html = generateDocumentHTML(formId, data);
+            document.getElementById('previewArea').innerHTML = html;
+            document.getElementById('printArea').innerHTML = html;
+            document.getElementById('previewModal').classList.add('active');
         }
 
-        // Save to Firestore
         async function saveToFirestore(formId, data) {
             try {
                 showLoading(true);
@@ -2070,7 +2101,6 @@
             }
         }
 
-        // Load history from Firestore
         async function loadHistory() {
             try {
                 showLoading(true);
@@ -2152,7 +2182,6 @@
             }
         }
 
-        // View history record
         async function viewHistoryRecord(id) {
             try {
                 showLoading(true);
@@ -2163,12 +2192,8 @@
                     const record = docSnap.data();
                     const html = generateDocumentHTML(record.formId, record.data);
                     
-                    // Show in preview area (inside modal)
                     document.getElementById('previewArea').innerHTML = html;
-                    
-                    // Also prepare print area (hidden, for printing)
                     document.getElementById('printArea').innerHTML = html;
-                    
                     document.getElementById('previewModal').classList.add('active');
                 } else {
                     showToast('ไม่พบข้อมูล', 'error');
@@ -2181,15 +2206,10 @@
             }
         }
 
-        // รหัสผ่านสำหรับแก้ไข/ลบ
-        const ADMIN_PASSWORD = '0000';
-
-        // ฟังก์ชันตรวจสอบรหัสผ่าน
         function verifyPassword(action) {
             return new Promise((resolve) => {
                 const password = prompt(`กรุณากรอกรหัสผ่านเพื่อ${action}:`);
                 if (password === null) {
-                    // ผู้ใช้กด Cancel
                     resolve(false);
                 } else if (password === ADMIN_PASSWORD) {
                     resolve(true);
@@ -2200,9 +2220,7 @@
             });
         }
 
-        // Load history record to form
         async function loadHistoryRecord(id) {
-            // ตรวจสอบรหัสผ่านก่อน
             const isAuthorized = await verifyPassword('แก้ไขเอกสาร');
             if (!isAuthorized) return;
 
@@ -2248,9 +2266,7 @@
             }
         }
 
-        // Delete history record
         async function deleteHistoryRecord(id) {
-            // ตรวจสอบรหัสผ่านก่อน
             const isAuthorized = await verifyPassword('ลบเอกสาร');
             if (!isAuthorized) return;
 
@@ -2271,7 +2287,6 @@
             }
         }
 
-        // Settings Functions
         function openSettings() {
             document.getElementById('registrarName').value = currentSettings.registrarName;
             document.getElementById('academicHeadName').value = currentSettings.academicHeadName;
@@ -2289,7 +2304,6 @@
             try {
                 showLoading(true);
                 
-                // Save to Firestore using setDoc with merge
                 const settingsRef = window.firestore.doc(window.db, 'settings', 'officials');
                 await window.firestore.setDoc(settingsRef, newSettings, { merge: true });
 
@@ -2312,7 +2326,6 @@
                 if (docSnap.exists()) {
                     currentSettings = { ...DEFAULT_SETTINGS, ...docSnap.data() };
                 } else {
-                    // Initialize with default settings
                     currentSettings = { ...DEFAULT_SETTINGS };
                 }
             } catch (error) {
@@ -2321,7 +2334,6 @@
             }
         }
 
-        // Show/Hide loading
         function showLoading(show) {
             const loading = document.getElementById('loading');
             if (show) {
@@ -2331,7 +2343,6 @@
             }
         }
 
-        // Show toast notification
         function showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
             const toastMessage = document.getElementById('toastMessage');
