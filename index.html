@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบยื่นขอเอกสารคำร้อง - กลุ่มงานบริหารวิชาการ</title>
+    <title>ระบบยื่นเอกสารคำร้องออนไลน์ - กลุ่มงานบริหารวิชาการ</title>
     <link rel="icon" type="image/png" href="https://nonthaphathr.github.io/uploadimg/logoschool.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -129,9 +129,18 @@
         @media (max-width: 1024px) {
             .main-container {
                 grid-template-columns: 1fr;
+                display: flex;
+                flex-direction: column;
+            }
+            .form-section {
+                order: 1;
+                width: 100%;
             }
             .history-panel {
                 order: 2;
+                width: 100%;
+                position: relative !important;
+                top: 0 !important;
             }
         }
 
@@ -298,8 +307,14 @@
             box-shadow: var(--shadow-lg);
             overflow: hidden;
             height: fit-content;
-            position: sticky;
-            top: 100px;
+        }
+        
+        /* Sticky เฉพาะบนหน้าจอใหญ่ */
+        @media (min-width: 1025px) {
+            .history-panel {
+                position: sticky;
+                top: 100px;
+            }
         }
 
         .history-header {
@@ -794,12 +809,16 @@
             left: 0;
             width: 100%;
             height: 100vh;
+            height: 100dvh; /* Dynamic viewport height สำหรับมือถือ */
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 10000;
-            overflow: hidden;
+            overflow-y: auto; /* เปลี่ยนจาก hidden เป็น auto */
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch; /* Smooth scroll บน iOS */
+            padding: 20px 0;
         }
 
         .landing-page.hidden {
@@ -810,6 +829,8 @@
             max-width: 1200px;
             width: 90%;
             animation: fadeInUp 0.8s ease;
+            margin: auto; /* จัดกลาง */
+            padding: 20px 0;
         }
 
         .landing-header {
@@ -1050,6 +1071,20 @@
             }
             .main-container {
                 padding: 1rem;
+                display: flex;
+                flex-direction: column;
+            }
+            /* ให้ form section อยู่ก่อน history panel บนมือถือ */
+            .form-section {
+                order: 1;
+                width: 100%;
+            }
+            .history-panel {
+                order: 2;
+                width: 100%;
+                position: relative;
+                top: 0;
+                margin-top: 1rem;
             }
             .form-body {
                 padding: 1.5rem;
@@ -1070,7 +1105,7 @@
                 font-size: 11px;
             }
             .landing-header h1 {
-                font-size: 2rem;
+                font-size: 1.75rem;
             }
             
             .landing-header p {
@@ -1084,6 +1119,26 @@
 
             .form-card {
                 padding: 2rem 1.5rem;
+            }
+            
+            .landing-logo {
+                width: 100px;
+                height: 100px;
+            }
+        }
+        
+        /* สำหรับหน้าจอ tablet */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+            .form-section {
+                order: 1;
+            }
+            .history-panel {
+                order: 2;
+                position: relative;
+                top: 0;
             }
         }
 
@@ -1106,7 +1161,7 @@
                 <div class="landing-logo">
                     <img src="https://nonthaphathr.github.io/uploadimg/logoschool.png" alt="โลโก้โรงเรียน">
                 </div>
-                <h1>ระบบยื่นขอเอกสารคำร้อง</h1>
+                <h1>ระบบยื่นเอกสารคำร้องออนไลน์</h1>
                 <p>กลุ่มงานบริหารวิชาการ โรงเรียนกระดุมทองวิทยา</p>
                 <p class="developer">พัฒนาโดย ครูนนทพัทธ์ หิรัญเรือง</p>
             </div>
@@ -1124,7 +1179,7 @@
                     <h3>ระเบียนผลการเรียน</h3>
                     <div class="form-card-code">วก.กทว.207 (ปพ.1)</div>
                     <p class="form-card-desc">
-                        แบบคำร้องขอระเบียนแสดงผลการเรียน ปพ.1:บ / ปพ.1:พ (เกรด 4 เทอม/5 เทอม) สำหรับนักเรียนปัจจุบันที่ต้องการใช้ในการศึกษาต่อ
+                        แบบคำร้องขอระเบียนแสดงผลการเรียน ปพ.1:บ / ปพ.1:พ (เกรด 4 เทอม / 5 เทอม) สำหรับนักเรียนปัจจุบันที่ต้องการใช้ในการศึกษาต่อ
                     </p>
                 </div>
                 <div class="form-card" onclick="selectForm('form209')">
@@ -1150,7 +1205,7 @@
             <div class="logo-section">
                 <img src="https://nonthaphathr.github.io/uploadimg/logoschool.png" alt="โลโก้โรงเรียน">
                 <div class="logo-text">
-                    <h1>ระบบยื่นขอเอกสารคำร้อง</h1>
+                    <h1>ระบบยื่นเอกสารคำร้องออนไลน์</h1>
                     <p>กลุ่มงานบริหารวิชาการ โรงเรียนกระดุมทองวิทยา</p>
                     <p style="font-size: 0.75rem; opacity: 0.8; margin-top: 2px;">พัฒนาโดย ครูนนทพัทธ์ หิรัญเรือง</p>
                 </div>
