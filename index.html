@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบเอกสารคำร้อง - ฝ่ายบริหารงานวิชาการ</title>
+    <title>ระบบยื่นขอเอกสารคำร้อง - กลุ่มงานบริหารวิชาการ</title>
     <link rel="icon" type="image/png" href="https://nonthaphathr.github.io/uploadimg/logoschool.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -492,6 +492,17 @@
             justify-content: flex-end;
         }
 
+        /* Preview Area */
+        #previewArea {
+            background: white;
+            min-height: 200px;
+        }
+
+        #previewArea .print-document {
+            margin: 0 auto;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
         /* Settings Modal */
         .settings-modal .modal-content {
             max-width: 600px;
@@ -553,8 +564,8 @@
         }
 
         .print-document .doc-logo {
-            width: 55px;
-            height: 55px;
+            width: 110px;
+            height: 110px;
         }
 
         .print-document .doc-school-info {
@@ -719,7 +730,6 @@
             text-align: center;
             margin-top: -2px;
         }
-        }
 
         /* Loading Spinner */
         .loading {
@@ -777,87 +787,255 @@
             background: var(--danger);
         }
 
-        /* Print Styles */
+        /* Landing Page */
+        .landing-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            overflow: hidden;
+        }
+
+        .landing-page.hidden {
+            display: none;
+        }
+
+        .landing-container {
+            max-width: 1200px;
+            width: 90%;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .landing-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
+        }
+
+        .landing-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1.5rem;
+            background: white;
+            border-radius: 50%;
+            padding: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .landing-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .landing-header h1 {
+            font-family: 'Prompt', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .landing-header p {
+            font-size: 1.25rem;
+            opacity: 0.95;
+            margin-bottom: 0.25rem;
+        }
+
+        .landing-header .developer {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        .form-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+        }
+
+        .form-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+        }
+
+        .form-card-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 10px 20px rgba(26, 54, 93, 0.2);
+        }
+
+        .form-card h3 {
+            font-family: 'Prompt', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .form-card-code {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .form-card-desc {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hidden Print Area - สำหรับพิมพ์เอกสาร */
+        #printArea {
+            display: none;
+        }
+
+        /* ========================================
+           PRINT STYLES - แก้ไขแล้ว
+           ======================================== */
         @media print {
-            * {
+            /* Reset ทุกอย่างก่อน */
+            *, *::before, *::after {
+                background: transparent !important;
+                background-color: transparent !important;
+                box-shadow: none !important;
+            }
+            
+            /* ตั้งค่า html และ body */
+            html, body {
+                width: 210mm !important;
+                height: auto !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                background: white !important;
+                background-color: white !important;
+            }
+            
+            /* ซ่อนทุกอย่างใน body ก่อน */
+            body > * {
+                display: none !important;
+                visibility: hidden !important;
+            }
+            
+            /* แสดงเฉพาะ printArea */
+            #printArea {
+                display: block !important;
+                visibility: visible !important;
+                position: absolute !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                background: white !important;
+                background-color: white !important;
+            }
+            
+            /* แสดงเนื้อหาภายใน printArea */
+            #printArea * {
+                visibility: visible !important;
+            }
+            
+            /* ตั้งค่าเอกสาร */
+            .print-document {
+                display: block !important;
+                visibility: visible !important;
+                width: 100% !important;
+                min-height: auto !important;
+                padding: 5mm 10mm !important;
+                margin: 0 !important;
+                box-shadow: none !important;
+                font-size: 14px !important;
+                page-break-inside: avoid !important;
+                background: white !important;
+                background-color: white !important;
+            }
+            
+            /* ให้กรอบ approval-box มี background ขาว */
+            .print-document .approval-box,
+            .print-document .approval-grid {
+                background: white !important;
+                background-color: white !important;
+            }
+            
+            /* ตั้งค่าหน้ากระดาษ */
+            @page {
+                size: A4 portrait;
+                margin: 10mm;
+            }
+            
+            /* ให้สีพิมพ์ออกมาถูกต้อง */
+            .print-document,
+            .print-document * {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
+                color-adjust: exact !important;
             }
             
-            body {
-                margin: 0;
-                padding: 0;
+            /* ให้ border ยังคงแสดง */
+            .print-document .approval-box {
+                border: 1px solid #666 !important;
+            }
+            
+            .print-document .doc-checkbox {
+                border: 1.5px solid #333 !important;
                 background: white !important;
             }
             
-            /* Hide everything except print content */
-            .header,
-            .main-container,
-            .modal-header,
-            .modal-footer,
-            .modal-close,
-            .nav-tabs,
-            .history-panel,
-            .form-section,
-            .settings-modal,
-            #settingsModal {
-                display: none !important;
-            }
-            
-            /* Show only preview modal body and print area */
-            .modal-overlay {
-                position: static !important;
-                background: white !important;
-                display: block !important;
-            }
-            
-            /* Hide all modals first */
-            .modal-overlay.settings-modal {
-                display: none !important;
-            }
-            
-            /* Show only preview modal */
-            #previewModal {
-                display: block !important;
-                position: static !important;
-            }
-            
-            .modal-content {
-                max-width: none !important;
-                width: 100% !important;
-                max-height: none !important;
-                box-shadow: none !important;
-                border-radius: 0 !important;
-                background: white !important;
-            }
-            
-            .modal-body {
-                background: white !important;
-                padding: 0 !important;
-                overflow: visible !important;
-            }
-            
-            .print-area {
-                width: 100% !important;
-                background: white !important;
-            }
-            
-            .print-document {
-                width: 210mm;
-                min-height: auto;
-                height: auto;
-                padding: 0;
-                box-shadow: none;
-                margin: 0 auto;
-                font-size: 14px;
-                page-break-after: avoid;
-                page-break-inside: avoid;
-                background: white;
-            }
-            
-            @page {
-                size: A4;
-                margin: 10mm;
+            /* ป้องกันการตัดหน้า */
+            .approval-grid,
+            .approval-box {
+                page-break-inside: avoid !important;
             }
         }
 
@@ -891,6 +1069,22 @@
                 padding: 5mm;
                 font-size: 11px;
             }
+            .landing-header h1 {
+                font-size: 2rem;
+            }
+            
+            .landing-header p {
+                font-size: 1rem;
+            }
+
+            .form-cards {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .form-card {
+                padding: 2rem 1.5rem;
+            }
         }
 
         /* Animations */
@@ -905,6 +1099,46 @@
     </style>
 </head>
 <body>
+    <!-- Landing Page -->
+    <div class="landing-page" id="landingPage">
+        <div class="landing-container">
+            <div class="landing-header">
+                <div class="landing-logo">
+                    <img src="https://nonthaphathr.github.io/uploadimg/logoschool.png" alt="โลโก้โรงเรียน">
+                </div>
+                <h1>ระบบยื่นขอเอกสารคำร้อง</h1>
+                <p>กลุ่มงานบริหารวิชาการ โรงเรียนกระดุมทองวิทยา</p>
+                <p class="developer">พัฒนาโดย ครูนนทพัทธ์ หิรัญเรือง</p>
+            </div>
+            <div class="form-cards">
+                <div class="form-card" onclick="selectForm('form201')">
+                    <div class="form-card-icon">📄</div>
+                    <h3>ใบรับรองการเป็นนักเรียน</h3>
+                    <div class="form-card-code">วก.กทว.201</div>
+                    <p class="form-card-desc">
+                        แบบคำร้องขอใบรับรองการเป็นนักเรียน สำหรับใช้ในการติดต่อราชการหรือเรื่องอื่นๆ ที่ต้องการหลักฐานการศึกษา
+                    </p>
+                </div>
+                <div class="form-card" onclick="selectForm('form207')">
+                    <div class="form-card-icon">📋</div>
+                    <h3>ระเบียนผลการเรียน</h3>
+                    <div class="form-card-code">วก.กทว.207 (ปพ.1)</div>
+                    <p class="form-card-desc">
+                        แบบคำร้องขอระเบียนแสดงผลการเรียน ปพ.1:บ / ปพ.1:พ (เกรด 4 เทอม/5 เทอม) สำหรับนักเรียนปัจจุบันที่ต้องการใช้ในการศึกษาต่อ
+                    </p>
+                </div>
+                <div class="form-card" onclick="selectForm('form209')">
+                    <div class="form-card-icon">📝</div>
+                    <h3>ใบรับรองผลการเรียน</h3>
+                    <div class="form-card-code">วก.กทว.209</div>
+                    <p class="form-card-desc">
+                        แบบคำร้องขอใบรับรองผลการเรียน สำหรับใช้เป็นหลักฐานในการติดต่อราชการหรือยื่นเรื่องต่างๆ
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Loading Spinner -->
     <div class="loading" id="loading">
         <div class="spinner"></div>
@@ -916,8 +1150,9 @@
             <div class="logo-section">
                 <img src="https://nonthaphathr.github.io/uploadimg/logoschool.png" alt="โลโก้โรงเรียน">
                 <div class="logo-text">
-                    <h1>ระบบเอกสารคำร้อง</h1>
-                    <p>ฝ่ายบริหารงานวิชาการ โรงเรียนกระดุมทองวิทยา</p>
+                    <h1>ระบบยื่นขอเอกสารคำร้อง</h1>
+                    <p>กลุ่มงานบริหารวิชาการ โรงเรียนกระดุมทองวิทยา</p>
+                    <p style="font-size: 0.75rem; opacity: 0.8; margin-top: 2px;">พัฒนาโดย ครูนนทพัทธ์ หิรัญเรือง</p>
                 </div>
             </div>
             <nav class="nav-tabs">
@@ -1046,9 +1281,21 @@
                                 <input type="date" class="form-control" name="requestDate" required>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label>ชื่อ-นามสกุล <span class="required">*</span></label>
-                            <input type="text" class="form-control" name="fullName" required placeholder="กรอกชื่อ-นามสกุล">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>คำนำหน้า <span class="required">*</span></label>
+                                <select class="form-control" name="prefix" required>
+                                    <option value="">-- เลือก --</option>
+                                    <option value="ด.ช.">ด.ช.</option>
+                                    <option value="ด.ญ.">ด.ญ.</option>
+                                    <option value="นาย">นาย</option>
+                                    <option value="นางสาว">นางสาว</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>ชื่อ-นามสกุล <span class="required">*</span></label>
+                                <input type="text" class="form-control" name="fullName" required placeholder="กรอกชื่อ-นามสกุล">
+                            </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
@@ -1153,9 +1400,21 @@
                             <label>วันที่ยื่นคำร้อง <span class="required">*</span></label>
                             <input type="date" class="form-control" name="requestDate" required>
                         </div>
-                        <div class="form-group">
-                            <label>ชื่อ-นามสกุล <span class="required">*</span></label>
-                            <input type="text" class="form-control" name="fullName" required placeholder="กรอกชื่อ-นามสกุล">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>คำนำหน้า <span class="required">*</span></label>
+                                <select class="form-control" name="prefix" required>
+                                    <option value="">-- เลือก --</option>
+                                    <option value="ด.ช.">ด.ช.</option>
+                                    <option value="ด.ญ.">ด.ญ.</option>
+                                    <option value="นาย">นาย</option>
+                                    <option value="นางสาว">นางสาว</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>ชื่อ-นามสกุล <span class="required">*</span></label>
+                                <input type="text" class="form-control" name="fullName" required placeholder="กรอกชื่อ-นามสกุล">
+                            </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
@@ -1183,12 +1442,12 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label>ชื่อบิดา</label>
-                                <input type="text" class="form-control" name="fatherName" placeholder="ชื่อบิดา">
+                                <label>ชื่อบิดา <span style="font-size: 0.85rem; color: var(--text-light);">(โปรดกรอกคำนำหน้าชื่อ ชื่อ-สกุล)</span></label>
+                                <input type="text" class="form-control" name="fatherName" placeholder="ตัวอย่าง : นายสมหมาย ใจดี">
                             </div>
                             <div class="form-group">
-                                <label>ชื่อมารดา</label>
-                                <input type="text" class="form-control" name="motherName" placeholder="ชื่อมารดา">
+                                <label>ชื่อมารดา <span style="font-size: 0.85rem; color: var(--text-light);">(โปรดกรอกคำนำหน้าชื่อ ชื่อ-สกุล)</span></label>
+                                <input type="text" class="form-control" name="motherName" placeholder="ตัวอย่าง : นางสุดา ใจดี">
                             </div>
                         </div>
                         <div class="form-group">
@@ -1247,8 +1506,8 @@
                 <button class="modal-close" onclick="closeModal('previewModal')">&times;</button>
             </div>
             <div class="modal-body">
-                <div class="print-area" id="printArea">
-                    <!-- Document content will be rendered here -->
+                <div id="previewArea">
+                    <!-- Document preview will be rendered here -->
                 </div>
             </div>
             <div class="modal-footer">
@@ -1256,6 +1515,11 @@
                 <button class="btn btn-success" onclick="printDocument()">🖨️ พิมพ์เอกสาร</button>
             </div>
         </div>
+    </div>
+
+    <!-- Hidden Print Area - สำหรับพิมพ์เอกสารโดยเฉพาะ -->
+    <div id="printArea">
+        <!-- Document for printing will be rendered here -->
     </div>
 
     <!-- Settings Modal -->
@@ -1305,7 +1569,7 @@
     <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import { getFirestore, collection, addDoc, getDocs, getDoc, doc, updateDoc, deleteDoc, query, orderBy, limit, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import { getFirestore, collection, addDoc, getDocs, getDoc, doc, updateDoc, deleteDoc, query, orderBy, limit, serverTimestamp, setDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
         // Firebase Configuration
         const firebaseConfig = {
@@ -1323,7 +1587,7 @@
 
         // Export to global scope
         window.db = db;
-        window.firestore = { collection, addDoc, getDocs, getDoc, doc, updateDoc, deleteDoc, query, orderBy, limit, serverTimestamp };
+        window.firestore = { collection, addDoc, getDocs, getDoc, doc, updateDoc, deleteDoc, query, orderBy, limit, serverTimestamp, setDoc };
 
         console.log('Firebase initialized successfully!');
         
@@ -1343,6 +1607,15 @@
         };
 
         let currentSettings = { ...DEFAULT_SETTINGS };
+
+        // Select form from landing page
+        function selectForm(formId) {
+            // Hide landing page
+            document.getElementById('landingPage').classList.add('hidden');
+            
+            // Show the selected form
+            switchForm(formId);
+        }
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
@@ -1482,25 +1755,25 @@
                         <div class="doc-content">
                             <p><strong>เรื่อง</strong> ขอใบรับรองการเป็นนักเรียน</p>
                             <p><strong>เรียน</strong> ผู้อำนวยการโรงเรียนกระดุมทองวิทยา</p>
-                            <p class="indent">ข้าพเจ้า ${data.prefix || ''}${data.fullName || '.............................'} นักเรียนชั้นมัธยมศึกษาปีที่ ${data.grade || '............'} เลขประจำตัวนักเรียน ${data.studentId || '............'} หมายเลขโทรศัพท์ ${data.phone || '............'} มีความประสงค์จะขอใบรับรองการเป็นนักเรียนเพื่อ ${data.purpose || '.............................'} และจะมารับในวันที่ ${formatThaiDate(data.pickupDate)} ทั้งนี้ได้แนบเอกสาร</p>
+                            <p class="indent">ข้าพเจ้า <strong>${data.prefix || ''}${data.fullName || '.............................'}</strong> นักเรียนชั้นมัธยมศึกษาปีที่ <strong>${data.grade || '............'}</strong> เลขประจำตัวนักเรียน <strong>${data.studentId || '............'}</strong> หมายเลขโทรศัพท์ <strong>${data.phone || '............'}</strong> มีความประสงค์จะขอใบรับรองการเป็นนักเรียนเพื่อ <strong>${data.purpose || '.............................'}</strong> และจะมารับในวันที่ <strong>${formatThaiDate(data.pickupDate)}</strong> ทั้งนี้ได้แนบเอกสาร</p>
                             <div class="checkbox-line">${checkbox(attachments.includes('photo'))} รูปถ่าย 1.5 นิ้ว 1 รูป</div>
-                            <div class="checkbox-line">${checkbox(attachments.includes('other'))} อื่นๆ ${data.otherAttachment || '.............................'}</div>
+                            <div class="checkbox-line">${checkbox(attachments.includes('other'))} อื่นๆ <strong>${data.otherAttachment || '.............................'}</strong></div>
                             <p style="margin-top: 6px;">จึงเรียนมาเพื่อโปรดทราบ และพิจารณาดำเนินการต่อไป</p>
                         </div>
                         <div class="signature-section">
                             <p style="text-align: center; margin: 20px 0 2px 0;">(ลงชื่อ) .............................</p>
-                            <p style="text-align: center; margin: 0;">( ${data.prefix || ''}${data.fullName || '.............................'} )</p>
-                            <p style="text-align: center; margin: 0;">ผู้ยื่นคำขอ</p>
+                            <p style="text-align: center; margin: 0; padding-left: 48px;">( ${data.prefix || ''}${data.fullName || '.............................'} )</p>
+                            <p style="text-align: center; margin: 0; padding-left: 48px;">ผู้ยื่นคำขอ</p>
                         </div>
                         <div class="approval-grid">
                             <div class="approval-box">
                                 <div class="approval-box-title">ความเห็นเจ้าหน้าที่ทะเบียน</div>
-                                <p style="margin: 3px 0;">${checkbox(false)} เห็นควรอนุมัติ</p>
+                                <p style="margin: 3px 0;">${checkbox(false)} เห็นควรอนุมัติ นัดให้มารับวันที่ ....................</p>
                                 <p style="margin: 3px 0;">${checkbox(false)} ไม่เห็นควรอนุมัติ เนื่องจาก ....................</p>
                                 <div style="margin-top: 15px; text-align: center;">
                                     <p style="margin: 2px 0;">(ลงชื่อ) .............................</p>
-                                    <p style="margin: 2px 0;">(${currentSettings.registrarName})</p>
-                                    <p style="margin: 2px 0;">เจ้าหน้าที่งานทะเบียน</p>
+                                    <p style="margin: 2px 0; padding-left: 48px;">(${currentSettings.registrarName})</p>
+                                    <p style="margin: 2px 0; padding-left: 48px;">เจ้าหน้าที่งานทะเบียน</p>
                                 </div>
                             </div>
                             <div class="approval-box">
@@ -1509,8 +1782,8 @@
                                 <p style="margin: 3px 0;">${checkbox(false)} ไม่เห็นควรอนุมัติ เนื่องจาก ....................</p>
                                 <div style="margin-top: 15px; text-align: center;">
                                     <p style="margin: 2px 0;">(ลงชื่อ) .............................</p>
-                                    <p style="margin: 2px 0;">(${currentSettings.academicHeadName})</p>
-                                    <p style="margin: 2px 0;">หัวหน้าฝ่ายวิชาการ</p>
+                                    <p style="margin: 2px 0; padding-left: 48px;">(${currentSettings.academicHeadName})</p>
+                                    <p style="margin: 2px 0; padding-left: 48px;">หัวหน้าฝ่ายวิชาการ</p>
                                 </div>
                             </div>
                         </div>
@@ -1520,8 +1793,8 @@
                             <p style="margin: 3px 0;">${checkbox(false)} ไม่อนุมัติ เนื่องจาก ....................</p>
                             <div style="margin-top: 15px; text-align: center;">
                                 <p style="margin: 2px 0;">(ลงชื่อ) .............................</p>
-                                <p style="margin: 2px 0;">(${currentSettings.directorName})</p>
-                                <p style="margin: 2px 0;">ผู้อำนวยการโรงเรียนกระดุมทองวิทยา</p>
+                                <p style="margin: 2px 0; padding-left: 48px;">(${currentSettings.directorName})</p>
+                                <p style="margin: 2px 0; padding-left: 48px; white-space: nowrap;">ผู้อำนวยการโรงเรียนกระดุมทองวิทยา</p>
                             </div>
                         </div>
                     </div>
@@ -1538,26 +1811,26 @@
                                 วันที่ ${formatThaiDate(data.requestDate)}
                             </div>
                         </div>
-                        <div class="doc-content" style="margin-top: 10px;">
+                        <div class="doc-content" style="margin-top: 16px;">
                             <p><strong>เรื่อง</strong> ขอระเบียนแสดงผลการเรียน ปพ.1:บ / ปพ.1:พ (สำหรับนักเรียนปัจจุบัน)</p>
                             <p><strong>เรียน</strong> ผู้อำนวยการโรงเรียนกระดุมทองวิทยา</p>
                             <p><strong>สิ่งที่ส่งมาด้วย</strong></p>
                             <div class="checkbox-line">${checkbox(attachments.includes('photo'))} รูปถ่าย ขนาด 1.5 นิ้ว จำนวน 1 แผ่น</div>
                             <div class="checkbox-line">${checkbox(attachments.includes('lostReport'))} รายงานประจำวันรับแจ้งเอกสารหาย จำนวน 1 แผ่น</div>
-                            <p class="indent" style="margin-top: 6px;">ด้วยข้าพเจ้า ${data.fullName || '.............................'} นักเรียนชั้น ${data.grade || '............'} เลขประจำตัว ${data.studentId || '............'} มีความประสงค์ขอระเบียนแสดงผลการเรียน</p>
+                            <p class="indent" style="margin-top: 6px;">ด้วยข้าพเจ้า <strong>${data.prefix || ''}${data.fullName || '.............................'}</strong> นักเรียนชั้น <strong>${data.grade || '............'}</strong> เลขประจำตัว <strong>${data.studentId || '............'}</strong> มีความประสงค์ขอระเบียนแสดงผลการเรียน</p>
                             <div class="checkbox-line" style="margin-left: 25px;">${checkbox(data.docType === 'ปพ.1:บ')} ปพ.1:บ</div>
                             <div class="checkbox-line" style="margin-left: 25px;">${checkbox(data.docType === 'ปพ.1:พ')} ปพ.1:พ</div>
                             <p><strong>เพื่อ</strong></p>
                             <div class="checkbox-line">${checkbox(data.purpose === 'ศึกษาต่อสถานศึกษาอื่น')} ศึกษาต่อสถานศึกษาอื่น</div>
                             <div class="checkbox-line">${checkbox(data.purpose === 'ทดแทนใบเดิมที่สูญหาย')} ทดแทนใบเดิมที่สูญหาย</div>
                             <div class="checkbox-line">${checkbox(data.purpose === 'ใช้เป็นหลักฐานการขอรับทุนการศึกษา')} ใช้เป็นหลักฐานการขอรับทุนการศึกษา</div>
-                            <div class="checkbox-line">${checkbox(data.purpose === 'other')} อื่นๆ (ระบุ) ............................${data.purpose === 'other' ? (data.otherPurpose || '') : ''}</div>
+                            <div class="checkbox-line">${checkbox(data.purpose === 'other')} อื่นๆ (ระบุ) ............................<strong>${data.purpose === 'other' ? (data.otherPurpose || '') : ''}</strong></div>
                             <p style="margin-top: 6px;">โดยจะมารับในวันที่ <strong>${formatThaiDate(data.pickupDate)}</strong></p>
                             <p style="text-indent: 150px; margin-top: 4px;">จึงเรียนมาเพื่อโปรดพิจารณา</p>
                         </div>
                         <div class="signature-section">
                             <p style="text-align: center; margin: 20px 0 2px 0;">(ลงชื่อ) ............................. ผู้ขอ</p>
-                            <p style="text-align: center; margin: 0;">( ${data.fullName || '.............................'} )</p>
+                            <p style="text-align: center; margin: 0;">( ${data.prefix || ''}${data.fullName || '.............................'} )</p>
                         </div>
                         <div class="approval-grid">
                             <div class="approval-box">
@@ -1566,16 +1839,16 @@
                                 <p style="margin: 3px 0;">2. นัดให้มารับวันที่ ....................</p>
                                 <div style="margin-top: 15px; text-align: center;">
                                     <p style="margin: 2px 0;">(ลงชื่อ) ............................. นายทะเบียน</p>
-                                    <p style="margin: 2px 0;">(${currentSettings.registrarName})</p>
+                                    <p style="margin: 2px 0; padding-left: 32px;">(${currentSettings.registrarName})</p>
                                 </div>
                             </div>
                             <div class="approval-box">
-                                <div class="approval-box-title">ความเห็นของหัวหน้าฝ่ายบริหารงานวิชาการ</div>
+                                <div class="approval-box-title">ความเห็นของหัวหน้ากลุ่มงานบริหารวิชาการ</div>
                                 <p style="margin: 3px 0;">1. เพื่อโปรดทราบ</p>
                                 <p style="margin: 3px 0;">2. เพื่อโปรดพิจารณาลงนาม</p>
                                 <div style="margin-top: 15px; text-align: center;">
                                     <p style="margin: 2px 0;">(ลงชื่อ) ............................. หัวหน้าฝ่ายวิชาการ</p>
-                                    <p style="margin: 2px 0;">(${currentSettings.academicHeadName})</p>
+                                    <p style="margin: 2px 0; padding-left: 32px;">(${currentSettings.academicHeadName})</p>
                                 </div>
                             </div>
                         </div>
@@ -1609,13 +1882,12 @@
                         <div class="doc-content">
                             <p><strong>เรื่อง</strong> ขอใบรับรองผลการเรียน</p>
                             <p><strong>เรียน</strong> ผู้อำนวยการโรงเรียนกระดุมทองวิทยา</p>
-                            <p class="indent">ด้วยข้าพเจ้า ${data.fullName || '.............................'} นักเรียนชั้น ${data.grade || '............'} เลขประจำตัวนักเรียน ${data.studentId || '............'} เกิดวันที่ ${formatThaiDate(data.birthDate)} บิดาชื่อ ${data.fatherName || '............'} มารดาชื่อ ${data.motherName || '............'} มีความประสงค์จะขอใบรับรองผลการเรียนเพื่อ ${data.purpose || '.............................'} โดยจะมารับในวันที่ ${formatThaiDate(data.pickupDate)}</p>
-                            <p style="margin-top: 6px;">จึงเรียนมาเพื่อโปรดพิจารณา</p>
+                            <p class="indent">ด้วยข้าพเจ้า <strong>${data.prefix || ''}${data.fullName || '.............................'}</strong> นักเรียนชั้น <strong>${data.grade || '............'}</strong> เลขประจำตัวนักเรียน <strong>${data.studentId || '............'}</strong> เกิดวันที่ <strong>${formatThaiDate(data.birthDate)}</strong> บิดาชื่อ <strong>${data.fatherName || '............'}</strong> มารดาชื่อ <strong>${data.motherName || '............'}</strong> มีความประสงค์จะขอใบรับรองผลการเรียนเพื่อ <strong>${data.purpose || '.............................'}</strong> โดยจะมารับในวันที่ <strong>${formatThaiDate(data.pickupDate)}</strong></p>
+                            <p style="text-indent: 150px; margin-top: 4px;">จึงเรียนมาเพื่อโปรดพิจารณา</p>
                         </div>
                         <div class="signature-section">
-                            <p style="margin-bottom: 4px;">ขอแสดงความนับถือ</p>
                             <p style="text-align: center; margin: 20px 0 2px 0;">(ลงชื่อ) ............................. ผู้ยื่นขอ</p>
-                            <p style="text-align: center; margin: 0;">( ${data.fullName || '.............................'} )</p>
+                            <p style="text-align: center; margin: 0;">( ${data.prefix || ''}${data.fullName || '.............................'} )</p>
                         </div>
                         <div class="approval-grid">
                             <div class="approval-box">
@@ -1624,16 +1896,16 @@
                                 <p style="margin: 3px 0;">2. นัดให้มารับวันที่ ....................</p>
                                 <div style="margin-top: 15px; text-align: center;">
                                     <p style="margin: 2px 0;">(ลงชื่อ) ............................. นายทะเบียน</p>
-                                    <p style="margin: 2px 0;">(${currentSettings.registrarName})</p>
+                                    <p style="margin: 2px 0; padding-left: 32px;">(${currentSettings.registrarName})</p>
                                 </div>
                             </div>
                             <div class="approval-box">
-                                <div class="approval-box-title">ความเห็นของหัวหน้าฝ่ายบริหารงานวิชาการ</div>
+                                <div class="approval-box-title">ความเห็นของหัวหน้ากลุ่มงานบริหารวิชาการ</div>
                                 <p style="margin: 3px 0;">1. เพื่อโปรดทราบ</p>
                                 <p style="margin: 3px 0;">2. เพื่อโปรดพิจารณาลงนาม</p>
                                 <div style="margin-top: 15px; text-align: center;">
                                     <p style="margin: 2px 0;">(ลงชื่อ) ............................. หัวหน้าฝ่ายวิชาการ</p>
-                                    <p style="margin: 2px 0;">(${currentSettings.academicHeadName})</p>
+                                    <p style="margin: 2px 0; padding-left: 32px;">(${currentSettings.academicHeadName})</p>
                                 </div>
                             </div>
                         </div>
@@ -1644,7 +1916,7 @@
                             <div class="checkbox-line" style="margin: 3px 0 3px 0;">${checkbox(false)} ลงนามแล้ว</div>
                             <div style="margin-top: 15px; text-align: center;">
                                 <p style="margin: 2px 0;">(ลงชื่อ) ............................. ผู้อำนวยการสถานศึกษา</p>
-                                <p style="margin: 2px 0;">(${currentSettings.directorName})</p>
+                                <p style="margin: 2px 0; padding-left: 48px;">(${currentSettings.directorName})</p>
                             </div>
                         </div>
                     </div>
@@ -1663,7 +1935,13 @@
 
             const data = getFormData(formId);
             const html = generateDocumentHTML(formId, data);
+            
+            // Show in preview area (inside modal)
+            document.getElementById('previewArea').innerHTML = html;
+            
+            // Also prepare print area (hidden, for printing)
             document.getElementById('printArea').innerHTML = html;
+            
             document.getElementById('previewModal').classList.add('active');
         }
 
@@ -1672,9 +1950,15 @@
             document.getElementById(modalId).classList.remove('active');
         }
 
-        // Print document
+        // Print document - แก้ไขฟังก์ชันนี้
         function printDocument() {
-            window.print();
+            // ปิด modal ก่อนพิมพ์เพื่อไม่ให้ติด modal overlay
+            closeModal('previewModal');
+            
+            // รอให้ modal ปิดสนิทก่อนพิมพ์
+            setTimeout(() => {
+                window.print();
+            }, 100);
         }
 
         // Save and print
@@ -1823,7 +2107,13 @@
                 if (docSnap.exists()) {
                     const record = docSnap.data();
                     const html = generateDocumentHTML(record.formId, record.data);
+                    
+                    // Show in preview area (inside modal)
+                    document.getElementById('previewArea').innerHTML = html;
+                    
+                    // Also prepare print area (hidden, for printing)
                     document.getElementById('printArea').innerHTML = html;
+                    
                     document.getElementById('previewModal').classList.add('active');
                 } else {
                     showToast('ไม่พบข้อมูล', 'error');
@@ -1836,8 +2126,31 @@
             }
         }
 
+        // รหัสผ่านสำหรับแก้ไข/ลบ
+        const ADMIN_PASSWORD = '0000';
+
+        // ฟังก์ชันตรวจสอบรหัสผ่าน
+        function verifyPassword(action) {
+            return new Promise((resolve) => {
+                const password = prompt(`กรุณากรอกรหัสผ่านเพื่อ${action}:`);
+                if (password === null) {
+                    // ผู้ใช้กด Cancel
+                    resolve(false);
+                } else if (password === ADMIN_PASSWORD) {
+                    resolve(true);
+                } else {
+                    showToast('รหัสผ่านไม่ถูกต้อง', 'error');
+                    resolve(false);
+                }
+            });
+        }
+
         // Load history record to form
         async function loadHistoryRecord(id) {
+            // ตรวจสอบรหัสผ่านก่อน
+            const isAuthorized = await verifyPassword('แก้ไขเอกสาร');
+            if (!isAuthorized) return;
+
             try {
                 showLoading(true);
                 const docRef = window.firestore.doc(window.db, 'requests', id);
@@ -1882,6 +2195,10 @@
 
         // Delete history record
         async function deleteHistoryRecord(id) {
+            // ตรวจสอบรหัสผ่านก่อน
+            const isAuthorized = await verifyPassword('ลบเอกสาร');
+            if (!isAuthorized) return;
+
             if (!confirm('คุณต้องการลบรายการนี้หรือไม่?')) {
                 return;
             }
@@ -1917,15 +2234,9 @@
             try {
                 showLoading(true);
                 
-                // Save to Firestore
+                // Save to Firestore using setDoc with merge
                 const settingsRef = window.firestore.doc(window.db, 'settings', 'officials');
-                await window.firestore.updateDoc(settingsRef, newSettings).catch(async () => {
-                    // If document doesn't exist, create it
-                    await window.firestore.addDoc(
-                        window.firestore.collection(window.db, 'settings'),
-                        { id: 'officials', ...newSettings }
-                    );
-                });
+                await window.firestore.setDoc(settingsRef, newSettings, { merge: true });
 
                 currentSettings = newSettings;
                 closeModal('settingsModal');
@@ -1948,11 +2259,6 @@
                 } else {
                     // Initialize with default settings
                     currentSettings = { ...DEFAULT_SETTINGS };
-                    // Save default settings to Firestore
-                    await window.firestore.addDoc(
-                        window.firestore.collection(window.db, 'settings'),
-                        { id: 'officials', ...currentSettings }
-                    );
                 }
             } catch (error) {
                 console.error('Error loading settings:', error);
